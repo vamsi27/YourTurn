@@ -184,6 +184,7 @@
 				TargetAttributes = {
 					F448D8DB1E887E05001EECAB = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = Z6VX63C9QP;
 						ProvisioningStyle = Automatic;
 					};
 					F448D8EF1E887E05001EECAB = {
@@ -471,6 +472,7 @@
 			baseConfigurationReference = D938047B6FD4EB042F2CBA89 /* Pods-YourTurn.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = Z6VX63C9QP;
 				INFOPLIST_FILE = YourTurn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = vmzir.YourTurn;
@@ -484,6 +486,7 @@
 			baseConfigurationReference = 18E23091AC2A06A64F2E942A /* Pods-YourTurn.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = Z6VX63C9QP;
 				INFOPLIST_FILE = YourTurn/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = vmzir.YourTurn;
@@ -541,6 +544,7 @@
 				F448D8FB1E887E05001EECAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F448D8FC1E887E05001EECAB /* Build configuration list for PBXNativeTarget "YourTurnTests" */ = {
 			isa = XCConfigurationList;
@@ -549,6 +553,7 @@
 				F448D8FE1E887E05001EECAB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
