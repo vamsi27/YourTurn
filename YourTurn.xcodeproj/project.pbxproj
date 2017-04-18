@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		5AFDD4F4997D40C1DBC39317 /* Pods_YourTurn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B425ACF90C58E3ACD9AF118B /* Pods_YourTurn.framework */; };
 		A6405E4151C9386E2FE17F2D /* Pods_YourTurnTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073B69202E254934231A5447 /* Pods_YourTurnTests.framework */; };
+		F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */; };
 		F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8DF1E887E05001EECAB /* AppDelegate.swift */; };
-		F448D8E21E887E05001EECAB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8E11E887E05001EECAB /* ViewController.swift */; };
+		F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */; };
 		F448D8E51E887E05001EECAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F448D8E31E887E05001EECAB /* Main.storyboard */; };
 		F448D8E71E887E05001EECAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F448D8E61E887E05001EECAB /* Assets.xcassets */; };
 		F448D8EA1E887E05001EECAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F448D8E81E887E05001EECAB /* LaunchScreen.storyboard */; };
@@ -34,9 +35,10 @@
 		A8C804423237046210850E71 /* Pods-YourTurnTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YourTurnTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YourTurnTests/Pods-YourTurnTests.release.xcconfig"; sourceTree = "<group>"; };
 		B425ACF90C58E3ACD9AF118B /* Pods_YourTurn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YourTurn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D938047B6FD4EB042F2CBA89 /* Pods-YourTurn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YourTurn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YourTurn/Pods-YourTurn.debug.xcconfig"; sourceTree = "<group>"; };
+		F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeVC.swift; sourceTree = "<group>"; };
 		F448D8DC1E887E05001EECAB /* YourTurn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourTurn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F448D8DF1E887E05001EECAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F448D8E11E887E05001EECAB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberSetupVC.swift; sourceTree = "<group>"; };
 		F448D8E41E887E05001EECAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F448D8E61E887E05001EECAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F448D8E91E887E05001EECAB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -110,11 +112,12 @@
 			isa = PBXGroup;
 			children = (
 				F448D8DF1E887E05001EECAB /* AppDelegate.swift */,
-				F448D8E11E887E05001EECAB /* ViewController.swift */,
+				F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */,
 				F448D8E31E887E05001EECAB /* Main.storyboard */,
 				F448D8E61E887E05001EECAB /* Assets.xcassets */,
 				F448D8E81E887E05001EECAB /* LaunchScreen.storyboard */,
 				F448D8EB1E887E05001EECAB /* Info.plist */,
+				F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */,
 			);
 			path = YourTurn;
 			sourceTree = "<group>";
@@ -331,7 +334,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F448D8E21E887E05001EECAB /* ViewController.swift in Sources */,
+				F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */,
+				F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */,
 				F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
