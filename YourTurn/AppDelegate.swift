@@ -31,26 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
             //$0.isLocalDatastoreEnabled = true
         }
-        Parse.initialize(with: configuration)
-        
-        
-        
-        let params = ["phoneVerificationCode":12345, "phoneNumber":3057750907] as [String : Any]
-        var code = 0
-        
-        PFCloud.callFunction(inBackground: "sendVerificationCode", withParameters: params){ (response, error) in
-            if error == nil {
-                
-                code = response as! Int
-                
-                print(code)
-                
-            } else {
-                print("Send code failed")
-            }
-        }
- 
-        
+        Parse.initialize(with: configuration)        
         
         // Update font of all navigation bar button items - 
         let font = UIFont(name: "Marker Felt", size: 24.0)
