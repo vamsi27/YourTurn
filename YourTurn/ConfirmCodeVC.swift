@@ -36,13 +36,18 @@ class ConfirmCodeVC: UIViewController {
         
         if("\(serverConfCode)" == txtFieldConfCode.text)
         {
-            print("Success code matched - It's \(serverConfCode)")
+            let controllerId = "sbUserTasks";
+            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initViewController: UIViewController = storyboard.instantiateViewController(withIdentifier: controllerId) as UIViewController
+            self.present(initViewController, animated: true, completion: nil)
+        }
+        else
+        {
+            let alert = UIAlertController(title: "Error!", message: "Invalid code entered", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
         
-        let controllerId = "sbUserTasks";
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let initViewController: UIViewController = storyboard.instantiateViewController(withIdentifier: controllerId) as UIViewController
-        self.present(initViewController, animated: true, completion: nil)
         
     }
     

@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import libPhoneNumber_iOS
 
 class PhoneNumberSetupVC: UIViewController {
     
@@ -19,14 +20,20 @@ class PhoneNumberSetupVC: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         addDoneButtonOnKeyboard()
+        
+        // uncomment below to start using
+        //let phoneUtil = NBPhoneNumberUtil()
+        
+        
+        
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-        
-        
-        
+        // Dispose of any resources that can be recreated.        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -44,7 +51,7 @@ class PhoneNumberSetupVC: UIViewController {
     
     @IBAction func continueToConfirmCodeAction(_ sender: Any) {
         
-        let params = ["phoneNumber":Int(txtPhnNum.text!)!] as [String : Any]
+        let params = ["phoneNumber":txtPhnNum.text!] as [String : Any]
         
         PFCloud.callFunction(inBackground: "sendVerificationCode", withParameters: params){ (response, error) in
             if error == nil {
@@ -58,9 +65,9 @@ class PhoneNumberSetupVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if (segue.identifier == "seguePhnSetupToConfirm") {
-            confirmCodeViewController = (segue.destination as? ConfirmCodeVC)        }
+            confirmCodeViewController = (segue.destination as? ConfirmCodeVC)
+        }
     }
     
     
