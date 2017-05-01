@@ -10,25 +10,50 @@ import UIKit
 import Parse
 import libPhoneNumber_iOS
 
-class PhoneNumberSetupVC: UIViewController {
+class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCodePickerDelegate {
     
+    @IBOutlet weak var textFieldCountry: UITextField!
     
     @IBOutlet weak var txtPhnNum: UITextField!
     
+    @IBOutlet weak var lblCountryCode: UILabel!
+    
+    @IBOutlet weak var pickerViewCountry: CountryPicker!
+
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+                super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let locale = Locale.current
+        let code = (locale as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
+        
+        
+        pickerViewCountry.removeFromSuperview()
+        
+        
+        textFieldCountry.inputView = pickerViewCountry
+        
+        
+        
+        pickerViewCountry.countryPhoneCodeDelegate = self
+        pickerViewCountry.setCountry(code)
+        
         addDoneButtonOnKeyboard()
+        addDoneButtonOnCountryKeyboard()
+        
         
         // uncomment below to start using
         //let phoneUtil = NBPhoneNumberUtil()
+    }
+    
+    
+    // MARK: - CountryPhoneCodePicker Delegate
+    
+    func countryPhoneCodePicker(_ picker: CountryPicker, didSelectCountryCountryWithName name: String, countryCode: String, phoneCode: String) {
         
-        
-        
-        
-        
-        
+        textFieldCountry.text = name
+        lblCountryCode.text = phoneCode
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,6 +97,7 @@ class PhoneNumberSetupVC: UIViewController {
     
     
     func addDoneButtonOnKeyboard() {
+        
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle       = UIBarStyle.default
         let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
@@ -89,6 +115,27 @@ class PhoneNumberSetupVC: UIViewController {
     
     func doneButtonAction() {
         self.txtPhnNum.resignFirstResponder()
+    }
+    
+    func addDoneButtonOnCountryKeyboard() {
+        
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle       = UIBarStyle.default
+        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(PhoneNumberSetupVC.doneButtonActionCountry))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.textFieldCountry.inputAccessoryView = doneToolbar
+    }
+    
+    func doneButtonActionCountry() {
+        self.textFieldCountry.resignFirstResponder()
     }
 }
 

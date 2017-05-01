@@ -16,6 +16,10 @@
 		F448D8E71E887E05001EECAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F448D8E61E887E05001EECAB /* Assets.xcassets */; };
 		F448D8EA1E887E05001EECAB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F448D8E81E887E05001EECAB /* LaunchScreen.storyboard */; };
 		F448D8F51E887E05001EECAB /* YourTurnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8F41E887E05001EECAB /* YourTurnTests.swift */; };
+		F47911741EB6A4720014C7D5 /* CountryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F47911711EB6A4720014C7D5 /* CountryView.xib */; };
+		F47911751EB6A4720014C7D5 /* CountryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47911721EB6A4720014C7D5 /* CountryPicker.swift */; };
+		F47911761EB6A4720014C7D5 /* CountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47911731EB6A4720014C7D5 /* CountryView.swift */; };
+		F47911781EB6A48F0014C7D5 /* Flags.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47911771EB6A48F0014C7D5 /* Flags.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,10 @@
 		F448D8F41E887E05001EECAB /* YourTurnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourTurnTests.swift; sourceTree = "<group>"; };
 		F448D8F61E887E05001EECAB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F479116A1EB55AA50014C7D5 /* YourTurn-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "YourTurn-Bridging-Header.h"; sourceTree = "<group>"; };
+		F47911711EB6A4720014C7D5 /* CountryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CountryView.xib; sourceTree = "<group>"; };
+		F47911721EB6A4720014C7D5 /* CountryPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryPicker.swift; sourceTree = "<group>"; };
+		F47911731EB6A4720014C7D5 /* CountryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryView.swift; sourceTree = "<group>"; };
+		F47911771EB6A48F0014C7D5 /* Flags.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Flags.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +120,8 @@
 		F448D8DE1E887E05001EECAB /* YourTurn */ = {
 			isa = PBXGroup;
 			children = (
+				F47911771EB6A48F0014C7D5 /* Flags.xcassets */,
+				F47911701EB6A3DF0014C7D5 /* CountryPicker */,
 				F448D8DF1E887E05001EECAB /* AppDelegate.swift */,
 				F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */,
 				F448D8E31E887E05001EECAB /* Main.storyboard */,
@@ -131,6 +141,16 @@
 				F448D8F61E887E05001EECAB /* Info.plist */,
 			);
 			path = YourTurnTests;
+			sourceTree = "<group>";
+		};
+		F47911701EB6A3DF0014C7D5 /* CountryPicker */ = {
+			isa = PBXGroup;
+			children = (
+				F47911711EB6A4720014C7D5 /* CountryView.xib */,
+				F47911721EB6A4720014C7D5 /* CountryPicker.swift */,
+				F47911731EB6A4720014C7D5 /* CountryView.swift */,
+			);
+			name = CountryPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,9 +244,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F47911781EB6A48F0014C7D5 /* Flags.xcassets in Resources */,
 				F448D8EA1E887E05001EECAB /* LaunchScreen.storyboard in Resources */,
 				F448D8E71E887E05001EECAB /* Assets.xcassets in Resources */,
 				F448D8E51E887E05001EECAB /* Main.storyboard in Resources */,
+				F47911741EB6A4720014C7D5 /* CountryView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,6 +359,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F47911761EB6A4720014C7D5 /* CountryView.swift in Sources */,
+				F47911751EB6A4720014C7D5 /* CountryPicker.swift in Sources */,
 				F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */,
 				F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */,
 				F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */,
