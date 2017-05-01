@@ -35,11 +35,10 @@
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Select your country code and enter your phone number" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cd-RT-KJ3">
                                 <rect key="frame" x="54" y="220" width="266" height="45"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -57,46 +56,50 @@
                                     <segue destination="RDd-wh-qNa" kind="show" identifier="seguePhnSetupToConfirm" id="5TU-7T-mgl"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a7h-xs-Xaa">
-                                <rect key="frame" x="67" y="350" width="42" height="0.0"/>
-                                <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KO5-f0-c1f">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Country" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KO5-f0-c1f">
                                 <rect key="frame" x="67" y="296" width="240" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ykm-s9-1QL" customClass="CountryPicker" customModule="YourTurn" customModuleProvider="target">
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ykm-s9-1QL" customClass="CountryPicker" customModule="YourTurn" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="451" width="375" height="216"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qco-Zd-G2X">
+                                <rect key="frame" x="67" y="334" width="51" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="2cd-RT-KJ3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="38" id="14v-ju-f9R"/>
                             <constraint firstItem="KO5-f0-c1f" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="51" id="1MN-3b-TQM"/>
+                            <constraint firstItem="qco-Zd-G2X" firstAttribute="leading" secondItem="KO5-f0-c1f" secondAttribute="leading" id="32b-uj-dFa"/>
+                            <constraint firstItem="Ykm-s9-1QL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="5Nk-2g-UOn"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="glz-sW-a75" secondAttribute="bottom" constant="246" id="7pN-1F-AiG"/>
-                            <constraint firstItem="KO5-f0-c1f" firstAttribute="leading" secondItem="a7h-xs-Xaa" secondAttribute="leading" id="B9f-2x-UHV"/>
                             <constraint firstItem="3F0-c9-EuD" firstAttribute="centerX" secondItem="2cd-RT-KJ3" secondAttribute="centerX" id="EEu-qM-4Tp"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ykm-s9-1QL" secondAttribute="bottom" id="Lkn-Dq-dk3"/>
                             <constraint firstItem="KO5-f0-c1f" firstAttribute="top" secondItem="2cd-RT-KJ3" secondAttribute="bottom" constant="31" id="Lsg-01-1g3"/>
                             <constraint firstItem="2cd-RT-KJ3" firstAttribute="top" secondItem="3F0-c9-EuD" secondAttribute="bottom" constant="71" id="NSb-ab-6hA"/>
                             <constraint firstItem="glz-sW-a75" firstAttribute="top" secondItem="1pc-6q-9zY" secondAttribute="bottom" constant="24" id="NeX-jJ-dVH"/>
                             <constraint firstItem="KO5-f0-c1f" firstAttribute="centerX" secondItem="glz-sW-a75" secondAttribute="centerX" id="U83-W0-Y1A"/>
                             <constraint firstItem="2cd-RT-KJ3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ZPT-Q9-VQc"/>
                             <constraint firstItem="2cd-RT-KJ3" firstAttribute="centerX" secondItem="KO5-f0-c1f" secondAttribute="centerX" id="cQa-1g-BXh"/>
+                            <constraint firstAttribute="trailing" secondItem="Ykm-s9-1QL" secondAttribute="trailing" id="dXt-iA-nse"/>
                             <constraint firstItem="KO5-f0-c1f" firstAttribute="trailing" secondItem="1pc-6q-9zY" secondAttribute="trailing" id="diJ-RN-NTu"/>
+                            <constraint firstItem="qco-Zd-G2X" firstAttribute="baseline" secondItem="1pc-6q-9zY" secondAttribute="baseline" id="kQl-0R-09P"/>
+                            <constraint firstItem="1pc-6q-9zY" firstAttribute="leading" secondItem="qco-Zd-G2X" secondAttribute="trailing" constant="8" symbolic="YES" id="lXs-aa-vKE"/>
                             <constraint firstItem="1pc-6q-9zY" firstAttribute="top" secondItem="KO5-f0-c1f" secondAttribute="bottom" constant="8" symbolic="YES" id="pGD-g6-KmQ"/>
                             <constraint firstItem="3F0-c9-EuD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="38" id="xqR-Lg-pGH"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="tG3-eK-NaN"/>
                     <connections>
-                        <outlet property="lblCountryCode" destination="a7h-xs-Xaa" id="9vq-Zw-zAg"/>
                         <outlet property="pickerViewCountry" destination="Ykm-s9-1QL" id="Efr-FH-dx7"/>
                         <outlet property="textFieldCountry" destination="KO5-f0-c1f" id="zWH-0o-Rb1"/>
+                        <outlet property="txtCountryCode" destination="qco-Zd-G2X" id="5xw-oH-WTC"/>
                         <outlet property="txtPhnNum" destination="1pc-6q-9zY" id="KPn-4T-Dad"/>
                     </connections>
                 </viewController>
@@ -146,7 +149,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.82616585539999998" blue="0.3358037848" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="tQc-6Y-GfX" firstAttribute="top" secondItem="T5G-u7-PDe" secondAttribute="bottom" constant="28" id="BZw-Fm-kSz"/>
                             <constraint firstItem="T5G-u7-PDe" firstAttribute="centerX" secondItem="fhD-FJ-lW9" secondAttribute="centerX" id="Lqj-oc-At2"/>

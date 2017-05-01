@@ -16,7 +16,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     
     @IBOutlet weak var txtPhnNum: UITextField!
     
-    @IBOutlet weak var lblCountryCode: UILabel!
+    @IBOutlet weak var txtCountryCode: UITextField!
     
     @IBOutlet weak var pickerViewCountry: CountryPicker!
 
@@ -28,9 +28,15 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         let locale = Locale.current
         let code = (locale as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
         
+        //textFieldCountry.rightViewMode = .always
+        //textFieldCountry.rightView = UIImageView(image: UIImage(named: "down.png"))
         
         pickerViewCountry.removeFromSuperview()
         
+        textFieldCountry.delegate = self
+        
+        // so that the cursor looks hidden
+        textFieldCountry.tintColor = UIColor.clear
         
         textFieldCountry.inputView = pickerViewCountry
         
@@ -48,12 +54,23 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     }
     
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        // so that country text field looks like readonly without being disabled or un-editable
+        if (textField == textFieldCountry)
+        {
+            return false
+        }
+        
+        return true
+    }
+    
     // MARK: - CountryPhoneCodePicker Delegate
     
     func countryPhoneCodePicker(_ picker: CountryPicker, didSelectCountryCountryWithName name: String, countryCode: String, phoneCode: String) {
         
         textFieldCountry.text = name
-        lblCountryCode.text = phoneCode
+        txtCountryCode.text = phoneCode
     }
     
     override func didReceiveMemoryWarning() {

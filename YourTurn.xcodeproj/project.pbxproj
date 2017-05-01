@@ -20,6 +20,7 @@
 		F47911751EB6A4720014C7D5 /* CountryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47911721EB6A4720014C7D5 /* CountryPicker.swift */; };
 		F47911761EB6A4720014C7D5 /* CountryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47911731EB6A4720014C7D5 /* CountryView.swift */; };
 		F47911781EB6A48F0014C7D5 /* Flags.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47911771EB6A48F0014C7D5 /* Flags.xcassets */; };
+		F479117B1EB6F1A70014C7D5 /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = F479117A1EB6F1A70014C7D5 /* down.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		F47911721EB6A4720014C7D5 /* CountryPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryPicker.swift; sourceTree = "<group>"; };
 		F47911731EB6A4720014C7D5 /* CountryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryView.swift; sourceTree = "<group>"; };
 		F47911771EB6A48F0014C7D5 /* Flags.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Flags.xcassets; sourceTree = "<group>"; };
+		F479117A1EB6F1A70014C7D5 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 		F448D8DE1E887E05001EECAB /* YourTurn */ = {
 			isa = PBXGroup;
 			children = (
+				F47911791EB6F18F0014C7D5 /* Images */,
 				F47911771EB6A48F0014C7D5 /* Flags.xcassets */,
 				F47911701EB6A3DF0014C7D5 /* CountryPicker */,
 				F448D8DF1E887E05001EECAB /* AppDelegate.swift */,
@@ -151,6 +154,14 @@
 				F47911731EB6A4720014C7D5 /* CountryView.swift */,
 			);
 			name = CountryPicker;
+			sourceTree = "<group>";
+		};
+		F47911791EB6F18F0014C7D5 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				F479117A1EB6F1A70014C7D5 /* down.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,6 +260,7 @@
 				F448D8E71E887E05001EECAB /* Assets.xcassets in Resources */,
 				F448D8E51E887E05001EECAB /* Main.storyboard in Resources */,
 				F47911741EB6A4720014C7D5 /* CountryView.xib in Resources */,
+				F479117B1EB6F1A70014C7D5 /* down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
