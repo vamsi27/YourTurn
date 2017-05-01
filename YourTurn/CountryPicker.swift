@@ -61,7 +61,7 @@ class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource 
         for index in 0..<countries.count {
             if countries[index].code == code {
                 row = index
-                country = nil//countries[index]
+                country = countries[index]
                 break
             }
         }
