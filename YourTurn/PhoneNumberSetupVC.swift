@@ -21,6 +21,14 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     @IBOutlet weak var pickerViewCountry: CountryPicker!
 
     
+    /*
+     TODO: FIX DEFAULT COUNTRY SELECTION BASED ON CURRENT LOCALE
+     */
+    
+    
+    
+    
+    
     override func viewDidLoad() {
                 super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -43,7 +51,10 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         
         
         pickerViewCountry.countryPhoneCodeDelegate = self
-        pickerViewCountry.setCountry(code)
+        let defaultCountry = pickerViewCountry.setCountry(code)
+        
+        textFieldCountry.text = defaultCountry?.name
+        txtCountryCode.text = defaultCountry?.phoneCode
         
         addDoneButtonOnKeyboard()
         addDoneButtonOnCountryKeyboard()

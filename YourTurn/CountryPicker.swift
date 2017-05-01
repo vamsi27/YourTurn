@@ -54,17 +54,24 @@ class CountryPicker: UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource 
     
     // MARK: - Country Methods
     
-    func setCountry(_ code: String) {
+    func setCountry(_ code: String) -> Country? {
         var row = 0
+        var country:Country? = nil
+        
         for index in 0..<countries.count {
             if countries[index].code == code {
                 row = index
+                country = nil//countries[index]
                 break
             }
         }
         
         self.selectRow(row, inComponent: 0, animated: true)
+        
+        return country
     }
+    
+    
     
     func countryNamesByCode() -> [Country] {
         var countries = [Country]()
