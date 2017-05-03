@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		5AFDD4F4997D40C1DBC39317 /* Pods_YourTurn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B425ACF90C58E3ACD9AF118B /* Pods_YourTurn.framework */; };
 		A6405E4151C9386E2FE17F2D /* Pods_YourTurnTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073B69202E254934231A5447 /* Pods_YourTurnTests.framework */; };
+		F41C37CA1EB99FA900F4EC6E /* MopKitchenFloor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F41C37C91EB99FA900F4EC6E /* MopKitchenFloor.jpg */; };
 		F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */; };
+		F42635681EB996D6004E079C /* TrashCan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F42635671EB996D6004E079C /* TrashCan.jpg */; };
+		F426356A1EB99883004E079C /* TasksTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42635691EB99883004E079C /* TasksTableVC.swift */; };
+		F426356C1EB99933004E079C /* TasksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426356B1EB99933004E079C /* TasksTableViewCell.swift */; };
 		F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8DF1E887E05001EECAB /* AppDelegate.swift */; };
 		F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */; };
 		F448D8E51E887E05001EECAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F448D8E31E887E05001EECAB /* Main.storyboard */; };
@@ -40,7 +44,11 @@
 		A8C804423237046210850E71 /* Pods-YourTurnTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YourTurnTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YourTurnTests/Pods-YourTurnTests.release.xcconfig"; sourceTree = "<group>"; };
 		B425ACF90C58E3ACD9AF118B /* Pods_YourTurn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YourTurn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D938047B6FD4EB042F2CBA89 /* Pods-YourTurn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YourTurn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YourTurn/Pods-YourTurn.debug.xcconfig"; sourceTree = "<group>"; };
+		F41C37C91EB99FA900F4EC6E /* MopKitchenFloor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MopKitchenFloor.jpg; sourceTree = "<group>"; };
 		F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeVC.swift; sourceTree = "<group>"; };
+		F42635671EB996D6004E079C /* TrashCan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TrashCan.jpg; sourceTree = "<group>"; };
+		F42635691EB99883004E079C /* TasksTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableVC.swift; sourceTree = "<group>"; };
+		F426356B1EB99933004E079C /* TasksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableViewCell.swift; sourceTree = "<group>"; };
 		F448D8DC1E887E05001EECAB /* YourTurn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourTurn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F448D8DF1E887E05001EECAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberSetupVC.swift; sourceTree = "<group>"; };
@@ -133,6 +141,8 @@
 				F448D8EB1E887E05001EECAB /* Info.plist */,
 				F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */,
 				F479116A1EB55AA50014C7D5 /* YourTurn-Bridging-Header.h */,
+				F42635691EB99883004E079C /* TasksTableVC.swift */,
+				F426356B1EB99933004E079C /* TasksTableViewCell.swift */,
 			);
 			path = YourTurn;
 			sourceTree = "<group>";
@@ -159,6 +169,8 @@
 		F47911791EB6F18F0014C7D5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F41C37C91EB99FA900F4EC6E /* MopKitchenFloor.jpg */,
+				F42635671EB996D6004E079C /* TrashCan.jpg */,
 				F479117A1EB6F1A70014C7D5 /* down.png */,
 			);
 			name = Images;
@@ -259,7 +271,9 @@
 				F448D8EA1E887E05001EECAB /* LaunchScreen.storyboard in Resources */,
 				F448D8E71E887E05001EECAB /* Assets.xcassets in Resources */,
 				F448D8E51E887E05001EECAB /* Main.storyboard in Resources */,
+				F42635681EB996D6004E079C /* TrashCan.jpg in Resources */,
 				F47911741EB6A4720014C7D5 /* CountryView.xib in Resources */,
+				F41C37CA1EB99FA900F4EC6E /* MopKitchenFloor.jpg in Resources */,
 				F479117B1EB6F1A70014C7D5 /* down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,9 +387,11 @@
 			files = (
 				F47911761EB6A4720014C7D5 /* CountryView.swift in Sources */,
 				F47911751EB6A4720014C7D5 /* CountryPicker.swift in Sources */,
+				F426356A1EB99883004E079C /* TasksTableVC.swift in Sources */,
 				F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */,
 				F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */,
 				F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */,
+				F426356C1EB99933004E079C /* TasksTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

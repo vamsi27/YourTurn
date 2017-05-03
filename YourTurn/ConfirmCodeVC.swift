@@ -19,7 +19,6 @@ class ConfirmCodeVC: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        txtFieldConfCode.text = "\(serverConfCode)"
         addDoneButtonOnKeyboard()
     }
 
@@ -33,10 +32,9 @@ class ConfirmCodeVC: UIViewController {
         print("Server code - \(serverConfCode)")
         print("Entered code - " + txtFieldConfCode.text!)
         
-        
         if("\(serverConfCode)" == txtFieldConfCode.text)
         {
-            let controllerId = "sbUserTasks";
+            let controllerId = "sbLoggedInNavCtrler";
             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let initViewController: UIViewController = storyboard.instantiateViewController(withIdentifier: controllerId) as UIViewController
             self.present(initViewController, animated: true, completion: nil)
