@@ -8,16 +8,18 @@
 
 import UIKit
 
-class ConfirmCodeVC: UIViewController {
+class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
     
     var serverConfCode = 0
     
+    @IBOutlet weak var btnConfirmCode: UIButton!
     @IBOutlet weak var txtFieldConfCode: UITextField!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        btnConfirmCode.isEnabled = false
+        txtFieldConfCode.delegate = self
         
         addDoneButtonOnKeyboard()
     }
@@ -25,6 +27,21 @@ class ConfirmCodeVC: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if(textField == txtFieldConfCode){
+            
+            guard let text = textField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            
+            btnConfirmCode.isEnabled = newLength == 5
+            
+            return newLength <= 5
+        }
+        
+        return true
     }
     
     @IBAction func btnConfirmCode(_ sender: Any) {

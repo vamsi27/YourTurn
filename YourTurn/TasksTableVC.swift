@@ -32,7 +32,7 @@ class TasksTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
 
     
@@ -46,6 +46,13 @@ class TasksTableVC: UITableViewController {
             cell.taskImage.image = UIImage(named: "MopKitchenFloor.jpg")
             cell.taskNameLbl.text = "Mop Kitchen Floor"
             cell.taskWhosNextLbl.text = "Next turn: Vikrant"
+        }
+        
+        if(indexPath.row == 2)
+        {
+            cell.taskImage.image = UIImage(named: "PayRent.png")
+            cell.taskNameLbl.text = "Pay Rent"
+            cell.taskWhosNextLbl.text = "Next turn: Venky"
         }
 
         return cell

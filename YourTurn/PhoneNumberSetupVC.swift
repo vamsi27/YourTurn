@@ -19,29 +19,25 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     @IBOutlet weak var txtCountryCode: UITextField!
     
     @IBOutlet weak var pickerViewCountry: CountryPicker!
-
     
-    /*
-     TODO: FIX DEFAULT COUNTRY SELECTION BASED ON CURRENT LOCALE
-     */
-    
-    
-    
-    
+    @IBOutlet weak var btnContinue: UIButton!
     
     override func viewDidLoad() {
+        
                 super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         let locale = Locale.current
         let code = (locale as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
         
-        //textFieldCountry.rightViewMode = .always
-        //textFieldCountry.rightView = UIImageView(image: UIImage(named: "down.png"))
+        
+        btnContinue.isEnabled = false
+        btnContinue.adjustsImageWhenDisabled = true
         
         pickerViewCountry.removeFromSuperview()
         
         textFieldCountry.delegate = self
+        txtPhnNum.delegate = self
         
         // so that the cursor looks hidden
         textFieldCountry.tintColor = UIColor.clear
@@ -73,8 +69,19 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
             return false
         }
         
+        if(textField == txtPhnNum){
+            
+            guard let text = textField.text else { return true }
+            let newLength = text.characters.count + string.characters.count - range.length
+            
+            btnContinue.isEnabled = newLength == 10
+            
+            return newLength <= 10
+        }
+        
         return true
     }
+    
     
     // MARK: - CountryPhoneCodePicker Delegate
     
