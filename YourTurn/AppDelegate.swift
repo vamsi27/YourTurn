@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Parse.initialize(with: configuration)        
         
         // Update font of all navigation bar button items - 
-        let font = UIFont(name: "Marker Felt", size: 24.0)
+        let font = UIFont(name: "Marker Felt", size: 17.0)
         
         // Back button
         UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState.normal)

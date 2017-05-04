@@ -10,6 +10,7 @@
 		5AFDD4F4997D40C1DBC39317 /* Pods_YourTurn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B425ACF90C58E3ACD9AF118B /* Pods_YourTurn.framework */; };
 		A6405E4151C9386E2FE17F2D /* Pods_YourTurnTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 073B69202E254934231A5447 /* Pods_YourTurnTests.framework */; };
 		F40F510D1EBADCAF007A6B55 /* PayRent.png in Resources */ = {isa = PBXBuildFile; fileRef = F40F510C1EBADCAF007A6B55 /* PayRent.png */; };
+		F40F510F1EBAE833007A6B55 /* CreateTaskVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40F510E1EBAE833007A6B55 /* CreateTaskVC.swift */; };
 		F41C37CA1EB99FA900F4EC6E /* MopKitchenFloor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F41C37C91EB99FA900F4EC6E /* MopKitchenFloor.jpg */; };
 		F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */; };
 		F42635681EB996D6004E079C /* TrashCan.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F42635671EB996D6004E079C /* TrashCan.jpg */; };
@@ -46,6 +47,7 @@
 		B425ACF90C58E3ACD9AF118B /* Pods_YourTurn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YourTurn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D938047B6FD4EB042F2CBA89 /* Pods-YourTurn.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YourTurn.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YourTurn/Pods-YourTurn.debug.xcconfig"; sourceTree = "<group>"; };
 		F40F510C1EBADCAF007A6B55 /* PayRent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PayRent.png; sourceTree = "<group>"; };
+		F40F510E1EBAE833007A6B55 /* CreateTaskVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTaskVC.swift; sourceTree = "<group>"; };
 		F41C37C91EB99FA900F4EC6E /* MopKitchenFloor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MopKitchenFloor.jpg; sourceTree = "<group>"; };
 		F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeVC.swift; sourceTree = "<group>"; };
 		F42635671EB996D6004E079C /* TrashCan.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TrashCan.jpg; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				F479116A1EB55AA50014C7D5 /* YourTurn-Bridging-Header.h */,
 				F42635691EB99883004E079C /* TasksTableVC.swift */,
 				F426356B1EB99933004E079C /* TasksTableViewCell.swift */,
+				F40F510E1EBAE833007A6B55 /* CreateTaskVC.swift */,
 			);
 			path = YourTurn;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				F426356A1EB99883004E079C /* TasksTableVC.swift in Sources */,
 				F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */,
 				F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */,
+				F40F510F1EBAE833007A6B55 /* CreateTaskVC.swift in Sources */,
 				F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */,
 				F426356C1EB99933004E079C /* TasksTableViewCell.swift in Sources */,
 			);
