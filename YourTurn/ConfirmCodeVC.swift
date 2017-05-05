@@ -49,15 +49,13 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         print("Server code - \(serverConfCode)")
         print("Entered code - " + txtFieldConfCode.text!)
         
-        if("\(serverConfCode)" == txtFieldConfCode.text)
-        {
+        if("\(serverConfCode)" == txtFieldConfCode.text){
             let controllerId = "sbLoggedInNavCtrler";
             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let initViewController: UIViewController = storyboard.instantiateViewController(withIdentifier: controllerId) as UIViewController
             self.present(initViewController, animated: true, completion: nil)
         }
-        else
-        {
+        else{
             let alert = UIAlertController(title: "Error!", message: "Invalid code entered", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)

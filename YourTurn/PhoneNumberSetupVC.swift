@@ -74,7 +74,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
             guard let text = textField.text else { return true }
             let newLength = text.characters.count + string.characters.count - range.length
             
-            btnContinue.isEnabled = newLength == 10
+            btnContinue.isEnabled = newLength >= 10
             
             return newLength <= 10
         }
@@ -94,17 +94,6 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        //isTranslucent - true set in sb
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
     }
     
     var confirmCodeViewController:ConfirmCodeVC?
@@ -127,6 +116,10 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "seguePhnSetupToConfirm") {
             confirmCodeViewController = (segue.destination as? ConfirmCodeVC)
+            
+            let backItem = UIBarButtonItem()
+            backItem.title = ""
+            navigationItem.backBarButtonItem = backItem
         }
     }
     
@@ -172,5 +165,15 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     func doneButtonActionCountry() {
         self.textFieldCountry.resignFirstResponder()
     }
+    
+    /*
+    override func viewWillDisappear(_ animated: Bool) {
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    */
 }
 

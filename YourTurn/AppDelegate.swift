@@ -31,19 +31,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
             //$0.isLocalDatastoreEnabled = true
         }
-        Parse.initialize(with: configuration)        
+        Parse.initialize(with: configuration)
         
-        // Update font of all navigation bar button items - 
-        let font = UIFont(name: "Marker Felt", size: 17.0)
-        
-        // Back button
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState.normal)
+        setupNavigationBarStyling()
         
         
         return true
     }
     
-    
+    func setupNavigationBarStyling(){
+        //0091FF
+        
+        UINavigationBar.appearance().barTintColor = UIColor(red: 0, green: 145/255, blue: 255/255, alpha: 1)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+
+        
+    }
     
     
     
