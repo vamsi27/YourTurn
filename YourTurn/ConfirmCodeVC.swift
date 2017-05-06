@@ -23,7 +23,16 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         btnConfirmCode.isEnabled = false
         txtFieldConfCode.delegate = self
         
-        addDoneButtonOnKeyboard()
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ConfirmCodeVC.dismissKb))
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKb(){
+        view.endEditing(false)
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +61,7 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         print("Entered code - " + txtFieldConfCode.text!)
         
         if("\(serverConfCode)" == txtFieldConfCode.text){
-            self.signUpUser()
+            self.UserLoginOrSignUp()
         }
         else{
             
@@ -60,25 +69,49 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         }
     }
     
-    func signUpUser() {
+    func UserLoginOrSignUp() -> Void {
+        let query = PFUser.query() // or PFQuery(className: "_User") // observe the underscore
+        query?.whereKey("username", equalTo: fullphoneNumer)
+        query?.findObjectsInBackground{
+            (users: [PFObject]?, error: Error?) -> Void in
+            if error == nil && users != nil && (users?.count)! > 0 {
+                
+                let user = users?[0] as! PFUser
+                let userName = user.username!
+                
+                
+                self.loginUser(userName: userName)
+            } else {
+                self.signUpUser()
+            }
+        }
+    }
+    
+    func loginUser(userName: String){
         
+        let loginTask = PFUser.logInWithUsername(inBackground: userName, password: userName)
+        
+        loginTask.continue({_ in
+            if PFUser.current() != nil {
+                self.proceedToMyTasks()
+            } else {
+                self.showOKAlertMsg(title: "Error", message: "Unable to login. Please try again.")
+            }
+            return nil
+        })
+    }
+    
+    func signUpUser() {
         let user = PFUser()
         user.username = fullphoneNumer
-        user.password = "\(serverConfCode)"
-        
+        user.password = fullphoneNumer
         user["displayName"] = "You"
-        
-        
         user.signUpInBackground {
             (succeeded: Bool, error: Error?) -> Void in
             if let error = error {
-                
                 self.showOKAlertMsg(title: "Error", message: "Unable to sign up. Please try again.")
-                
-                
                 print(error)
             } else {
-                
                 self.proceedToMyTasks()
             }
         }
@@ -97,28 +130,6 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-    }
-    
-
-    
-    func addDoneButtonOnKeyboard() {
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-        doneToolbar.barStyle       = UIBarStyle.default
-        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
-        
-        var items = [UIBarButtonItem]()
-        items.append(flexSpace)
-        items.append(done)
-        
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-        self.txtFieldConfCode.inputAccessoryView = doneToolbar
-    }
-    
-    func doneButtonAction() {
-        self.txtFieldConfCode.resignFirstResponder()
     }
     
     

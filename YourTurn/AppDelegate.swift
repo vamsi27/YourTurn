@@ -38,13 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if(PFUser.current() == nil){
-            
             setUpInitialViewController(viewIdentifier: "sbLogInNavCtrler")
-            
         }
         else{
             setUpInitialViewController(viewIdentifier: "sbLoggedInNavCtrler")
-            
         }
         
         setupNavigationBarStyling()

@@ -262,6 +262,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="dyn-js-cEN">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </refreshControl>
                     <connections>
                         <segue destination="tAd-Vd-WbK" kind="show" identifier="taskTableCellToDetails" id="YkD-0R-QeO"/>
                     </connections>

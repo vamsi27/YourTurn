@@ -9,6 +9,8 @@
 import UIKit
 
 class TasksTableVC: UITableViewController {
+    
+    var tasks = [Task]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +19,58 @@ class TasksTableVC: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.navigationItem.leftBarButtonItem = editButtonItem
+        
+        loadTasks()
+        
+        setupRefreshControl()
+    }
+    
+    func setupRefreshControl(){
+        
+        // UITableViewController has a defualt refresh control so no need to create it again
+        // But you will need to declare if you are trying to attach the refresh to a table view
+        
+        self.refreshControl?.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
+        self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        self.refreshControl?.addTarget(self, action: #selector(TasksTableVC.refresh), for: UIControlEvents.valueChanged)
+        
+        // below line is not required when using UITableViewController
+        //tableView.addSubview(refreshControl)
+    }
+    
+    
+    func refresh(sender:AnyObject) {
+        
+        loadTasks()
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
+    }
+    
+    func loadTasks(){
+        
+        // get pfuser.current().taskIds
+        // fetch tasks based upon these taskids
+        
+        let t1 = Task(name:"Clear Trash", description:"", displayImage: nil)
+        let t2 = Task(name:"Mop Kitchen Floor", description:"", displayImage: nil)
+        let t3 = Task(name:"Pay Rent", description:"", displayImage:nil)
+        
+        tasks.append(t1!)
+        tasks.append(t2!)
+        tasks.append(t3!)
+        
+    }
+    
+    
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("mytasks view will appear")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("mytasks view appeared")
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,29 +85,24 @@ class TasksTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return tasks.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "taskCell", for: indexPath) as! TasksTableViewCell
-
-        // Configure the cell...
         
-        if(indexPath.row == 1)
-        {
-            cell.taskImage.image = UIImage(named: "MopKitchenFloor.jpg")
-            cell.taskNameLbl.text = "Mop Kitchen Floor"
-            cell.taskWhosNextLbl.text = "Next turn: Vikrant"
+        let cellIdentifier = "taskCell"
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? TasksTableViewCell  else {
+            fatalError("The dequeued cell is not an instance of TasksTableViewCell.")
         }
         
-        if(indexPath.row == 2)
-        {
-            cell.taskImage.image = UIImage(named: "PayRent.png")
-            cell.taskNameLbl.text = "Pay Rent"
-            cell.taskWhosNextLbl.text = "Next turn: Venky"
-        }
+        let task = tasks[indexPath.row]
 
+        //cell.taskImage.image = UIImage(named: "MopKitchenFloor.jpg")
+        cell.taskNameLbl.text = task.name
+        cell.taskWhosNextLbl.text = "Next turn: TBD"
+        
         return cell
     }
     
@@ -66,25 +114,26 @@ class TasksTableVC: UITableViewController {
         performSegue(withIdentifier: "taskTableCellToDetails", sender: self)
     }
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
