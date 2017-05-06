@@ -12,11 +12,11 @@ import libPhoneNumber_iOS
 
 class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCodePickerDelegate {
     
-    @IBOutlet weak var textFieldCountry: UITextField!
+    @IBOutlet weak var txtFlagImage: UITextField!
     
     @IBOutlet weak var txtPhnNum: UITextField!
     
-    @IBOutlet weak var txtCountryCode: UITextField!
+    var txtCountryCode:String = ""
     
     @IBOutlet weak var pickerViewCountry: CountryPicker!
     
@@ -24,8 +24,19 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     
     override func viewDidLoad() {
         
-                super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        super.viewDidLoad()
+        
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PhoneNumberSetupVC.dismissPickerAndKb))
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        tap.cancelsTouchesInView = false
+        
+        view.addGestureRecognizer(tap)
+        
+        
+        
+        
         
         let locale = Locale.current
         let code = (locale as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
@@ -36,38 +47,45 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         
         pickerViewCountry.removeFromSuperview()
         
-        textFieldCountry.delegate = self
         txtPhnNum.delegate = self
         
-        // so that the cursor looks hidden
-        textFieldCountry.tintColor = UIColor.clear
-        
-        textFieldCountry.inputView = pickerViewCountry
+        txtFlagImage.borderStyle = UITextBorderStyle.none
+        txtFlagImage.delegate = self
+        txtFlagImage.inputView = pickerViewCountry
         
         
         
         pickerViewCountry.countryPhoneCodeDelegate = self
         let defaultCountry = pickerViewCountry.setCountry(code)
         
-        textFieldCountry.text = defaultCountry?.name
-        txtCountryCode.text = defaultCountry?.phoneCode
-        
-        addDoneButtonOnKeyboard()
-        addDoneButtonOnCountryKeyboard()
         
         
-        // uncomment below to start using
-        //let phoneUtil = NBPhoneNumberUtil()
+        setCountryFlagToButton(code: code)
+        txtCountryCode = (defaultCountry?.phoneCode)!
+        
+        //addDoneButtonOnKeyboard()
+        //addDoneButtonOnCountryKeyboard()
+    }
+    
+    func dismissPickerAndKb() {
+        view.endEditing(false)
+        
+        //txtFlagImage.resignFirstResponder()
+        //txtPhnNum.resignFirstResponder()
+    }
+    
+    func setCountryFlagToButton(code: String){
+        let btnImage = UIImage(named: code.lowercased())
+        txtFlagImage.background = btnImage
     }
     
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-        // so that country text field looks like readonly without being disabled or un-editable
-        if (textField == textFieldCountry)
-        {
+        if(textField == txtFlagImage){
             return false
         }
+        
         
         if(textField == txtPhnNum){
             
@@ -76,7 +94,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
             
             btnContinue.isEnabled = newLength >= 10
             
-            return newLength <= 10
+            return newLength <= 10 && !txtCountryCode.isEmpty
         }
         
         return true
@@ -87,8 +105,8 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     
     func countryPhoneCodePicker(_ picker: CountryPicker, didSelectCountryCountryWithName name: String, countryCode: String, phoneCode: String) {
         
-        textFieldCountry.text = name
-        txtCountryCode.text = phoneCode
+        setCountryFlagToButton(code: countryCode)
+        txtCountryCode = phoneCode
     }
     
     override func didReceiveMemoryWarning() {
@@ -100,11 +118,15 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     
     @IBAction func continueToConfirmCodeAction(_ sender: Any) {
         
-        let params = ["phoneNumber":txtPhnNum.text!] as [String : Any]
+        let fullPhnNum = txtCountryCode + txtPhnNum.text!
+        
+        let params = ["phoneNumber":fullPhnNum] as [String : Any]
         
         PFCloud.callFunction(inBackground: "sendVerificationCode", withParameters: params){ (response, error) in
             if error == nil {
+                print("###############\(response as! Int)##################")
                 self.confirmCodeViewController?.serverConfCode = response as! Int
+                self.confirmCodeViewController?.fullphoneNumer = fullPhnNum
                 
             } else {
                 print("Send code failed")
@@ -123,7 +145,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         }
     }
     
-    
+    /*
     func addDoneButtonOnKeyboard() {
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -145,6 +167,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         self.txtPhnNum.resignFirstResponder()
     }
     
+    
     func addDoneButtonOnCountryKeyboard() {
         
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
@@ -164,7 +187,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     
     func doneButtonActionCountry() {
         self.textFieldCountry.resignFirstResponder()
-    }
+    }*/
     
     /*
     override func viewWillDisappear(_ animated: Bool) {

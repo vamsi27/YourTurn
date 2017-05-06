@@ -33,6 +33,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         Parse.initialize(with: configuration)
         
+        if(PFUser.current() != nil){
+            //PFUser.logOut()
+        }
+        
+        if(PFUser.current() == nil){
+            
+            setUpInitialViewController(viewIdentifier: "sbLogInNavCtrler")
+            
+        }
+        else{
+            setUpInitialViewController(viewIdentifier: "sbLoggedInNavCtrler")
+            
+        }
+        
         setupNavigationBarStyling()
         
         
@@ -49,6 +63,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func setUpInitialViewController(viewIdentifier: String){
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let initialViewController = storyboard.instantiateViewController(withIdentifier: viewIdentifier)
+        
+        self.window?.rootViewController = initialViewController
+        //self.window?.makeKeyAndVisible()
+        
+    }
     
     
     

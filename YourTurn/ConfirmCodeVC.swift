@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Parse
 
 class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
     
     var serverConfCode = 0
+    var fullphoneNumer = ""
     
     @IBOutlet weak var btnConfirmCode: UIButton!
     @IBOutlet weak var txtFieldConfCode: UITextField!
@@ -50,25 +52,60 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         print("Entered code - " + txtFieldConfCode.text!)
         
         if("\(serverConfCode)" == txtFieldConfCode.text){
-            let controllerId = "sbLoggedInNavCtrler";
-            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let initViewController: UIViewController = storyboard.instantiateViewController(withIdentifier: controllerId) as UIViewController
-            self.present(initViewController, animated: true, completion: nil)
+            self.signUpUser()
         }
         else{
-            let alert = UIAlertController(title: "Error!", message: "Invalid code entered", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            
+            self.showOKAlertMsg(title: "Error", message: "Invalid code entered")
         }
+    }
+    
+    func signUpUser() {
         
+        let user = PFUser()
+        user.username = fullphoneNumer
+        user.password = "\(serverConfCode)"
+        
+        user["displayName"] = "You"
+        
+        
+        user.signUpInBackground {
+            (succeeded: Bool, error: Error?) -> Void in
+            if let error = error {
+                
+                self.showOKAlertMsg(title: "Error", message: "Unable to sign up. Please try again.")
+                
+                
+                print(error)
+            } else {
+                
+                self.proceedToMyTasks()
+            }
+        }
+    }
+    
+    func proceedToMyTasks(){
+        
+        let controllerId = "sbLoggedInNavCtrler";
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let initViewController: UIViewController = storyboard.instantiateViewController(withIdentifier: controllerId) as UIViewController
+        self.present(initViewController, animated: true, completion: nil)
         
     }
+    
+    func showOKAlertMsg(title: String, message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+
     
     func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle       = UIBarStyle.default
         let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(PhoneNumberSetupVC.doneButtonAction))
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
         
         var items = [UIBarButtonItem]()
         items.append(flexSpace)

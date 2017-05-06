@@ -9,13 +9,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "YourTurn/PhoneNumberSetupVC.swift"
-            timestampString = "515560234.408695"
+            filePath = "YourTurn/ConfirmCodeVC.swift"
+            timestampString = "515730697.554717"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "textField(_:shouldChangeCharactersIn:replacementString:)"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "signUpUser()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "YourTurn/PhoneNumberSetupVC.swift"
+            timestampString = "515745486.38084"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "continueToConfirmCodeAction(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
