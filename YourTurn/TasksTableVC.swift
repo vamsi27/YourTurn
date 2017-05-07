@@ -7,16 +7,20 @@
 //
 
 import UIKit
+import ContactsUI
 
 class TasksTableVC: UITableViewController {
+    
     
     var tasks = [Task]()
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
+        // ###################### WILL NEED TO INSERT TASKS IN TABLE- After Save btnCick ##########
         // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        // self.clearsSelectionOnViewWillAppear = true
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = editButtonItem
@@ -29,7 +33,7 @@ class TasksTableVC: UITableViewController {
     func setupRefreshControl(){
         
         // UITableViewController has a defualt refresh control so no need to create it again
-        // But you will need to declare if you are trying to attach the refresh to a table view
+        // But you will need to /Users/vmzi/Documents/iOS Apps/YourTurn/YourTurn/TasksTableVC.swiftdeclare if you are trying to attach the refresh to a table view
         
         self.refreshControl?.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -99,7 +103,7 @@ class TasksTableVC: UITableViewController {
         
         let task = tasks[indexPath.row]
 
-        //cell.taskImage.image = UIImage(named: "MopKitchenFloor.jpg")
+        cell.taskImage.image = UIImage(named: "\((indexPath.row + 1) % 3)" + ".jpg")
         cell.taskNameLbl.text = task.name
         cell.taskWhosNextLbl.text = "Next turn: TBD"
         

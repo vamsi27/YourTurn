@@ -100,6 +100,16 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         return true
     }
     
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        let result = true
+        
+        if(result){
+            btnContinue.isEnabled = false
+        }
+        
+        return result
+    }
+    
     
     // MARK: - CountryPhoneCodePicker Delegate
     
