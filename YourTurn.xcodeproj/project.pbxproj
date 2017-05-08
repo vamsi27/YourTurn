@@ -13,6 +13,7 @@
 		F41391B21EBE7ADA00E8568F /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41391B11EBE7ADA00E8568F /* Task.swift */; };
 		F41391B41EBED0B500E8568F /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41391B31EBED0B500E8568F /* ContactsTableViewCell.swift */; };
 		F41391BA1EBFCC9700E8568F /* 0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F41391B91EBFCC9700E8568F /* 0.jpg */; };
+		F41391BC1EC01E1800E8568F /* CreateTask1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41391BB1EC01E1800E8568F /* CreateTask1VC.swift */; };
 		F41C37CA1EB99FA900F4EC6E /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F41C37C91EB99FA900F4EC6E /* 2.jpg */; };
 		F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */; };
 		F42635681EB996D6004E079C /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F42635671EB996D6004E079C /* 1.jpg */; };
@@ -52,6 +53,7 @@
 		F41391B11EBE7ADA00E8568F /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		F41391B31EBED0B500E8568F /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
 		F41391B91EBFCC9700E8568F /* 0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 0.jpg; sourceTree = "<group>"; };
+		F41391BB1EC01E1800E8568F /* CreateTask1VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTask1VC.swift; sourceTree = "<group>"; };
 		F41C37C91EB99FA900F4EC6E /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeVC.swift; sourceTree = "<group>"; };
 		F42635671EB996D6004E079C /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				F40F510E1EBAE833007A6B55 /* CreateTaskVC.swift */,
 				F41391B11EBE7ADA00E8568F /* Task.swift */,
 				F41391B31EBED0B500E8568F /* ContactsTableViewCell.swift */,
+				F41391BB1EC01E1800E8568F /* CreateTask1VC.swift */,
 			);
 			path = YourTurn;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				F47911761EB6A4720014C7D5 /* CountryView.swift in Sources */,
 				F47911751EB6A4720014C7D5 /* CountryPicker.swift in Sources */,
 				F41391B41EBED0B500E8568F /* ContactsTableViewCell.swift in Sources */,
+				F41391BC1EC01E1800E8568F /* CreateTask1VC.swift in Sources */,
 				F426356A1EB99883004E079C /* TasksTableVC.swift in Sources */,
 				F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */,
 				F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */,
