@@ -10,7 +10,7 @@ import UIKit
 
 class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var groupMembers = ["","","","","",""]
+    var groupMembers = ["","","","","","","","","",""]
 
     @IBOutlet weak var groupMembersTbl: UITableView!
     @IBAction func cancelBtnAction(_ sender: Any) {
@@ -24,6 +24,9 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         /*
          // $$$$$ NOT WORKING $$$$
+         
+         http://stackoverflow.com/questions/31760815/set-tableview-height-by-the-number-or-rows
+         chk sublink in comments - observer pattern
         // but it has a max height (6 rows) - after that it has to scroll
         groupMembersTbl.frame.size.height = CGFloat(groupMembers.count * 44)
          */
