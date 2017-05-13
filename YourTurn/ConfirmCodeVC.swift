@@ -70,16 +70,14 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
     }
     
     func UserLoginOrSignUp() -> Void {
-        let query = PFUser.query() // or PFQuery(className: "_User") // observe the underscore
+        // or use -> PFQuery(className: "_User") // observe the underscore for core classes
+        let query = PFUser.query()
         query?.whereKey("username", equalTo: fullphoneNumer)
         query?.findObjectsInBackground{
             (users: [PFObject]?, error: Error?) -> Void in
             if error == nil && users != nil && (users?.count)! > 0 {
-                
                 let user = users?[0] as! PFUser
                 let userName = user.username!
-                
-                
                 self.loginUser(userName: userName)
             } else {
                 self.signUpUser()

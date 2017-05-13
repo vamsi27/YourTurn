@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         Parse.initialize(with: configuration)
         
+        
         if(PFUser.current() != nil){
             //PFUser.logOut()
         }

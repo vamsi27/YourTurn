@@ -9,17 +9,57 @@
 import UIKit
 import ContactsUI
 
-class CreateTaskVC: UITableViewController {
+class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     
+    @IBOutlet weak var searchBar: UISearchBar!
     var contacts = [CNContact]()
+    var filteredContacts = [CNContact]()
+    var searchActive : Bool = false
+    
 
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        searchBar.delegate = self
 
         // Do any additional setup after loading the view.
         
         loadContacts()
+    }
+    
+    
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchActive = true;
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchActive = false;
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        filteredContacts = contacts.filter({ (contact) -> Bool in
+            let tmp: String = contact.givenName.isEmpty ? contact.familyName : contact.givenName + " " + contact.familyName
+            
+            let range = tmp.range(of:searchText, options: .caseInsensitive)
+            return range != nil
+        })
+        
+        if(filteredContacts.count == 0){
+            searchActive = false;
+        } else {
+            searchActive = true;
+        }
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,13 +68,11 @@ class CreateTaskVC: UITableViewController {
     }
     
     @IBAction func cancelBtnAction(_ sender: Any) {
-        
+        self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
     }
     
     func loadContacts(){
-        
-        
         
         let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName)]
         let request = CNContactFetchRequest(keysToFetch: keys)
@@ -65,6 +103,11 @@ class CreateTaskVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if(searchActive) {
+            return filteredContacts.count
+        }
+        
         return contacts.count
     }
     
@@ -77,7 +120,13 @@ class CreateTaskVC: UITableViewController {
             fatalError("The dequeued cell is not an instance of TasksTableViewCell.")
         }
         
-        let contact = contacts[indexPath.row]
+        let contact:CNContact
+        
+        if(searchActive){
+            contact = filteredContacts[indexPath.row]
+        } else {
+            contact = contacts[indexPath.row];
+        }
         
         cell.nameLbl.text = contact.givenName.isEmpty ? contact.familyName : contact.givenName + " " + contact.familyName
         
