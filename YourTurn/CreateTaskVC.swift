@@ -15,6 +15,7 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     var contacts = [CNContact]()
     var filteredContacts = [CNContact]()
     var searchActive : Bool = false
+    var selectedContact:CNContact? = nil
     
 
     override func viewDidLoad() {
@@ -155,6 +156,14 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if(searchActive){
+            selectedContact = filteredContacts[indexPath.row]
+            filteredContacts.remove(at: indexPath.row)
+        }else{
+            selectedContact = contacts[indexPath.row]
+            contacts.remove(at: indexPath.row)
+        }
         
         endEditing()
         self.performSegue(withIdentifier: "unwindToCreateTaskSegue", sender: self)

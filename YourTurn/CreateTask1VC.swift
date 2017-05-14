@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import ContactsUI
 
 class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var groupMembers = ["","","","","","","","","",""]
+    var groupMembers = [CNContact]()
 
     @IBOutlet weak var groupMembersTbl: UITableView!
     
@@ -50,7 +51,20 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        let heightConst = groupMembersTbl.constraints.first(where: { (x) -> Bool in
+            
+            x.firstAttribute == NSLayoutAttribute.height
+        })
+        
+        
+        heightConst?.constant = CGFloat(groupMembers.count * 44)
+
+        groupMembersTbl.contentOffset = CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude)
+        
         return groupMembers.count
+        
+        
     }
     
     
@@ -58,10 +72,13 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         let cellIdentifier = "groupMemberCell"
         
+        let contact = groupMembers[indexPath.row]
+        let conactName = Utilities.getContactFullName(cnConatct: contact)
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? UITableViewCell  else {
             fatalError("The dequeued cell is not an instance of TasksTableViewCell.")
         }
-        cell.textLabel?.text = "Member " + "\(indexPath.row + 1)"
+        cell.textLabel?.text = conactName
         return cell
     }
     
@@ -70,23 +87,10 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @IBAction func unwindToCreateTask(sender: UIStoryboardSegue) {
-        /*if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
-            
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                // Update an existing meal.
-                meals[selectedIndexPath.row] = meal
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-            }
-            else {
-                // Add a new meal.
-                let newIndexPath = IndexPath(row: meals.count, section: 0)
-                
-                meals.append(meal)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
-        }*/
-        
-        print("got back to create task page")
+        if let sourceViewController = sender.source as? CreateTaskVC, let selectedContact = sourceViewController.selectedContact {
+                groupMembers.append(selectedContact)
+                groupMembersTbl.reloadData()
+        }
     }
 
     /*

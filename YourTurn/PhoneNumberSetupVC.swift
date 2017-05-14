@@ -139,7 +139,6 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
                 print("Send code failed")
             }
         }
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
