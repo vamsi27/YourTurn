@@ -27,7 +27,9 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         loadContacts()
     }
     
-    
+    func endEditing(){
+        self.view.endEditing(true)
+    }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true;
@@ -68,7 +70,7 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     }
     
     @IBAction func cancelBtnAction(_ sender: Any) {
-        self.view.endEditing(true)
+        endEditing()
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -99,7 +101,22 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        var numOfSections: Int = 1
+        tableView.separatorStyle = .singleLine
+        tableView.backgroundView = nil
+        
+        if (!(searchBar.text?.isEmpty)! && filteredContacts.count == 0)
+        {
+            numOfSections = 0
+            let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            noDataLabel.text          = "Stop the madness"
+            noDataLabel.textColor     = UIColor.black
+            noDataLabel.textAlignment = .center
+            tableView.backgroundView  = noDataLabel
+            tableView.separatorStyle  = .none
+        }
+        
+        return numOfSections
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -138,6 +155,9 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        endEditing()
+        self.performSegue(withIdentifier: "unwindToCreateTaskSegue", sender: self)
         
     }
     

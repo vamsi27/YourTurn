@@ -13,23 +13,29 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var groupMembers = ["","","","","","","","","",""]
 
     @IBOutlet weak var groupMembersTbl: UITableView!
-    @IBAction func cancelBtnAction(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         groupMembersTbl.delegate = self
         groupMembersTbl.dataSource = self
         
-        /*
-         // $$$$$ NOT WORKING $$$$
-         
-         http://stackoverflow.com/questions/31760815/set-tableview-height-by-the-number-or-rows
-         chk sublink in comments - observer pattern
-        // but it has a max height (6 rows) - after that it has to scroll
-        groupMembersTbl.frame.size.height = CGFloat(groupMembers.count * 44)
-         */
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CreateTask1VC.endEditing))
+        
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        tap.cancelsTouchesInView = false
+        
+        self.view.addGestureRecognizer(tap)
+    }
+    
+    func endEditing(){
+        view.endEditing(true)
+    }
+    
+    @IBAction func cancelBtnAction(_ sender: Any) {
+        endEditing()
+        self.dismiss(animated: true, completion: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,6 +67,26 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
+    }
+    
+    @IBAction func unwindToCreateTask(sender: UIStoryboardSegue) {
+        /*if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
+            
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                // Update an existing meal.
+                meals[selectedIndexPath.row] = meal
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+            }
+            else {
+                // Add a new meal.
+                let newIndexPath = IndexPath(row: meals.count, section: 0)
+                
+                meals.append(meal)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        }*/
+        
+        print("got back to create task page")
     }
 
     /*
