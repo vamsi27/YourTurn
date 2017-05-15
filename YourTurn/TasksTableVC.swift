@@ -66,15 +66,10 @@ class TasksTableVC: UITableViewController {
         
     }
     
-    
-
-    
     override func viewWillAppear(_ animated: Bool) {
-        print("mytasks view will appear")
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("mytasks view appeared")
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,7 +98,7 @@ class TasksTableVC: UITableViewController {
         
         let task = tasks[indexPath.row]
 
-        cell.taskImage.image = UIImage(named: "\((indexPath.row + 1) % 3)" + ".jpg")
+        //cell.taskImage.image = UIImage(named: "\((indexPath.row + 1) % 3)" + ".jpg")
         cell.taskNameLbl.text = task.name
         cell.taskWhosNextLbl.text = "Next turn: TBD"
         
@@ -136,6 +131,17 @@ class TasksTableVC: UITableViewController {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
+    }
+    
+    @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
+        
+        
+        print("Now I got to reload my newly added task here ;) ... excited!")
+        
+        /*if let sourceViewController = sender.source as? CreateTask1VC, let addedTask = sourceViewController.addedTask {
+            //tasks.append(addedTask)
+            self.tableView.reloadData()
+        }*/
     }
     
 

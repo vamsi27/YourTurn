@@ -9,7 +9,10 @@
 import UIKit
 
 class GroupMemberTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var contactPhnNumLbl: UILabel!
+    @IBOutlet weak var conatctNameLbl: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +22,9 @@ class GroupMemberTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func deleteGroupMember(_ sender: Any) {
     }
 
 }

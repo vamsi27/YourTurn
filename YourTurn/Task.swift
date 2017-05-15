@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import ContactsUI
 
 class Task {
     
@@ -16,6 +17,9 @@ class Task {
     var name: String
     var description: String?
     var displayImage: UIImage?
+    var members = [CNContact]()
+    var admin:PFUser?
+    var nextTurnUser:PFUser?
     
     //MARK: Initialization
     

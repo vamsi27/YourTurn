@@ -77,19 +77,23 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     
     func loadContacts(){
         
-        let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName)]
-        let request = CNContactFetchRequest(keysToFetch: keys)
+        let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName),CNContactPhoneNumbersKey] as [Any]
+        let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
         
         do {
             try CNContactStore().enumerateContacts(with: request) {
                 (contact, stop) in
+                
                 // Array containing all unified contacts from everywhere
-                self.contacts.append(contact)
+                if(contact.phoneNumbers.count > 0){
+                    // TODO: Validate phn# and then only append
+                    self.contacts.append(contact)
+                }
             }
             
             if contacts.count > 0{
                 contacts.sort(by: { (cn1, cn2) -> Bool in
-                    return (cn1.givenName + cn1.familyName) < (cn2.givenName + cn2.familyName)
+                    return (cn1.givenName + cn1.familyName).lowercased() < (cn2.givenName + cn2.familyName).lowercased()
                 })
             }
         }
