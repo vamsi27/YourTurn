@@ -17,12 +17,12 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     var searchActive : Bool = false
     var selectedContact:CNContact? = nil
     
-
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         searchBar.delegate = self
-
+        
         // Do any additional setup after loading the view.
         
         loadContacts()
@@ -64,7 +64,7 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         }
         self.tableView.reloadData()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

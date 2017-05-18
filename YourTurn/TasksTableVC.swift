@@ -8,24 +8,25 @@
 
 import UIKit
 import ContactsUI
+import Parse
 
 class TasksTableVC: UITableViewController {
     
     
-    var tasks = [Task]()
-
+    var tasks = [PFObject]()
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-
+        
         // ###################### WILL NEED TO INSERT TASKS IN TABLE- After Save btnCick ##########
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = true
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = editButtonItem
         
-        loadTasks()
+        loadTasksInDetail(refreshCtrl: false)
         
         setupRefreshControl()
     }
@@ -46,24 +47,55 @@ class TasksTableVC: UITableViewController {
     
     func refresh(sender:AnyObject) {
         
-        loadTasks()
-        self.tableView.reloadData()
-        self.refreshControl?.endRefreshing()
+        loadTasksInDetail(refreshCtrl: true)
     }
     
-    func loadTasks(){
+    /*
+    func loadTasks(refreshCtrl: Bool){
         
-        // get pfuser.current().taskIds
-        // fetch tasks based upon these taskids
+        let user = PFUser.current()
         
-        let t1 = Task(name:"Clear Trash", description:"", displayImage: nil)
-        let t2 = Task(name:"Mop Kitchen Floor", description:"", displayImage: nil)
-        let t3 = Task(name:"Pay Rent", description:"", displayImage:nil)
         
-        tasks.append(t1!)
-        tasks.append(t2!)
-        tasks.append(t3!)
+        let bfTask = user?.fetchInBackground()
         
+        bfTask?.continue({ (antecedent) -> Any? in
+            
+            if let _ = antecedent.result{
+                
+                self.loadTasksInDetail(refreshCtrl: refreshCtrl)
+            }
+            return nil
+        })
+        
+    }*/
+    
+    func loadTasksInDetail(refreshCtrl: Bool){
+        let query = PFUser.query()
+        query?.whereKey("objectId", equalTo: (PFUser.current()?.objectId)!)
+        query?.includeKey("Tasks")
+        
+        query?.getFirstObjectInBackground(block: { (u, error) in
+            if(error == nil && u != nil){
+                
+                
+                // TODO: set lock here
+                
+                self.tasks = u?["Tasks"] as! [PFObject]
+                
+                if self.tasks.count > 0 {
+                    self.tasks.sort(by: { (t1, t2) -> Bool in
+                        t1.createdAt! > t2.createdAt!
+                    })
+                }
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    if(refreshCtrl){
+                        self.refreshControl?.endRefreshing()
+                    }
+                }
+            }
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,22 +103,22 @@ class TasksTableVC: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -97,9 +129,7 @@ class TasksTableVC: UITableViewController {
         }
         
         let task = tasks[indexPath.row]
-
-        //cell.taskImage.image = UIImage(named: "\((indexPath.row + 1) % 3)" + ".jpg")
-        cell.taskNameLbl.text = task.name
+        cell.taskNameLbl.text = task["Name"] as? String
         cell.taskWhosNextLbl.text = "Next turn: TBD"
         
         return cell
@@ -112,7 +142,7 @@ class TasksTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "taskTableCellToDetails", sender: self)
     }
-
+    
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -120,7 +150,7 @@ class TasksTableVC: UITableViewController {
         return true
     }
     
-
+    
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -135,39 +165,33 @@ class TasksTableVC: UITableViewController {
     
     @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
         
-        
-        print("Now I got to reload my newly added task here ;) ... excited!")
-        
-        /*if let sourceViewController = sender.source as? CreateTask1VC, let addedTask = sourceViewController.addedTask {
-            //tasks.append(addedTask)
-            self.tableView.reloadData()
-        }*/
+        loadTasksInDetail(refreshCtrl: false)
     }
     
-
+    
     /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
