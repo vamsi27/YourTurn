@@ -50,25 +50,6 @@ class TasksTableVC: UITableViewController {
         loadTasksInDetail(refreshCtrl: true)
     }
     
-    /*
-    func loadTasks(refreshCtrl: Bool){
-        
-        let user = PFUser.current()
-        
-        
-        let bfTask = user?.fetchInBackground()
-        
-        bfTask?.continue({ (antecedent) -> Any? in
-            
-            if let _ = antecedent.result{
-                
-                self.loadTasksInDetail(refreshCtrl: refreshCtrl)
-            }
-            return nil
-        })
-        
-    }*/
-    
     func loadTasksInDetail(refreshCtrl: Bool){
         let query = PFUser.query()
         query?.whereKey("objectId", equalTo: (PFUser.current()?.objectId)!)
@@ -132,6 +113,14 @@ class TasksTableVC: UITableViewController {
         cell.taskNameLbl.text = task["Name"] as? String
         cell.taskWhosNextLbl.text = "Next turn: TBD"
         
+        if let taskImage = task["DisplayImage"] as? PFFile {
+            taskImage.getDataInBackground(block: { (imageData, error) in
+                if (error == nil && imageData != nil) {
+                    cell.taskImage.image = UIImage(data:imageData!)
+                }
+            })
+        }
+        
         return cell
     }
     
@@ -139,8 +128,19 @@ class TasksTableVC: UITableViewController {
         return 75
     }
     
+    var selectedTaskCellRow:Int = -1
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedTaskCellRow = indexPath.row
         performSegue(withIdentifier: "taskTableCellToDetails", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if(selectedTaskCellRow >= 0 && selectedTaskCellRow < tasks.count){
+            let taskVC = segue.destination as! TaskViewController
+            taskVC.currentTask = tasks[selectedTaskCellRow]
+        }
     }
     
     
@@ -184,14 +184,8 @@ class TasksTableVC: UITableViewController {
      }
      */
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    
+    
     
 }

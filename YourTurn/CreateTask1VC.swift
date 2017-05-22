@@ -14,6 +14,9 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     var groupMembers = [CNContact]()
     
+    @IBOutlet weak var taskDescriptionField: UITextView!
+    @IBOutlet weak var taskImage: UIImageView!
+    @IBOutlet weak var taskNameTxtField: UITextField!
     @IBOutlet weak var groupMembersTbl: UITableView!
     
     override func viewDidLoad() {
@@ -119,17 +122,39 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func createTask(){
         
         
+        var params:[String : Any] = [:]
+        var members:[String] = []
+        let taskDescription:String
+        
+        for member in groupMembers {
+            var uName = member.phoneNumbers[0].value.stringValue.replacingOccurrences(of: " ", with: "")
+            uName = uName.replacingOccurrences(of: "(", with: "")
+            uName = uName.replacingOccurrences(of: ")", with: "")
+            uName = uName.replacingOccurrences(of: "-", with: "")
+            
+            members.append(uName)
+        }
+        
+        params["tskMembers"] = members
+        
         let task = PFObject(className:"Task")
-        task["Name"] = "Rent"
-        task["Description"] = "Just throw the trash"
-        //task["DIsplayImage"] = nil
+        task["Name"] = taskNameTxtField.text!
+        
+        if(taskDescriptionField.text != nil && !taskDescriptionField.text!.isEmpty){
+            taskDescription = taskDescriptionField.text!
+            task["Description"] = taskDescription
+        }
+        
+        if(self.taskImage.image != nil){
+            let imageData = UIImagePNGRepresentation(self.taskImage.image!)
+            let imageFile = PFFile(name:"taskImage.png", data:imageData!)
+            task["DisplayImage"] = imageFile
+        }
+        
         task["Admin"] = PFUser.current()
-        //task["NextTurnMember"] = nil
         task["Members"] = [PFUser.current()]
         
         let bfTask = task.saveInBackground()
-        
-        // TODO: Fetch current user here, cuz some other user might have added this current user to a new group which this guy should be aware of
         
         bfTask.continue({ (antecedent) -> Any? in
             
@@ -149,15 +174,32 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                         //self.showOKAlertMsg(title: "Error", message: "Unable to sign up. Please try again.")
                         print(error)
                     } else {
-                        //self.proceedToMyTasks()
+                        
+                        // Cloud code to fetch other users (create accounts if required) and add to task
+                        print(task.objectId!)
+                        params["tskId"] = task.objectId
+                        self.addMemebersToTheTask(params: params)
+
                         self.endEditing()
                         self.performSegue(withIdentifier: "unwindToCreateTaskList", sender: self)
-                        
                     }
                 }}
             
             return nil
         })
+    }
+    
+    func addMemebersToTheTask(params:[String : Any]){
+        
+        PFCloud.callFunction(inBackground: "addMembersToTask", withParameters: params){ (response, error) in
+            if error == nil {
+                
+                
+                
+            } else {
+                print(error ?? "zzz")
+            }
+        }
     }
     
     /*
