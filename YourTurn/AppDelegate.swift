@@ -33,7 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         Parse.initialize(with: configuration)
         
-        
+        DispatchQueue.main.async() {
+            Utilities.loadContacts()
+        }
         
         if(PFUser.current() != nil){
             //PFUser.logOut()
