@@ -10,11 +10,12 @@ import UIKit
 import Parse
 import ContactsUI
 
-class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate {
     
     var currentTask:PFObject?
     var pickerDataSource = [PFUser]()
     var contacts = [CNContact]()
+    var selectedMemberTitle:String = ""
 
     @IBOutlet weak var txtTaskName: UILabel!
     @IBOutlet weak var txtTaskDescription: UITextView!
@@ -27,6 +28,8 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         self.membersPickerView.dataSource = self;
         self.membersPickerView.delegate = self;
         self.membersPickerView.showsSelectionIndicator = true
+        
+        navigationController?.delegate = self
         
         contacts = Utilities.loadContacts()
 
@@ -68,6 +71,9 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                     if let index = nextTurnMemberIndex{
                         self.membersPickerView.selectRow(index, inComponent: 0, animated: true)
                     }
+                    else{
+                        self.membersPickerView.selectRow(0, inComponent: 0, animated: true)
+                    }
                 }
             }
         })
@@ -88,24 +94,18 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        // move this to didLoad method as we do not fetch names everytime
-        // or fetch when a new member is added
+        // do we need to fetch it everytime?
         let phnNum = (pickerDataSource[row] as PFUser).username
-        
-        let contact = contacts.first { (c) -> Bool in
-            c.phoneNumbers.contains(where: { (p) -> Bool in
-                Utilities.getContactPlainPhnNum(number: p.value.stringValue) == phnNum
-            })
-        }
-        
-        return contact != nil ? Utilities.getContactGivenName(cnConatct: contact) : phnNum
+        return Utilities.getContactNameFromPhnNum(phnNum: phnNum!)
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         let nextTurnMember = pickerDataSource[row]
         
         if let task = currentTask{
+            setSelectedRowTitle()
             task["NextTurnMember"] = nextTurnMember
+            task["NextTurnUserName"] = nextTurnMember.username
             task.saveEventually()
         }
     }
@@ -115,22 +115,31 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func clearTaskDetails(){
-        //txtTaskName.text = ""
         txtTaskDescription.text = ""
         lblNextTurn.text = "Next Turn: "
         pickerDataSource.removeAll()
-        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func setSelectedRowTitle(){
+        let selectedRow = membersPickerView.selectedRow(inComponent: 0)
+        selectedMemberTitle = pickerView(membersPickerView, titleForRow: selectedRow, forComponent: 0)!
+        lblNextTurn.text = "Next Turn: " + selectedMemberTitle
     }
-    */
+    
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool){
+        if(!selectedMemberTitle.isEmpty){
+        (viewController as? TasksTableVC)?.selectedTaskNextUserName = selectedMemberTitle
+        }
+    }
+    
+    
+    
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        
+        
+        
+    }
 
 }

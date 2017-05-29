@@ -31,10 +31,12 @@ class TasksTableVC: UITableViewController {
         setupRefreshControl()
     }
     
+    
+    
     func setupRefreshControl(){
         
         // UITableViewController has a defualt refresh control so no need to create it again
-        // But you will need to /Users/vmzi/Documents/iOS Apps/YourTurn/YourTurn/TasksTableVC.swiftdeclare if you are trying to attach the refresh to a table view
+        // But you will need to declare if you are trying to attach the refresh to a table view
         
         self.refreshControl?.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -79,10 +81,23 @@ class TasksTableVC: UITableViewController {
         })
     }
     
+    var selectedTaskNextUserName:String = ""
+    
     override func viewWillAppear(_ animated: Bool) {
+        // call to super will auto deselect table rows
+        super.viewWillAppear(false)
+        
+        if(selectedTaskCellRow >= 0){
+            let cell = self.tableView.cellForRow(at: IndexPath(row: selectedTaskCellRow, section: 0)) as? TasksTableViewCell
+            cell?.taskWhosNextLbl.text  = "Next turn: " + selectedTaskNextUserName
+            self.tableView.reloadData()
+            
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        //print(self.tableView.indexPathForSelectedRow ?? 99)
     }
     
     override func didReceiveMemoryWarning() {
@@ -100,7 +115,6 @@ class TasksTableVC: UITableViewController {
         return tasks.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cellIdentifier = "taskCell"
@@ -111,7 +125,12 @@ class TasksTableVC: UITableViewController {
         
         let task = tasks[indexPath.row]
         cell.taskNameLbl.text = task["Name"] as? String
-        cell.taskWhosNextLbl.text = "Next turn: TBD"
+        
+        let nextTurnUserName = task["NextTurnUserName"] as? String
+        
+        let uName = (nextTurnUserName == nil || nextTurnUserName!.isEmpty) ? "" : Utilities.getContactNameFromPhnNum(phnNum: nextTurnUserName!)
+        
+        cell.taskWhosNextLbl.text = uName.isEmpty ? "Next turn: TBD" : "Next turn: " + uName
         
         if let taskImage = task["DisplayImage"] as? PFFile {
             taskImage.getDataInBackground(block: { (imageData, error) in
@@ -124,6 +143,8 @@ class TasksTableVC: UITableViewController {
         return cell
     }
     
+    
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
     }
@@ -134,6 +155,8 @@ class TasksTableVC: UITableViewController {
         selectedTaskCellRow = indexPath.row
         performSegue(withIdentifier: "taskTableCellToDetails", sender: self)
     }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

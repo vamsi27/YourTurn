@@ -38,7 +38,7 @@ class Utilities{
     static func getContactPlainPhnNum(number: String) -> String {
         
         
-        if number == nil || number.isEmpty {
+        if number.isEmpty {
             return ""
         }
         
@@ -77,6 +77,15 @@ class Utilities{
         }
             
         return contacts
+    }
+    
+    static func getContactNameFromPhnNum(phnNum: String) -> String{
+        let contact = contacts.first { (c) -> Bool in
+            c.phoneNumbers.contains(where: { (p) -> Bool in
+                getContactPlainPhnNum(number: p.value.stringValue) == phnNum
+            })
+        }
+        return contact != nil ? getContactGivenName(cnConatct: contact) : phnNum
     }
 
 }
