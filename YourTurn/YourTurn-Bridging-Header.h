@@ -7,5 +7,6 @@
 
 #import "libPhoneNumber_iOS/NBPhoneNumberUtil.h"
 #import "libPhoneNumber_iOS/NBPhoneNumber.h"
+#import "RSKImageCropper/RSKImageCropper.h"
 
 #endif

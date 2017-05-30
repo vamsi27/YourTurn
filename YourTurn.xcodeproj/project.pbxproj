@@ -15,7 +15,6 @@
 		F41391BA1EBFCC9700E8568F /* 0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F41391B91EBFCC9700E8568F /* 0.jpg */; };
 		F41391BC1EC01E1800E8568F /* CreateTask1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41391BB1EC01E1800E8568F /* CreateTask1VC.swift */; };
 		F41391BE1EC177C000E8568F /* GroupMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41391BD1EC177C000E8568F /* GroupMemberTableViewCell.swift */; };
-		F41C37CA1EB99FA900F4EC6E /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F41C37C91EB99FA900F4EC6E /* 2.jpg */; };
 		F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */; };
 		F42635681EB996D6004E079C /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F42635671EB996D6004E079C /* 1.jpg */; };
 		F426356A1EB99883004E079C /* TasksTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42635691EB99883004E079C /* TasksTableVC.swift */; };
@@ -35,6 +34,9 @@
 		F479117B1EB6F1A70014C7D5 /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = F479117A1EB6F1A70014C7D5 /* down.png */; };
 		F49E89C11ED13CDB00D76FDA /* EmptyTask.png in Resources */ = {isa = PBXBuildFile; fileRef = F49E89C01ED13CDB00D76FDA /* EmptyTask.png */; };
 		F49E89C31ED27F3600D76FDA /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E89C21ED27F3600D76FDA /* TaskViewController.swift */; };
+		F49E89C51EDCF6EA00D76FDA /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F49E89C41EDCF6EA00D76FDA /* 2.jpg */; };
+		F49E89C71EDCF74700D76FDA /* sjobs.png in Resources */ = {isa = PBXBuildFile; fileRef = F49E89C61EDCF74700D76FDA /* sjobs.png */; };
+		F49E89CB1EDD36AA00D76FDA /* camSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F49E89CA1EDD36AA00D76FDA /* camSmall.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +62,6 @@
 		F41391B91EBFCC9700E8568F /* 0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 0.jpg; sourceTree = "<group>"; };
 		F41391BB1EC01E1800E8568F /* CreateTask1VC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTask1VC.swift; sourceTree = "<group>"; };
 		F41391BD1EC177C000E8568F /* GroupMemberTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupMemberTableViewCell.swift; sourceTree = "<group>"; };
-		F41C37C91EB99FA900F4EC6E /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		F425DADC1EA5C238007BE333 /* ConfirmCodeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmCodeVC.swift; sourceTree = "<group>"; };
 		F42635671EB996D6004E079C /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		F42635691EB99883004E079C /* TasksTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableVC.swift; sourceTree = "<group>"; };
@@ -85,6 +86,9 @@
 		F479117A1EB6F1A70014C7D5 /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		F49E89C01ED13CDB00D76FDA /* EmptyTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmptyTask.png; sourceTree = "<group>"; };
 		F49E89C21ED27F3600D76FDA /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskViewController.swift; path = ../TaskViewController.swift; sourceTree = "<group>"; };
+		F49E89C41EDCF6EA00D76FDA /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
+		F49E89C61EDCF74700D76FDA /* sjobs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sjobs.png; sourceTree = "<group>"; };
+		F49E89CA1EDD36AA00D76FDA /* camSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camSmall.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,10 +208,12 @@
 		F47911791EB6F18F0014C7D5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F49E89CA1EDD36AA00D76FDA /* camSmall.png */,
+				F49E89C61EDCF74700D76FDA /* sjobs.png */,
+				F49E89C41EDCF6EA00D76FDA /* 2.jpg */,
 				F49E89C01ED13CDB00D76FDA /* EmptyTask.png */,
 				F4727BEE1EC8CD6E008CBB35 /* task.png */,
 				F41391B91EBFCC9700E8568F /* 0.jpg */,
-				F41C37C91EB99FA900F4EC6E /* 2.jpg */,
 				F42635671EB996D6004E079C /* 1.jpg */,
 				F479117A1EB6F1A70014C7D5 /* down.png */,
 			);
@@ -305,16 +311,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F49E89C51EDCF6EA00D76FDA /* 2.jpg in Resources */,
+				F49E89C71EDCF74700D76FDA /* sjobs.png in Resources */,
 				F41391BA1EBFCC9700E8568F /* 0.jpg in Resources */,
 				F47911781EB6A48F0014C7D5 /* Flags.xcassets in Resources */,
 				F448D8EA1E887E05001EECAB /* LaunchScreen.storyboard in Resources */,
 				F448D8E71E887E05001EECAB /* Assets.xcassets in Resources */,
+				F49E89CB1EDD36AA00D76FDA /* camSmall.png in Resources */,
 				F49E89C11ED13CDB00D76FDA /* EmptyTask.png in Resources */,
 				F448D8E51E887E05001EECAB /* Main.storyboard in Resources */,
 				F42635681EB996D6004E079C /* 1.jpg in Resources */,
 				F4727BEF1EC8CD6E008CBB35 /* task.png in Resources */,
 				F47911741EB6A4720014C7D5 /* CountryView.xib in Resources */,
-				F41C37CA1EB99FA900F4EC6E /* 2.jpg in Resources */,
 				F479117B1EB6F1A70014C7D5 /* down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

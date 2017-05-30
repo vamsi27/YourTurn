@@ -18,6 +18,9 @@ class TasksTableViewCell: UITableViewCell {
         
         super.awakeFromNib()
         // Initialization code
+        
+        taskImage.clipsToBounds = true
+        taskImage.layer.cornerRadius = 54/2
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -138,7 +138,11 @@ class TasksTableVC: UITableViewController {
                     cell.taskImage.image = UIImage(data:imageData!)
                 }
             })
+        }else{
+            
+            cell.taskImage.image = UIImage(named: "EmptyTask.png")
         }
+        
         
         return cell
     }

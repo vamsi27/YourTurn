@@ -12,6 +12,7 @@ target 'YourTurn' do
   # Pods for YourTurn
     pod 'Parse'
     pod 'libPhoneNumber-iOS', '~> 0.8'
+    pod 'RSKImageCropper'
 
   target 'YourTurnTests' do
     inherit! :search_paths

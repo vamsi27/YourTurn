@@ -29,6 +29,7 @@ class Utilities{
         
         if let contact = cnConatct{
             
+            //print(contact.givenName.isEmpty ? contact.familyName : contact.givenName)
             return contact.givenName.isEmpty ? contact.familyName : contact.givenName
         }
         

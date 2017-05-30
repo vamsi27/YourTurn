@@ -3,16 +3,19 @@ PODS:
   - libPhoneNumber-iOS (0.9.6)
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
+  - RSKImageCropper (1.6.2)
 
 DEPENDENCIES:
   - libPhoneNumber-iOS (~> 0.8)
   - Parse
+  - RSKImageCropper
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   libPhoneNumber-iOS: 36044ed9658b5c11ee3cb3011751e47251d34992
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
+  RSKImageCropper: 3e579d0000945a8be1c0efdad728fd9e25c2fd79
 
-PODFILE CHECKSUM: 18587fdea8288171edc13ffc24135b1f16986713
+PODFILE CHECKSUM: 7a945482419a2de297287c0ad887fd219a882073
 
 COCOAPODS: 1.2.1

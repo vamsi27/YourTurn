@@ -18,7 +18,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var selectedMemberTitle:String = ""
 
     @IBOutlet weak var txtTaskName: UILabel!
-    @IBOutlet weak var txtTaskDescription: UITextView!
     @IBOutlet weak var lblNextTurn: UILabel!
     @IBOutlet weak var membersPickerView: UIPickerView!
     
@@ -28,17 +27,22 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         self.membersPickerView.dataSource = self;
         self.membersPickerView.delegate = self;
         self.membersPickerView.showsSelectionIndicator = true
-        
         navigationController?.delegate = self
         
         contacts = Utilities.loadContacts()
-
+        
         clearTaskDetails()
         
         if(currentTask != nil && !(currentTask?.objectId?.isEmpty)!){
             title = currentTask?["Name"]! as? String
-            txtTaskDescription.text = currentTask?["Description"]! as? String
+            
+            // todo: async
+            if let nextTurnPhnNum = currentTask?["NextTurnUserName"] as? String {
+                selectedMemberTitle = Utilities.getContactNameFromPhnNum(phnNum: nextTurnPhnNum)
+            }
+            
             loadMembers()
+            lblNextTurn.text = "Next turn: " + selectedMemberTitle
         }
     }
     
@@ -60,7 +64,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         query.includeKey("Members")
         query.includeKey("NextTurnMember")
         
-        //currentTask?.fetchInBackground not fetching username
         
         query.getFirstObjectInBackground(block: { (task, error) in
             if(error == nil && task != nil){
@@ -71,7 +74,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                     if let index = nextTurnMemberIndex{
                         self.membersPickerView.selectRow(index, inComponent: 0, animated: true)
                     }
-                    else{
+                    else if self.pickerDataSource.count > 0{
                         self.membersPickerView.selectRow(0, inComponent: 0, animated: true)
                     }
                 }
@@ -96,7 +99,8 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         // do we need to fetch it everytime?
         let phnNum = (pickerDataSource[row] as PFUser).username
-        return Utilities.getContactNameFromPhnNum(phnNum: phnNum!)
+        let x = Utilities.getContactNameFromPhnNum(phnNum: phnNum!)
+        return x
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
@@ -115,7 +119,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func clearTaskDetails(){
-        txtTaskDescription.text = ""
         lblNextTurn.text = "Next Turn: "
         pickerDataSource.removeAll()
     }
@@ -128,7 +131,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool){
         if(!selectedMemberTitle.isEmpty){
-        (viewController as? TasksTableVC)?.selectedTaskNextUserName = selectedMemberTitle
+            (viewController as? TasksTableVC)?.selectedTaskNextUserName = selectedMemberTitle
         }
     }
     

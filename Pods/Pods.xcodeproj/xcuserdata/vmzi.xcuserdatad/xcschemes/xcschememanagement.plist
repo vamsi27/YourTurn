@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>RSKImageCropper.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>libPhoneNumber-iOS.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,17 +42,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>42057D353A0DBE645F2D8DAF9534225E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>51CB0AF616C6306147B99C320EB6D3ED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>545088AC86824DE30D76F71F50FD4C49</key>
+		<key>7D5D891676725492FDD435B2ACEBBB3B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7D5D891676725492FDD435B2ACEBBB3B</key>
+		<key>A24CA1D329B515D6B6180CCC86CB5A0D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -9,21 +9,24 @@
 import UIKit
 import ContactsUI
 import Parse
+import RSKImageCropper
 
-class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSource, RSKImageCropViewControllerDelegate, RSKImageCropViewControllerDataSource {
     
     var groupMembers = [CNContact]()
     
-    @IBOutlet weak var taskDescriptionField: UITextView!
-    @IBOutlet weak var taskImage: UIImageView!
+    @IBOutlet weak var taskImageBtn: UIButton!
     @IBOutlet weak var taskNameTxtField: UITextField!
     @IBOutlet weak var groupMembersTbl: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         groupMembersTbl.delegate = self
         groupMembersTbl.dataSource = self
+        taskImageBtn.clipsToBounds = true
+        taskImageBtn.layer.cornerRadius = 45
         
         if groupMembers.count == 0 {
             
@@ -124,14 +127,13 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         var params:[String : Any] = [:]
         var members:[String] = []
-        let taskDescription:String
         
         for member in groupMembers {
             var uName = member.phoneNumbers[0].value.stringValue.replacingOccurrences(of: " ", with: "")
             uName = uName.replacingOccurrences(of: "(", with: "")
             uName = uName.replacingOccurrences(of: ")", with: "")
             uName = uName.replacingOccurrences(of: "-", with: "")
-            
+            print(uName)
             members.append(uName)
         }
         
@@ -140,13 +142,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let task = PFObject(className:"Task")
         task["Name"] = taskNameTxtField.text!
         
-        if(taskDescriptionField.text != nil && !taskDescriptionField.text!.isEmpty){
-            taskDescription = taskDescriptionField.text!
-            task["Description"] = taskDescription
-        }
-        
-        if(self.taskImage.image != nil){
-            let imageData = UIImagePNGRepresentation(self.taskImage.image!)
+        if(self.taskImageBtn.backgroundImage(for: UIControlState.normal) != nil){
+            let imageData = UIImagePNGRepresentation(self.taskImageBtn.backgroundImage(for: UIControlState.normal)!)
             let imageFile = PFFile(name:"taskImage.png", data:imageData!)
             task["DisplayImage"] = imageFile
         }
@@ -192,15 +189,80 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func addMemebersToTheTask(params:[String : Any]){
         
         PFCloud.callFunction(inBackground: "addMembersToTask", withParameters: params){ (response, error) in
-            if error == nil {
-                
-                
-                
+            if error == nil {                
             } else {
                 print(error ?? "zzz")
             }
         }
     }
+    
+    @IBAction func taskImageAction(_ sender: Any) {
+        
+        let image = UIImage(named: "sjobs.png")
+        let imageCropVC = RSKImageCropViewController(image: image!)
+        imageCropVC.delegate = self
+        navigationController?.pushViewController(imageCropVC, animated: true)
+    }
+    
+    
+    func imageCropViewControllerDidCancelCrop(_ controller: RSKImageCropViewController) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // The original image has been cropped.
+    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect) {
+        taskImageBtn.setBackgroundImage(croppedImage, for: UIControlState.normal)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // The original image has been cropped. Additionally provides a rotation angle used to produce image.
+    func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
+        //imageView?.image = croppedImage
+        taskImageBtn.setBackgroundImage(croppedImage, for: UIControlState.normal)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    // The original image will be cropped.
+    
+    //  The converted code is limited by 1 KB.
+    //  Please Sign Up (Free!) to remove this limitation.
+    
+    //  Converted with Swiftify v1.0.6341 - https://objectivec2swift.com/
+    // Returns a custom rect for the mask.
+    
+    func imageCropViewControllerCustomMaskRect(_ controller: RSKImageCropViewController) -> CGRect {
+        var maskSize: CGSize
+        if controller.isPortraitInterfaceOrientation() {
+            maskSize = CGSize(width: CGFloat(250), height: CGFloat(250))
+        }
+        else {
+            maskSize = CGSize(width: CGFloat(220), height: CGFloat(220))
+        }
+        let viewWidth: CGFloat = controller.view.frame.width
+        let viewHeight: CGFloat = controller.view.frame.height
+        let maskRect = CGRect(x: CGFloat((viewWidth - maskSize.width) * 0.5), y: CGFloat((viewHeight - maskSize.height) * 0.5), width: CGFloat(maskSize.width), height: CGFloat(maskSize.height))
+        return maskRect
+    }
+    
+    func imageCropViewControllerCustomMaskPath(_ controller: RSKImageCropViewController) -> UIBezierPath {
+        let rect: CGRect = controller.maskRect
+        let point1 = CGPoint(x: CGFloat(rect.minX), y: CGFloat(rect.maxY))
+        let point2 = CGPoint(x: CGFloat(rect.maxX), y: CGFloat(rect.maxY))
+        let point3 = CGPoint(x: CGFloat(rect.midX), y: CGFloat(rect.minY))
+        let triangle = UIBezierPath()
+        triangle.move(to: point1)
+        triangle.addLine(to: point2)
+        triangle.addLine(to: point3)
+        triangle.close()
+        return triangle
+    }
+    
+    // Returns a custom rect in which the image can be moved.
+    func imageCropViewControllerCustomMovementRect(_ controller: RSKImageCropViewController) -> CGRect {
+        // If the image is not rotated, then the movement rect coincides with the mask rect.
+        return controller.maskRect
+    }
+
     
     /*
      // MARK: - Navigation
