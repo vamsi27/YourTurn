@@ -164,9 +164,11 @@ class TasksTableVC: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if(selectedTaskCellRow >= 0 && selectedTaskCellRow < tasks.count){
+        if(segue.identifier == "taskTableCellToDetails" && selectedTaskCellRow >= 0 && selectedTaskCellRow < tasks.count){
+            
             let taskVC = segue.destination as! TaskViewController
             taskVC.currentTask = tasks[selectedTaskCellRow]
+            
         }
     }
     

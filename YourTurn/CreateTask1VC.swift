@@ -14,6 +14,7 @@ import RSKImageCropper
 class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSource, RSKImageCropViewControllerDelegate, RSKImageCropViewControllerDataSource {
     
     var groupMembers = [CNContact]()
+    var imageSelected:Bool = false
     
     @IBOutlet weak var taskImageBtn: UIButton!
     @IBOutlet weak var taskNameTxtField: UITextField!
@@ -27,6 +28,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         groupMembersTbl.dataSource = self
         taskImageBtn.clipsToBounds = true
         taskImageBtn.layer.cornerRadius = 45
+        taskImageBtn.layer.borderWidth = 2
+        taskImageBtn.layer.borderColor = UIColor.black.cgColor
         
         if groupMembers.count == 0 {
             
@@ -142,7 +145,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let task = PFObject(className:"Task")
         task["Name"] = taskNameTxtField.text!
         
-        if(self.taskImageBtn.backgroundImage(for: UIControlState.normal) != nil){
+        // __def_ctask_uturn.png
+        if(self.taskImageBtn.backgroundImage(for: UIControlState.normal) != nil && imageSelected){
             let imageData = UIImagePNGRepresentation(self.taskImageBtn.backgroundImage(for: UIControlState.normal)!)
             let imageFile = PFFile(name:"taskImage.png", data:imageData!)
             task["DisplayImage"] = imageFile
@@ -217,7 +221,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     // The original image has been cropped. Additionally provides a rotation angle used to produce image.
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
-        //imageView?.image = croppedImage
+        
+        imageSelected = true
         taskImageBtn.setBackgroundImage(croppedImage, for: UIControlState.normal)
         navigationController?.popViewController(animated: true)
     }

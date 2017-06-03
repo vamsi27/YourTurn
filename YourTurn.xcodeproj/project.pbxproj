@@ -19,6 +19,7 @@
 		F42635681EB996D6004E079C /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F42635671EB996D6004E079C /* 1.jpg */; };
 		F426356A1EB99883004E079C /* TasksTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42635691EB99883004E079C /* TasksTableVC.swift */; };
 		F426356C1EB99933004E079C /* TasksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426356B1EB99933004E079C /* TasksTableViewCell.swift */; };
+		F440125C1EE34DDE00254421 /* __def_ctask_uturn.png in Resources */ = {isa = PBXBuildFile; fileRef = F440125B1EE34DDE00254421 /* __def_ctask_uturn.png */; };
 		F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8DF1E887E05001EECAB /* AppDelegate.swift */; };
 		F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */; };
 		F448D8E51E887E05001EECAB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F448D8E31E887E05001EECAB /* Main.storyboard */; };
@@ -36,7 +37,6 @@
 		F49E89C31ED27F3600D76FDA /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E89C21ED27F3600D76FDA /* TaskViewController.swift */; };
 		F49E89C51EDCF6EA00D76FDA /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F49E89C41EDCF6EA00D76FDA /* 2.jpg */; };
 		F49E89C71EDCF74700D76FDA /* sjobs.png in Resources */ = {isa = PBXBuildFile; fileRef = F49E89C61EDCF74700D76FDA /* sjobs.png */; };
-		F49E89CB1EDD36AA00D76FDA /* camSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = F49E89CA1EDD36AA00D76FDA /* camSmall.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +66,7 @@
 		F42635671EB996D6004E079C /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		F42635691EB99883004E079C /* TasksTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableVC.swift; sourceTree = "<group>"; };
 		F426356B1EB99933004E079C /* TasksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableViewCell.swift; sourceTree = "<group>"; };
+		F440125B1EE34DDE00254421 /* __def_ctask_uturn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = __def_ctask_uturn.png; sourceTree = "<group>"; };
 		F448D8DC1E887E05001EECAB /* YourTurn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourTurn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F448D8DF1E887E05001EECAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberSetupVC.swift; sourceTree = "<group>"; };
@@ -88,7 +89,6 @@
 		F49E89C21ED27F3600D76FDA /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskViewController.swift; path = ../TaskViewController.swift; sourceTree = "<group>"; };
 		F49E89C41EDCF6EA00D76FDA /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		F49E89C61EDCF74700D76FDA /* sjobs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sjobs.png; sourceTree = "<group>"; };
-		F49E89CA1EDD36AA00D76FDA /* camSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camSmall.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,7 +208,7 @@
 		F47911791EB6F18F0014C7D5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				F49E89CA1EDD36AA00D76FDA /* camSmall.png */,
+				F440125B1EE34DDE00254421 /* __def_ctask_uturn.png */,
 				F49E89C61EDCF74700D76FDA /* sjobs.png */,
 				F49E89C41EDCF6EA00D76FDA /* 2.jpg */,
 				F49E89C01ED13CDB00D76FDA /* EmptyTask.png */,
@@ -317,12 +317,12 @@
 				F47911781EB6A48F0014C7D5 /* Flags.xcassets in Resources */,
 				F448D8EA1E887E05001EECAB /* LaunchScreen.storyboard in Resources */,
 				F448D8E71E887E05001EECAB /* Assets.xcassets in Resources */,
-				F49E89CB1EDD36AA00D76FDA /* camSmall.png in Resources */,
 				F49E89C11ED13CDB00D76FDA /* EmptyTask.png in Resources */,
 				F448D8E51E887E05001EECAB /* Main.storyboard in Resources */,
 				F42635681EB996D6004E079C /* 1.jpg in Resources */,
 				F4727BEF1EC8CD6E008CBB35 /* task.png in Resources */,
 				F47911741EB6A4720014C7D5 /* CountryView.xib in Resources */,
+				F440125C1EE34DDE00254421 /* __def_ctask_uturn.png in Resources */,
 				F479117B1EB6F1A70014C7D5 /* down.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
