@@ -36,22 +36,18 @@ class Utilities{
         return ""
     }
     
+    // TODO: convert this into an extension method
+    // TODO: Add country code if not already present
     static func getContactPlainPhnNum(number: String) -> String {
-        
-        
         if number.isEmpty {
             return ""
         }
-        
         return number.replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "")
     }
-    
-    
     
     static func loadContacts() -> [CNContact]{
         
         if(contacts.count == 0 ){
-            
             let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName),CNContactPhoneNumbersKey] as [Any]
             let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
             

@@ -16,6 +16,7 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     var filteredContacts = [CNContact]()
     var searchActive : Bool = false
     var selectedContact:CNContact? = nil
+    var existingGroupContacts = [CNContact]()
     
     
     override func viewDidLoad() {
@@ -141,9 +142,26 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
             contacts.remove(at: indexPath.row)
         }
         
-        endEditing()
-        self.performSegue(withIdentifier: "unwindToCreateTaskSegue", sender: self)
+        if (isSelectedContactPartOfGroup(conatct: selectedContact!)){
+        //if (existingGroupContacts.contains(selectedContact!)){
+            let alert = UIAlertController(title: "Nice Try!", message: "This member is already part of the group", preferredStyle: UIAlertControllerStyle.alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+                self.tableView.setEditing(false, animated: true)
+            }))
+            
+            present(alert, animated: true, completion: nil)
         
+        }else{
+            endEditing()
+            self.performSegue(withIdentifier: "unwindToCreateTaskSegue", sender: self)
+        }
+    }
+    
+    func isSelectedContactPartOfGroup(conatct: CNContact) -> Bool {
+        return existingGroupContacts.contains(where: { (c) -> Bool in
+            return Utilities.getContactPlainPhnNum(number: c.phoneNumbers[0].value.stringValue) == Utilities.getContactPlainPhnNum(number: conatct.phoneNumbers[0].value.stringValue)
+        })
     }
     
     
