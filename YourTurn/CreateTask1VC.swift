@@ -10,6 +10,8 @@ import UIKit
 import ContactsUI
 import Parse
 import RSKImageCropper
+import DKImagePickerController
+
 
 class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSource, RSKImageCropViewControllerDelegate, RSKImageCropViewControllerDataSource {
     
@@ -26,10 +28,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         groupMembersTbl.delegate = self
         groupMembersTbl.dataSource = self
-        taskImageBtn.clipsToBounds = true
-        taskImageBtn.layer.cornerRadius = 45
-        taskImageBtn.layer.borderWidth = 2
-        taskImageBtn.layer.borderColor = UIColor.black.cgColor
+        
+        setupTaskImageBtn()
         
         if groupMembers.count == 0 {
             
@@ -57,6 +57,16 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         view.endEditing(true)
     }
     
+    func setupTaskImageBtn(){
+        taskImageBtn.clipsToBounds = true
+        taskImageBtn.layer.cornerRadius = 45
+        taskImageBtn.layer.borderWidth = 1
+        taskImageBtn.layer.borderColor = UIColor.gray.cgColor
+        taskImageBtn.titleLabel!.lineBreakMode = .byWordWrapping
+        taskImageBtn.titleLabel!.textAlignment = .center
+        taskImageBtn.setTitle("add\nphoto", for: .normal)
+    }
+    
     @IBAction func cancelBtnAction(_ sender: Any) {
         endEditing()
         self.dismiss(animated: true, completion: nil)
@@ -76,18 +86,12 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         let heightConst = groupMembersTbl.constraints.first(where: { (x) -> Bool in
-            
             x.firstAttribute == NSLayoutAttribute.height
         })
         
-        
         heightConst?.constant = CGFloat(groupMembers.count * 60)
-        
         groupMembersTbl.contentOffset = CGPoint(x: 0, y: CGFloat.greatestFiniteMagnitude)
-        
         return groupMembers.count
-        
-        
     }
     
     
@@ -202,10 +206,70 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     @IBAction func taskImageAction(_ sender: Any) {
         
-        let image = UIImage(named: "sjobs.png")
-        let imageCropVC = RSKImageCropViewController(image: image!)
-        imageCropVC.delegate = self
-        navigationController?.pushViewController(imageCropVC, animated: true)
+        showSelectPhotoPopupMenu()
+        
+        
+    }
+    
+    func showSelectPhotoPopupMenu(){
+        
+        // 1
+        let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // 2
+        let deleteAction = UIAlertAction(title: "Take Photo", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.startPhotoPicker(useCamera: true)
+        })
+        let saveAction = UIAlertAction(title: "Choose Photo", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.startPhotoPicker(useCamera: false)
+        })
+        
+        //
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            print("Cancelled")
+        })
+        
+        
+        // 4
+        optionMenu.addAction(deleteAction)
+        optionMenu.addAction(saveAction)
+        optionMenu.addAction(cancelAction)
+        
+        // 5
+        self.present(optionMenu, animated: true, completion: nil)
+        
+    }
+    
+    func startPhotoPicker(useCamera:Bool){
+        
+        let pickerController = DKImagePickerController()
+        pickerController.singleSelect = true
+        pickerController.sourceType = useCamera ? .camera : .photo
+        pickerController.assetType = .allPhotos
+        
+        pickerController.didSelectAssets = { (assets: [DKAsset]) in
+            
+            if (assets.count == 0){
+                return
+            }
+            
+            let asset = assets[0]
+            
+            //sync -> true (synchronous), false (asynchronous) to the completion block
+            asset.fetchOriginalImage(true, completeBlock: { (selectedImage, info) in
+                let imageCropVC = RSKImageCropViewController(image: selectedImage!)
+                imageCropVC.delegate = self
+                self.navigationController?.pushViewController(imageCropVC, animated: true)
+            })
+        }
+        
+        self.present(pickerController, animated: true) {
+        }
     }
     
     
@@ -223,17 +287,10 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func imageCropViewController(_ controller: RSKImageCropViewController, didCropImage croppedImage: UIImage, usingCropRect cropRect: CGRect, rotationAngle: CGFloat) {
         
         imageSelected = true
+        taskImageBtn.setTitle("", for: .normal)
         taskImageBtn.setBackgroundImage(croppedImage, for: UIControlState.normal)
         navigationController?.popViewController(animated: true)
     }
-    
-    // The original image will be cropped.
-    
-    //  The converted code is limited by 1 KB.
-    //  Please Sign Up (Free!) to remove this limitation.
-    
-    //  Converted with Swiftify v1.0.6341 - https://objectivec2swift.com/
-    // Returns a custom rect for the mask.
     
     func imageCropViewControllerCustomMaskRect(_ controller: RSKImageCropViewController) -> CGRect {
         var maskSize: CGSize

@@ -184,14 +184,37 @@ class TasksTableVC: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            
+            let taskToDelete = tasks[indexPath.row]
             tasks.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            disassociateTaskFromUser(task: taskToDelete)
         }
     }
     
+    func disassociateTaskFromUser(task:PFObject){
+        let currentUser = PFUser.current()
+        currentUser?.remove(task, forKey: "Tasks")
+        currentUser?.saveEventually()
+        
+        var params:[String : Any] = [:]
+        params["taskId"] = task.objectId
+        params["userId"] = currentUser?.objectId
+        deleteUserFromTask(params: params)
+        
+    }
+    
+    func deleteUserFromTask(params:[String : Any]){
+        
+        PFCloud.callFunction(inBackground: "deleteUserFromTask", withParameters: params){ (response, error) in
+            if error == nil {
+            } else {
+                //print(error ?? "zzz")
+            }
+        }
+    }
+
+
     @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
         
         loadTasksInDetail(refreshCtrl: false)

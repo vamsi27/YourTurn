@@ -525,7 +525,9 @@
                                     <constraint firstAttribute="height" constant="90" id="eYl-b4-4vF"/>
                                     <constraint firstAttribute="width" constant="90" id="ryT-dJ-zQe"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="__def_ctask_uturn.png"/>
+                                <state key="normal" title="add photo">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="taskImageAction:" destination="ssz-iX-Aa8" eventType="touchUpInside" id="Kqn-vT-2Gn"/>
                                 </connections>
@@ -649,7 +651,4 @@
             <point key="canvasLocation" x="4224.8000000000002" y="1460.4197901049477"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="__def_ctask_uturn.png" width="90" height="90"/>
-    </resources>
 </document>

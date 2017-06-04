@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>DKImagePickerController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,12 +47,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>42057D353A0DBE645F2D8DAF9534225E</key>
+		<key>259C4251C538ADD2B2E7B8E697E28991</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>51CB0AF616C6306147B99C320EB6D3ED</key>
+		<key>6EE458AB7C9239893E5C6E840C0BF9B5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,7 +62,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A24CA1D329B515D6B6180CCC86CB5A0D</key>
+		<key>D29ECE69EF439D1FF5B5E9EB40FDFFE0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E5A0F73BC8C552CE890537BA919B2D4C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

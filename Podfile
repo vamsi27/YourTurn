@@ -13,6 +13,7 @@ target 'YourTurn' do
     pod 'Parse'
     pod 'libPhoneNumber-iOS', '~> 0.8'
     pod 'RSKImageCropper'
+    pod 'DKImagePickerController'
 
   target 'YourTurnTests' do
     inherit! :search_paths

@@ -61,7 +61,7 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         print("Entered code - " + txtFieldConfCode.text!)
         
         if("\(serverConfCode)" == txtFieldConfCode.text){
-            //if(1==1){
+        //    if(1==1){
             self.UserLoginOrSignUp()
         }
         else{
