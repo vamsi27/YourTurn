@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(PFUser.current() != nil){
             //PFUser.logOut()
             DispatchQueue.main.async() {
-                Utilities.loadContacts()
+                _ = Utilities.loadContacts()
             }
         }
         

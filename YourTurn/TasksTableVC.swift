@@ -34,16 +34,9 @@ class TasksTableVC: UITableViewController {
     
     
     func setupRefreshControl(){
-        
-        // UITableViewController has a defualt refresh control so no need to create it again
-        // But you will need to declare if you are trying to attach the refresh to a table view
-        
         self.refreshControl?.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
         self.refreshControl?.attributedTitle = NSAttributedString(string: "Pull to refresh")
         self.refreshControl?.addTarget(self, action: #selector(TasksTableVC.refresh), for: UIControlEvents.valueChanged)
-        
-        // below line is not required when using UITableViewController
-        //tableView.addSubview(refreshControl)
     }
     
     
@@ -59,9 +52,6 @@ class TasksTableVC: UITableViewController {
         
         query?.getFirstObjectInBackground(block: { (u, error) in
             if(error == nil && u != nil){
-                
-                
-                // TODO: set lock here
                 
                 self.tasks = u?["Tasks"] as! [PFObject]
                 
@@ -143,11 +133,8 @@ class TasksTableVC: UITableViewController {
             cell.taskImage.image = UIImage(named: "EmptyTask.png")
         }
         
-        
         return cell
     }
-    
-    
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
@@ -160,18 +147,12 @@ class TasksTableVC: UITableViewController {
         performSegue(withIdentifier: "taskTableCellToDetails", sender: self)
     }
     
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if(segue.identifier == "taskTableCellToDetails" && selectedTaskCellRow >= 0 && selectedTaskCellRow < tasks.count){
-            
             let taskVC = segue.destination as! TaskViewController
             taskVC.currentTask = tasks[selectedTaskCellRow]
-            
         }
     }
-    
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -179,17 +160,36 @@ class TasksTableVC: UITableViewController {
         return true
     }
     
-    
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Leave"
+    }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            
-            let taskToDelete = tasks[indexPath.row]
-            tasks.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            disassociateTaskFromUser(task: taskToDelete)
+            confirmTaskDeletion(indexPath: indexPath)
         }
+    }
+    
+    func confirmTaskDeletion(indexPath: IndexPath){
+        let alert = UIAlertController(title: "Leave Task", message: "Are you sure you want to leave this task group?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            self.deleteTask(indexPath: indexPath)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (action: UIAlertAction!) in
+            self.tableView.setEditing(false, animated: true)
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func deleteTask(indexPath: IndexPath){
+        let taskToDelete = tasks[indexPath.row]
+        tasks.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
+        disassociateTaskFromUser(task: taskToDelete)
     }
     
     func disassociateTaskFromUser(task:PFObject){
@@ -201,22 +201,14 @@ class TasksTableVC: UITableViewController {
         params["taskId"] = task.objectId
         params["userId"] = currentUser?.objectId
         deleteUserFromTask(params: params)
-        
     }
     
     func deleteUserFromTask(params:[String : Any]){
-        
-        PFCloud.callFunction(inBackground: "deleteUserFromTask", withParameters: params){ (response, error) in
-            if error == nil {
-            } else {
-                //print(error ?? "zzz")
-            }
-        }
+        PFCloud.callFunction(inBackground: "deleteUserFromTask", withParameters: params)
     }
 
 
     @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
-        
         loadTasksInDetail(refreshCtrl: false)
     }
     
@@ -235,9 +227,4 @@ class TasksTableVC: UITableViewController {
      return true
      }
      */
-    
-    
-    
-    
-    
 }
