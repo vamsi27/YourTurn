@@ -34,10 +34,6 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         
         view.addGestureRecognizer(tap)
         
-        
-        
-        
-        
         let locale = Locale.current
         let code = (locale as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
         
@@ -150,59 +146,5 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
             navigationItem.backBarButtonItem = backItem
         }
     }
-    
-    /*
-    func addDoneButtonOnKeyboard() {
-        
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-        doneToolbar.barStyle       = UIBarStyle.default
-        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(PhoneNumberSetupVC.doneButtonAction))
-        
-        var items = [UIBarButtonItem]()
-        items.append(flexSpace)
-        items.append(done)
-        
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-        self.txtPhnNum.inputAccessoryView = doneToolbar
-    }
-    
-    func doneButtonAction() {
-        self.txtPhnNum.resignFirstResponder()
-    }
-    
-    
-    func addDoneButtonOnCountryKeyboard() {
-        
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-        doneToolbar.barStyle       = UIBarStyle.default
-        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(PhoneNumberSetupVC.doneButtonActionCountry))
-        
-        var items = [UIBarButtonItem]()
-        items.append(flexSpace)
-        items.append(done)
-        
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-        self.textFieldCountry.inputAccessoryView = doneToolbar
-    }
-    
-    func doneButtonActionCountry() {
-        self.textFieldCountry.resignFirstResponder()
-    }*/
-    
-    /*
-    override func viewWillDisappear(_ animated: Bool) {
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
-    */
 }
 

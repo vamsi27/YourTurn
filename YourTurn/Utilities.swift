@@ -42,7 +42,7 @@ class Utilities{
         if number.isEmpty {
             return ""
         }
-        return number.replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "")
+        return number.replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "").replacingOccurrences(of: "\u{00A0}", with: "")
     }
     
     static func loadContacts() -> [CNContact]{

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "CreateTask1VC.createTask() -&gt; ():CreateTask1VC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "uName.replacingOccurrences(of: &quot;3&quot;, with: &quot;&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

@@ -136,11 +136,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         var members:[String] = []
         
         for member in groupMembers {
-            var uName = member.phoneNumbers[0].value.stringValue.replacingOccurrences(of: " ", with: "")
-            uName = uName.replacingOccurrences(of: "(", with: "")
-            uName = uName.replacingOccurrences(of: ")", with: "")
-            uName = uName.replacingOccurrences(of: "-", with: "")
-            print(uName)
+            let uName = Utilities.getContactPlainPhnNum(number: member.phoneNumbers[0].value.stringValue)
             members.append(uName)
         }
         

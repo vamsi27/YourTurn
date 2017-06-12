@@ -283,9 +283,21 @@
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9n-5V-bfa">
                                 <rect key="frame" x="0.0" y="380" width="375" height="216"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </pickerView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Turn: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVD-hw-3Nh">
-                                <rect key="frame" x="16" y="92" width="343" height="42"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OdS-PQ-eoy">
+                                <rect key="frame" x="84" y="318" width="206" height="45"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="HWs-jp-4Zt"/>
+                                    <constraint firstAttribute="width" constant="206" id="o2Z-8T-W48"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Turn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVD-hw-3Nh">
+                                <rect key="frame" x="16" y="243" width="343" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="VZ6-5i-ScQ"/>
                                 </constraints>
@@ -299,7 +311,9 @@
                             <constraint firstItem="sVD-hw-3Nh" firstAttribute="leading" secondItem="9fY-gq-YCh" secondAttribute="leadingMargin" id="0vv-51-RAk"/>
                             <constraint firstItem="sVD-hw-3Nh" firstAttribute="trailing" secondItem="9fY-gq-YCh" secondAttribute="trailingMargin" id="3PG-wh-fhn"/>
                             <constraint firstItem="sVD-hw-3Nh" firstAttribute="centerX" secondItem="9fY-gq-YCh" secondAttribute="centerX" id="90L-xb-zkr"/>
-                            <constraint firstItem="sVD-hw-3Nh" firstAttribute="top" secondItem="umr-4k-TbI" secondAttribute="bottom" constant="28" id="PHU-6G-j00"/>
+                            <constraint firstItem="sVD-hw-3Nh" firstAttribute="top" secondItem="umr-4k-TbI" secondAttribute="bottom" constant="179" id="PHU-6G-j00"/>
+                            <constraint firstItem="OdS-PQ-eoy" firstAttribute="centerX" secondItem="9fY-gq-YCh" secondAttribute="centerX" id="h00-H1-b5A"/>
+                            <constraint firstItem="OdS-PQ-eoy" firstAttribute="top" secondItem="sVD-hw-3Nh" secondAttribute="bottom" constant="33" id="kgs-j1-ylb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pLe-wy-2uh">
@@ -312,6 +326,7 @@
                     <connections>
                         <outlet property="lblNextTurn" destination="sVD-hw-3Nh" id="Kjq-ol-rSE"/>
                         <outlet property="membersPickerView" destination="F9n-5V-bfa" id="d8e-l9-AHX"/>
+                        <outlet property="nextTurnTxtField" destination="OdS-PQ-eoy" id="nQC-Yt-D6a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WNh-uP-nUk" userLabel="First Responder" sceneMemberID="firstResponder"/>

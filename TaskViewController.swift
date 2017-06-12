@@ -17,6 +17,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var contacts = [CNContact]()
     var selectedMemberTitle:String = ""
 
+    @IBOutlet weak var nextTurnTxtField: UITextField!
     @IBOutlet weak var txtTaskName: UILabel!
     @IBOutlet weak var lblNextTurn: UILabel!
     @IBOutlet weak var membersPickerView: UIPickerView!
@@ -24,10 +25,19 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskViewController.dismissPickerAndKb))
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
         self.membersPickerView.dataSource = self;
         self.membersPickerView.delegate = self;
         self.membersPickerView.showsSelectionIndicator = true
         navigationController?.delegate = self
+        
+        membersPickerView.removeFromSuperview()
+        nextTurnTxtField.inputView = membersPickerView
         
         contacts = Utilities.loadContacts()
         
@@ -39,11 +49,16 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             // todo: async
             if let nextTurnPhnNum = currentTask?["NextTurnUserName"] as? String {
                 selectedMemberTitle = Utilities.getContactNameFromPhnNum(phnNum: nextTurnPhnNum)
+                nextTurnTxtField.text = selectedMemberTitle != "" ? selectedMemberTitle : ""
             }
             
             loadMembers()
-            lblNextTurn.text = "Next turn: " + selectedMemberTitle
+            //lblNextTurn.text = "Next turn: " + selectedMemberTitle
         }
+    }
+    
+    func dismissPickerAndKb() {
+        view.endEditing(false)
     }
     
     func getAndSelectCurrentNextTurnMember() -> Int?{
@@ -80,6 +95,14 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                 }
             }
         })
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if(textField == nextTurnTxtField){
+            return false
+        }
+        return true
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,14 +142,16 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func clearTaskDetails(){
-        lblNextTurn.text = "Next Turn: "
+        //lblNextTurn.text = "Next Turn: "
         pickerDataSource.removeAll()
+        nextTurnTxtField.text = ""
     }
     
     func setSelectedRowTitle(){
         let selectedRow = membersPickerView.selectedRow(inComponent: 0)
         selectedMemberTitle = pickerView(membersPickerView, titleForRow: selectedRow, forComponent: 0)!
-        lblNextTurn.text = "Next Turn: " + selectedMemberTitle
+        //lblNextTurn.text = "Next Turn: " + selectedMemberTitle
+        nextTurnTxtField.text = selectedMemberTitle
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool){

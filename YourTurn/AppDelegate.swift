@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import libPhoneNumber_iOS
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,6 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         Parse.initialize(with: configuration)
         
+        /*
+        let f = NBPhoneNumberUtil.sharedInstance()
+        print(f!.getCountryCode(forRegion: "US"))
+        print(f!.extractPossibleNumber("+1 (305) 775 - 0907"))
+        do{
+            try print(f!.getExampleNumber("US"))
+            try print(f!.parse("+1 (305) 775 - 0907", defaultRegion: "US"))
+        }catch{}
+        */
         
         if(PFUser.current() != nil){
             //PFUser.logOut()
