@@ -151,6 +151,10 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         
         task["Admin"] = PFUser.current()
+        
+        // adding only cuurent user to task's members list
+        // Cloud code will take care of adding rest of the selected users to the task's members list
+        // It will also take care of adding task to the user's tasks list
         task["Members"] = [PFUser.current()]
         
         let bfTask = task.saveInBackground()
