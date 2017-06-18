@@ -72,11 +72,9 @@ class Utilities{
                     
                     // Array containing all unified contacts from everywhere
                     if(contact.phoneNumbers.count > 0){
-                        
                         contacts.append(contact)
                     }
                 }
-                
                 if self.contacts.count > 0{
                     self.contacts.sort(by: { (cn1, cn2) -> Bool in
                         return (cn1.givenName + cn1.familyName).lowercased() < (cn2.givenName + cn2.familyName).lowercased()
@@ -84,10 +82,9 @@ class Utilities{
                 }
             }
             catch {
-                print("unable to fetch contacts")
+                //print("unable to fetch contacts")
             }
         }
-            
         return contacts
     }
     

@@ -36,8 +36,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(PFUser.current() != nil){
             //PFUser.logOut()
             
+            /*
             // TODO: Can it run async on new background thread, rather than main thread?
             DispatchQueue.main.async() {
+                _ = Utilities.loadContacts()
+            }*/
+            
+            // using non main background thread
+            // TODO: study more about these threads
+            let backgroundQueue = DispatchQueue(label: "loadContacts", qos: .background)
+            backgroundQueue.async {
                 _ = Utilities.loadContacts()
             }
         }

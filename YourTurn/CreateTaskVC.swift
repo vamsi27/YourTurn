@@ -61,7 +61,6 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         } else {
             searchActive = true
         }
-        
         self.tableView.reloadData()
     }
     
@@ -74,8 +73,6 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         endEditing()
         self.dismiss(animated: true, completion: nil)
     }
-    
-    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         var numOfSections: Int = 1
@@ -103,15 +100,12 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         return contacts.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cellIdentifier = "contactsCell"
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ContactsTableViewCell  else {
             fatalError("The dequeued cell is not an instance of TasksTableViewCell.")
         }
-        
         let contact:CNContact
         
         if(searchActive){
@@ -121,7 +115,6 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         }
         
         cell.nameLbl.text = contact.givenName.isEmpty ? contact.familyName : contact.givenName + " " + contact.familyName
-        
         return cell
     }
     
