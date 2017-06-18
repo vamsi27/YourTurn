@@ -35,6 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if(PFUser.current() != nil){
             //PFUser.logOut()
+            
+            // TODO: Can it run async on new background thread, rather than main thread?
             DispatchQueue.main.async() {
                 _ = Utilities.loadContacts()
             }
@@ -48,34 +50,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         setupNavigationBarStyling()
-        
-        
         return true
     }
     
     func setupNavigationBarStyling(){
-        //0091FF
-        
         UINavigationBar.appearance().barTintColor = UIColor(red: 0, green: 145/255, blue: 255/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
-
-        
     }
     
     func setUpInitialViewController(viewIdentifier: String){
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
         let initialViewController = storyboard.instantiateViewController(withIdentifier: viewIdentifier)
-        
         self.window?.rootViewController = initialViewController
-        //self.window?.makeKeyAndVisible()
-        
     }
-    
-    
-    
     
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -98,7 +86,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-    
-    
 }
 

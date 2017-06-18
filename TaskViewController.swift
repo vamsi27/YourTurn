@@ -14,6 +14,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     var currentTask:PFObject?
     var pickerDataSource = [PFUser]()
+    var titles = [String]()
     var contacts = [CNContact]()
     var selectedMemberTitle:String = ""
 
@@ -25,9 +26,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskViewController.dismissPickerAndKb))
-        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
@@ -49,14 +48,11 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         if(currentTask != nil && !(currentTask?.objectId?.isEmpty)!){
             title = currentTask?["Name"]! as? String
             
-            // todo: async
             if let nextTurnPhnNum = currentTask?["NextTurnUserName"] as? String {
                 selectedMemberTitle = Utilities.getContactNameFromPhnNum(phnNum: nextTurnPhnNum)
                 nextTurnTxtField.text = selectedMemberTitle != "" ? selectedMemberTitle : ""
             }
-            
             loadMembers()
-            //lblNextTurn.text = "Next turn: " + selectedMemberTitle
         }
     }
     
@@ -76,17 +72,15 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func loadMembers(){
-        
         let query = PFQuery(className: "Task")
         query.whereKey("objectId", equalTo: currentTask!.objectId!)
         query.includeKey("Members")
         query.includeKey("NextTurnMember")
         
-        
         query.getFirstObjectInBackground(block: { (task, error) in
             if(error == nil && task != nil){
                 self.pickerDataSource = task?["Members"] as! [PFUser]
-                
+                self.loadTitles()
                 let nextTurnMemberIndex = self.getAndSelectCurrentNextTurnMember()
                 DispatchQueue.main.async {
                     self.membersPickerView.reloadAllComponents()
@@ -101,8 +95,13 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         })
     }
     
+    func loadTitles(){
+        self.pickerDataSource.forEach { (user) in
+            titles.append(Utilities.getContactNameFromPhnNum(phnNum: user.username!))
+        }
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
         if(textField == nextTurnTxtField){
             return false
         }
@@ -124,10 +123,18 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
-        // do we need to fetch it everytime?
+        /*
+        //This was very slow, hence moved to using titles array - which saves titles in background
+         
         let phnNum = (pickerDataSource[row] as PFUser).username
         let x = Utilities.getContactNameFromPhnNum(phnNum: phnNum!)
         return x
+        */
+        
+        if(row >= 0 && row < titles.count){
+            return titles[row]
+        }
+        return ""
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
@@ -146,15 +153,14 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func clearTaskDetails(){
-        //lblNextTurn.text = "Next Turn: "
         pickerDataSource.removeAll()
         nextTurnTxtField.text = ""
+        titles.removeAll()
     }
     
     func setSelectedRowTitle(){
         let selectedRow = membersPickerView.selectedRow(inComponent: 0)
         selectedMemberTitle = pickerView(membersPickerView, titleForRow: selectedRow, forComponent: 0)!
-        //lblNextTurn.text = "Next Turn: " + selectedMemberTitle
         nextTurnTxtField.text = selectedMemberTitle
     }
     
@@ -163,15 +169,8 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             (viewController as? TasksTableVC)?.selectedTaskNextUserName = selectedMemberTitle
         }
     }
-    
-    
-    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        
-        
-        
     }
 
 }
