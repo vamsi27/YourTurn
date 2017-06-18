@@ -19,17 +19,13 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     var selectedPhnNum:String? = nil
     var existingGroupContacts = [CNContact]()
     
-    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         searchBar.delegate = self
-        
         contacts = Utilities.loadContacts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
     }
     
     func endEditing(){
@@ -53,7 +49,6 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         filteredContacts = contacts.filter({ (contact) -> Bool in
             let tmp: String = contact.givenName.isEmpty ? contact.familyName : contact.givenName + " " + contact.familyName
             
@@ -62,10 +57,11 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         })
         
         if(filteredContacts.count == 0){
-            searchActive = false;
+            searchActive = false
         } else {
-            searchActive = true;
+            searchActive = true
         }
+        
         self.tableView.reloadData()
     }
     
@@ -101,11 +97,9 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if(searchActive) {
             return filteredContacts.count
         }
-        
         return contacts.count
     }
     
@@ -137,12 +131,10 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if(searchActive){
+        if(searchActive && filteredContacts.count > indexPath.row){
             selectedContact = filteredContacts[indexPath.row]
-            filteredContacts.remove(at: indexPath.row)
         }else{
             selectedContact = contacts[indexPath.row]
-            contacts.remove(at: indexPath.row)
         }
         
         // SHOW DIALOG BOX TO SELECT WHICH # THEY WANT
@@ -153,10 +145,7 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
             self.processSelectedPhnNum()
         }
         else{
-            let alert = UIAlertController(title: "Nice Try!", message: "This member has no phone numbers saved.", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
-                
-            }))
+            let alert = Utilities.createOKAlertMsg(title: "Nice Try!", message: "This member has no phone numbers saved.")
             present(alert, animated: true, completion: nil)
             return
         }
@@ -164,35 +153,19 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         tableView.deselectRow(at: indexPath, animated: false)
     }
     
-    // TODO: Do not check only on first number
+    // Exisitng group members will have only 1phn# so 0th index is fine
     func isSelectedContactPartOfGroup(conatctNum: String) -> Bool {
         return existingGroupContacts.contains(where: { (c) -> Bool in
             return Utilities.getContactPlainPhnNum(number: c.phoneNumbers[0].value.stringValue) == Utilities.getContactPlainPhnNum(number: conatctNum)
         })
     }
     
-    
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    
-    
-    
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            // tasks.remove(at: indexPath.row)
-            // tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
+        return false
     }
     
     func choosePhnNum(contact: CNContact){
-        
         if (contact.phoneNumbers.count <= 1){
             return
         }
@@ -200,38 +173,25 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         let optionMenu = UIAlertController(title: "Select a number", message: nil, preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
-            
         })
         
         contact.phoneNumbers.forEach { (c) in
-            
             let numStr = c.value.stringValue
-            
             let numAction = UIAlertAction(title: numStr, style: .default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                self.endEditing()
                 self.selectedPhnNum = alert.title!
                 self.processSelectedPhnNum()
-                
             })
-            
             optionMenu.addAction(numAction)
         }
-        
         optionMenu.addAction(cancelAction)
         self.present(optionMenu, animated: true, completion: nil)
     }
     
     func processSelectedPhnNum(){
         if (isSelectedContactPartOfGroup(conatctNum: selectedPhnNum!)){
-            let alert = UIAlertController(title: "Nice Try!", message: "This member is already part of the group", preferredStyle: UIAlertControllerStyle.alert)
-            
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
-                self.tableView.setEditing(false, animated: true)
-            }))
-            
+            let alert = Utilities.createOKAlertMsg(title: "Nice Try!", message: "Member already a part of the group.")
             present(alert, animated: true, completion: nil)
-            
         }else{
             endEditing()
             self.performSegue(withIdentifier: "unwindToCreateTaskSegue", sender: self)

@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YourTurn/CreateTaskVC.swift"
-            timestampString = "519441401.283387"
+            timestampString = "519447607.568816"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -794,11 +794,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YourTurn/CreateTaskVC.swift"
-            timestampString = "519441401.283387"
+            timestampString = "519449441.713522"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "188"
+            endingLineNumber = "188"
             landmarkName = "choosePhnNum(contact:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -810,11 +810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YourTurn/CreateTaskVC.swift"
-            timestampString = "519441401.283387"
+            timestampString = "519449441.713522"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "processSelectedPhnNum()"
             landmarkType = "7">
          </BreakpointContent>
@@ -826,12 +826,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YourTurn/CreateTaskVC.swift"
-            timestampString = "519441387.033337"
+            timestampString = "519447416.034598"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "searchBarTextDidEndEditing(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -842,105 +842,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YourTurn/CreateTaskVC.swift"
-            timestampString = "519441651.379391"
+            timestampString = "519449441.713522"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "CreateTaskVC"
-            landmarkType = "3">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourTurn.CreateTaskVC.searchActive.getter : Swift.Bool"
-                  moduleName = "YourTurn"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vmzi/Documents/iOS%20Apps/YourTurn/YourTurn/CreateTaskVC.swift"
-                  timestampString = "519441668.035687"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourTurn.CreateTaskVC.searchActive.setter : Swift.Bool"
-                  moduleName = "YourTurn"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vmzi/Documents/iOS%20Apps/YourTurn/YourTurn/CreateTaskVC.swift"
-                  timestampString = "519441668.03704"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "40">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourTurn.CreateTaskVC.init (style : __C.UITableViewStyle) -&gt; YourTurn.CreateTaskVC"
-                  moduleName = "YourTurn"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vmzi/Documents/iOS%20Apps/YourTurn/YourTurn/CreateTaskVC.swift"
-                  timestampString = "519441668.038974"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "176">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourTurn.CreateTaskVC.init (nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;__ObjC.Bundle&gt;) -&gt; YourTurn.CreateTaskVC"
-                  moduleName = "YourTurn"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vmzi/Documents/iOS%20Apps/YourTurn/YourTurn/CreateTaskVC.swift"
-                  timestampString = "519441668.041615"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "240">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "YourTurn.CreateTaskVC.init (coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;YourTurn.CreateTaskVC&gt;"
-                  moduleName = "YourTurn"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/vmzi/Documents/iOS%20Apps/YourTurn/YourTurn/CreateTaskVC.swift"
-                  timestampString = "519441668.045098"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "17"
-                  endingLineNumber = "17"
-                  offsetFromSymbolStart = "176">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "YourTurn/CreateTaskVC.swift"
-            timestampString = "519441692.162971"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "choosePhnNum(contact:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

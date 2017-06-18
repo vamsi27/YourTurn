@@ -103,4 +103,12 @@ class Utilities{
         contactData.phoneNumbers = [yourPhnNum]
         return contactData
     }
+    
+    static func createOKAlertMsg(title: String, message: String) -> UIAlertController{
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+            
+        }))
+        return alert
+    }
 }
