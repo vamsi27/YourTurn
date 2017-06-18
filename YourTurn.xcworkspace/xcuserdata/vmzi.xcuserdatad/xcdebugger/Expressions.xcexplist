@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "CreateTaskVC.tableView(UITableView, didSelectRowAt : IndexPath) -&gt; ():CreateTaskVC.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "(CNContact)((Class)0x21a1ad3f32f9)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "CreateTask1VC.createTask() -&gt; ():CreateTask1VC.swift">
          <PersistentStrings>
             <PersistentString

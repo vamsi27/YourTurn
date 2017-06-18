@@ -33,23 +33,17 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         if groupMembers.count == 0 {
             
-            let yourPhnNum = CNLabeledValue(label: CNLabelHome,value: CNPhoneNumber(stringValue: (PFUser.current()?.username)!))
+            // TODO: Format it
+            let contactData = Utilities.createDummyContact(givenName: "You", phnNum: (PFUser.current()?.username)!)
             
-            let contactData = CNMutableContact()
-            contactData.givenName = "You"
-            
-            contactData.phoneNumbers = [yourPhnNum]
             groupMembers.append(contactData)
             groupMembersTbl.reloadData()
-            
         }
         
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CreateTask1VC.endEditing))
-        
         //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
         tap.cancelsTouchesInView = false
-        
         self.view.addGestureRecognizer(tap)
     }
     
@@ -103,8 +97,6 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let conactName = Utilities.getContactFullName(cnConatct: contact)
         let contactPhnNum = contact.phoneNumbers[0].value.stringValue
         
-        
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? GroupMemberTableViewCell  else {
             fatalError("The dequeued cell is not an instance of TasksTableViewCell.")
         }
@@ -117,9 +109,14 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return 60
     }
     
+    // contacts list passes contact only with selected# if contact has multiple, so check only for 0 index
     @IBAction func unwindToCreateTask(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? CreateTaskVC, let selectedContact = sourceViewController.selectedContact {
-            groupMembers.append(selectedContact)
+        if let sourceViewController = sender.source as? CreateTaskVC, let selectedContact = sourceViewController.selectedContact, let selectedPhnNum = sourceViewController.selectedPhnNum {
+            
+            // do not add selectedContact directly, or else we wouldn't know which num was selected
+            let contactData = Utilities.createDummyContact(givenName: Utilities.getContactGivenName(cnConatct: selectedContact), phnNum: selectedPhnNum)
+            
+            groupMembers.append(contactData)
             groupMembersTbl.reloadData()
         }
     }
@@ -145,10 +142,11 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let task = PFObject(className:"Task")
         task["Name"] = taskNameTxtField.text!
         
-        // __def_ctask_uturn.png
         if(self.taskImageBtn.backgroundImage(for: UIControlState.normal) != nil && imageSelected){
             let imageData = UIImagePNGRepresentation(self.taskImageBtn.backgroundImage(for: UIControlState.normal)!)
             let imageFile = PFFile(name:"taskImage.png", data:imageData!)
+            
+            // TODO: Compress image to a reasonable size
             task["DisplayImage"] = imageFile
         }
         
@@ -172,10 +170,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 currentUser?.saveInBackground {
                     (succeeded: Bool, error: Error?) -> Void in
                     if let error = error {
-                        //self.showOKAlertMsg(title: "Error", message: "Unable to sign up. Please try again.")
                         print(error)
                     } else {
-                        
                         // Cloud code to fetch other users (create accounts if required) and add to task
                         print(task.objectId!)
                         params["tskId"] = task.objectId
@@ -185,58 +181,48 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                         self.performSegue(withIdentifier: "unwindToCreateTaskList", sender: self)
                     }
                 }}
-            
             return nil
         })
     }
     
     func addMemebersToTheTask(params:[String : Any]){
-        
         PFCloud.callFunction(inBackground: "addMembersToTask", withParameters: params){ (response, error) in
             if error == nil {                
             } else {
-                print(error ?? "zzz")
+                // Couldn't add members to task
             }
         }
     }
     
     @IBAction func taskImageAction(_ sender: Any) {
-        
         showSelectPhotoPopupMenu()
-        
-        
     }
     
     func showSelectPhotoPopupMenu(){
         
-        // 1
         let optionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        // 2
-        let deleteAction = UIAlertAction(title: "Take Photo", style: .default, handler: {
+        let takePhotoAction = UIAlertAction(title: "Take Photo", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             self.startPhotoPicker(useCamera: true)
         })
-        let saveAction = UIAlertAction(title: "Choose Photo", style: .default, handler: {
+        
+        let choosePhotoAction = UIAlertAction(title: "Choose Photo", style: .default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             self.startPhotoPicker(useCamera: false)
         })
         
-        //
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
             (alert: UIAlertAction!) -> Void in
             print("Cancelled")
         })
         
-        
-        // 4
-        optionMenu.addAction(deleteAction)
-        optionMenu.addAction(saveAction)
+        optionMenu.addAction(takePhotoAction)
+        optionMenu.addAction(choosePhotoAction)
         optionMenu.addAction(cancelAction)
         
-        // 5
         self.present(optionMenu, animated: true, completion: nil)
         
     }

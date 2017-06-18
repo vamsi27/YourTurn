@@ -36,6 +36,9 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         self.membersPickerView.showsSelectionIndicator = true
         navigationController?.delegate = self
         
+        //nextTurnTxtField.rightView = UIImageView(image: UIImage(named:"dda.png"))
+        //nextTurnTxtField.rightViewMode = UITextFieldViewMode.always
+        
         membersPickerView.removeFromSuperview()
         nextTurnTxtField.inputView = membersPickerView
         

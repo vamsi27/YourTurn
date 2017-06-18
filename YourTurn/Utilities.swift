@@ -8,31 +8,26 @@
 
 import Foundation
 import ContactsUI
+import libPhoneNumber_iOS
 
 class Utilities{
     
     static var contacts = [CNContact]()
+    static var phoneNumberUtil = NBPhoneNumberUtil.sharedInstance()
+    static var countryCode = (Locale.current as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
     
     static func getContactFullName(cnConatct: CNContact?) -> String {
-        
-        
         if let contact = cnConatct{
-        
         return contact.givenName.isEmpty ? contact.familyName : contact.givenName + " " + contact.familyName
         }
-        
         return ""
     }
     
     static func getContactGivenName(cnConatct: CNContact?) -> String {
-        
-        
         if let contact = cnConatct{
-            
             //print(contact.givenName.isEmpty ? contact.familyName : contact.givenName)
             return contact.givenName.isEmpty ? contact.familyName : contact.givenName
         }
-        
         return ""
     }
     
@@ -42,7 +37,21 @@ class Utilities{
         if number.isEmpty {
             return ""
         }
-        return number.replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "").replacingOccurrences(of: "\u{00A0}", with: "")
+        
+        var num = number.replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "").replacingOccurrences(of: "\u{00A0}", with: "")
+        
+        if (!num.hasPrefix("+")){
+            
+            if let dialingCode = getCountryDialingCode(code: countryCode){
+                num = dialingCode + num
+            }
+        }
+        return num
+    }
+    
+    static func getCountryDialingCode(code: String) -> String? {
+        let phoneCode: String? = "+\(phoneNumberUtil?.getCountryCode(forRegion: code) ?? 0)"
+        return phoneCode
     }
     
     static func loadContacts() -> [CNContact]{
@@ -57,7 +66,7 @@ class Utilities{
                     
                     // Array containing all unified contacts from everywhere
                     if(contact.phoneNumbers.count > 0){
-                        // TODO: Validate phn# and then only append
+                        
                         contacts.append(contact)
                     }
                 }
@@ -84,5 +93,14 @@ class Utilities{
         }
         return contact != nil ? getContactGivenName(cnConatct: contact) : phnNum
     }
-
+    
+    static func createDummyContact(givenName: String, phnNum: String) -> CNContact{
+        
+        let yourPhnNum = CNLabeledValue(label: CNLabelHome,value: CNPhoneNumber(stringValue: phnNum))
+        
+        let contactData = CNMutableContact()
+        contactData.givenName = givenName
+        contactData.phoneNumbers = [yourPhnNum]
+        return contactData
+    }
 }

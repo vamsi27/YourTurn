@@ -13,14 +13,10 @@ import libPhoneNumber_iOS
 class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCodePickerDelegate {
     
     @IBOutlet weak var txtFlagImage: UITextField!
-    
     @IBOutlet weak var txtPhnNum: UITextField!
-    
-    var txtCountryCode:String = ""
-    
     @IBOutlet weak var pickerViewCountry: CountryPicker!
-    
     @IBOutlet weak var btnContinue: UIButton!
+    var txtCountryCode:String = ""
     
     override func viewDidLoad() {
         
@@ -31,12 +27,10 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         
         //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
         tap.cancelsTouchesInView = false
-        
         view.addGestureRecognizer(tap)
         
         let locale = Locale.current
         let code = (locale as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
-        
         
         btnContinue.isEnabled = false
         btnContinue.adjustsImageWhenDisabled = true
@@ -49,25 +43,15 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         txtFlagImage.delegate = self
         txtFlagImage.inputView = pickerViewCountry
         
-        
-        
         pickerViewCountry.countryPhoneCodeDelegate = self
         let defaultCountry = pickerViewCountry.setCountry(code)
         
-        
-        
         setCountryFlagToButton(code: code)
         txtCountryCode = (defaultCountry?.phoneCode)!
-        
-        //addDoneButtonOnKeyboard()
-        //addDoneButtonOnCountryKeyboard()
     }
     
     func dismissPickerAndKb() {
         view.endEditing(false)
-        
-        //txtFlagImage.resignFirstResponder()
-        //txtPhnNum.resignFirstResponder()
     }
     
     func setCountryFlagToButton(code: String){
@@ -82,24 +66,18 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
             return false
         }
         
-        
         if(textField == txtPhnNum){
-            
             guard let text = textField.text else { return true }
             let newLength = text.characters.count + string.characters.count - range.length
-            
             btnContinue.isEnabled = newLength >= 10
             
             return newLength <= 10 && !txtCountryCode.isEmpty
         }
-        
         return true
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        
         btnContinue.isEnabled = false
-        
         return true
     }
     
@@ -107,7 +85,6 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     // MARK: - CountryPhoneCodePicker Delegate
     
     func countryPhoneCodePicker(_ picker: CountryPicker, didSelectCountryCountryWithName name: String, countryCode: String, phoneCode: String) {
-        
         setCountryFlagToButton(code: countryCode)
         txtCountryCode = phoneCode
     }
@@ -122,7 +99,6 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     @IBAction func continueToConfirmCodeAction(_ sender: Any) {
         
         let fullPhnNum = txtCountryCode + txtPhnNum.text!
-        
         let params = ["phoneNumber":fullPhnNum] as [String : Any]
         
         PFCloud.callFunction(inBackground: "sendVerificationCode", withParameters: params){ (response, error) in

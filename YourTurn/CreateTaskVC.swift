@@ -16,6 +16,7 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     var filteredContacts = [CNContact]()
     var searchActive : Bool = false
     var selectedContact:CNContact? = nil
+    var selectedPhnNum:String? = nil
     var existingGroupContacts = [CNContact]()
     
     
@@ -24,9 +25,11 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         super.viewDidLoad()
         searchBar.delegate = self
         
-        // Do any additional setup after loading the view.
-        
         contacts = Utilities.loadContacts()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     func endEditing(){
@@ -142,25 +145,29 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
             contacts.remove(at: indexPath.row)
         }
         
-        if (isSelectedContactPartOfGroup(conatct: selectedContact!)){
-        //if (existingGroupContacts.contains(selectedContact!)){
-            let alert = UIAlertController(title: "Nice Try!", message: "This member is already part of the group", preferredStyle: UIAlertControllerStyle.alert)
-            
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
-                self.tableView.setEditing(false, animated: true)
-            }))
-            
-            present(alert, animated: true, completion: nil)
-        
-        }else{
-            endEditing()
-            self.performSegue(withIdentifier: "unwindToCreateTaskSegue", sender: self)
+        // SHOW DIALOG BOX TO SELECT WHICH # THEY WANT
+        if((selectedContact?.phoneNumbers.count)! > 1){
+            choosePhnNum(contact: selectedContact!)
+        }else if (selectedContact?.phoneNumbers.count == 1){
+            selectedPhnNum = (selectedContact?.phoneNumbers[0].value.stringValue)!
+            self.processSelectedPhnNum()
         }
+        else{
+            let alert = UIAlertController(title: "Nice Try!", message: "This member has no phone numbers saved.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+                
+            }))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
-    func isSelectedContactPartOfGroup(conatct: CNContact) -> Bool {
+    // TODO: Do not check only on first number
+    func isSelectedContactPartOfGroup(conatctNum: String) -> Bool {
         return existingGroupContacts.contains(where: { (c) -> Bool in
-            return Utilities.getContactPlainPhnNum(number: c.phoneNumbers[0].value.stringValue) == Utilities.getContactPlainPhnNum(number: conatct.phoneNumbers[0].value.stringValue)
+            return Utilities.getContactPlainPhnNum(number: c.phoneNumbers[0].value.stringValue) == Utilities.getContactPlainPhnNum(number: conatctNum)
         })
     }
     
@@ -184,21 +191,52 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
         }
     }
     
+    func choosePhnNum(contact: CNContact){
+        
+        if (contact.phoneNumbers.count <= 1){
+            return
+        }
+        
+        let optionMenu = UIAlertController(title: "Select a number", message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+        })
+        
+        contact.phoneNumbers.forEach { (c) in
+            
+            let numStr = c.value.stringValue
+            
+            let numAction = UIAlertAction(title: numStr, style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                self.endEditing()
+                self.selectedPhnNum = alert.title!
+                self.processSelectedPhnNum()
+                
+            })
+            
+            optionMenu.addAction(numAction)
+        }
+        
+        optionMenu.addAction(cancelAction)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
     
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
+    func processSelectedPhnNum(){
+        if (isSelectedContactPartOfGroup(conatctNum: selectedPhnNum!)){
+            let alert = UIAlertController(title: "Nice Try!", message: "This member is already part of the group", preferredStyle: UIAlertControllerStyle.alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { (action: UIAlertAction!) in
+                self.tableView.setEditing(false, animated: true)
+            }))
+            
+            present(alert, animated: true, completion: nil)
+            
+        }else{
+            endEditing()
+            self.performSegue(withIdentifier: "unwindToCreateTaskSegue", sender: self)
+        }
+    }
     
     /*
      // MARK: - Navigation
