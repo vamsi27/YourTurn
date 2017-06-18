@@ -11,6 +11,7 @@ import ContactsUI
 import Parse
 import RSKImageCropper
 import DKImagePickerController
+import libPhoneNumber_iOS
 
 
 class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSource, RSKImageCropViewControllerDelegate, RSKImageCropViewControllerDataSource {
@@ -32,10 +33,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         setupTaskImageBtn()
         
         if groupMembers.count == 0 {
-            
-            // TODO: Format it
             let contactData = Utilities.createDummyContact(givenName: "You", phnNum: (PFUser.current()?.username)!)
-            
             groupMembers.append(contactData)
             groupMembersTbl.reloadData()
         }

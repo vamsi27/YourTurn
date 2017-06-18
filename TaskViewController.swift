@@ -86,6 +86,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         query.getFirstObjectInBackground(block: { (task, error) in
             if(error == nil && task != nil){
                 self.pickerDataSource = task?["Members"] as! [PFUser]
+                
                 let nextTurnMemberIndex = self.getAndSelectCurrentNextTurnMember()
                 DispatchQueue.main.async {
                     self.membersPickerView.reloadAllComponents()

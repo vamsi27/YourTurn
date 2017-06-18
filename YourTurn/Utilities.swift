@@ -32,21 +32,28 @@ class Utilities{
     }
     
     // TODO: convert this into an extension method
-    // TODO: Add country code if not already present
     static func getContactPlainPhnNum(number: String) -> String {
         if number.isEmpty {
             return ""
         }
         
-        var num = number.replacingOccurrences(of: "(", with: "").replacingOccurrences(of: ")", with: "").replacingOccurrences(of: " ", with: "").replacingOccurrences(of: "-", with: "").replacingOccurrences(of: "\u{00A0}", with: "")
-        
-        if (!num.hasPrefix("+")){
-            
-            if let dialingCode = getCountryDialingCode(code: countryCode){
-                num = dialingCode + num
+        do{
+            if let num = try phoneNumberUtil?.parse(number, defaultRegion: countryCode){
+                // international std without formatting .... no leading zeroes as well
+                return try phoneNumberUtil!.format(num, numberFormat: NBEPhoneNumberFormat.E164)
             }
-        }
-        return num
+        }catch {}
+        
+        return ""
+    }
+    
+    static func isPhnNumValid(number: String)->Bool{
+        do{
+            if let num = try phoneNumberUtil?.parse(number, defaultRegion: countryCode){
+                return phoneNumberUtil!.isValidNumber(num)
+            }
+        }catch {}
+        return false
     }
     
     static func getCountryDialingCode(code: String) -> String? {
@@ -55,7 +62,6 @@ class Utilities{
     }
     
     static func loadContacts() -> [CNContact]{
-        
         if(contacts.count == 0 ){
             let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName),CNContactPhoneNumbersKey] as [Any]
             let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
@@ -96,7 +102,8 @@ class Utilities{
     
     static func createDummyContact(givenName: String, phnNum: String) -> CNContact{
         
-        let yourPhnNum = CNLabeledValue(label: CNLabelHome,value: CNPhoneNumber(stringValue: phnNum))
+        let formattedPhnNum = getContactPlainPhnNum(number: phnNum)
+        let yourPhnNum = CNLabeledValue(label: CNLabelHome,value: CNPhoneNumber(stringValue: formattedPhnNum))
         
         let contactData = CNMutableContact()
         contactData.givenName = givenName

@@ -189,7 +189,13 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     }
     
     func processSelectedPhnNum(){
-        if (isSelectedContactPartOfGroup(conatctNum: selectedPhnNum!)){
+        if(selectedPhnNum == nil){
+            let alert = Utilities.createOKAlertMsg(title: "Error", message: "Pleae try again.")
+            present(alert, animated: true, completion: nil)
+        }else if(!Utilities.isPhnNumValid(number: selectedPhnNum!)){
+            let alert = Utilities.createOKAlertMsg(title: "Nice Try!", message: "Member has invalid phone number.")
+            present(alert, animated: true, completion: nil)
+        }else if (isSelectedContactPartOfGroup(conatctNum: selectedPhnNum!)){
             let alert = Utilities.createOKAlertMsg(title: "Nice Try!", message: "Member already a part of the group.")
             present(alert, animated: true, completion: nil)
         }else{
