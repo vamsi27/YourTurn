@@ -76,22 +76,20 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         taskImageBtn.layer.cornerRadius = 45
         taskImageBtn.layer.borderWidth = 1
         taskImageBtn.layer.borderColor = UIColor.gray.cgColor
+        taskImageBtn.titleLabel!.lineBreakMode = .byWordWrapping
+        taskImageBtn.titleLabel!.textAlignment = .center
+        taskImageBtn.setTitle("add\nphoto", for: .normal)
         
         if existingTask != nil {
             if let taskImage = existingTask?["DisplayImage"] as? PFFile {
                 taskImage.getDataInBackground(block: { (imageData, error) in
                     if (error == nil && imageData != nil) {
                         let image = UIImage(data:imageData!)
-                        
                         self.taskImageBtn.setBackgroundImage(image, for: UIControlState.normal)
+                        self.taskImageBtn.setTitle("", for: .normal)
                     }
                 })
             }
-            taskImageBtn.setTitle("", for: .normal)
-        }else {
-            taskImageBtn.titleLabel!.lineBreakMode = .byWordWrapping
-            taskImageBtn.titleLabel!.textAlignment = .center
-            taskImageBtn.setTitle("add\nphoto", for: .normal)
         }
     }
     
