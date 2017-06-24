@@ -71,15 +71,16 @@ class TasksTableVC: UITableViewController {
         })
     }
     
-    var selectedTaskNextUserName:String = ""
-    
     override func viewWillAppear(_ animated: Bool) {
         // call to super will auto deselect table rows
         super.viewWillAppear(false)
     }
     
+    // will be set by TaskViewController while navigating back to this screen
+    var selectedTaskNextUserName:String = ""
+    
     override func viewDidAppear(_ animated: Bool) {
-        if(selectedTaskCellRow >= 0){
+        if(selectedTaskCellRow >= 0 && selectedTaskCellRow < tasks.count){
             tasks[selectedTaskCellRow]["NextTurnUserName"] = selectedTaskNextUserName
             self.tableView.reloadRows(at: [IndexPath(row: selectedTaskCellRow, section: 0)], with: UITableViewRowAnimation.top)
         }
