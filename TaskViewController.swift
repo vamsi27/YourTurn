@@ -147,7 +147,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         // TODO: return if selected the same row
         
         let nextTurnMember = pickerDataSource[row]
-        
         if let task = currentTask{
             setSelectedRowTitle()
             task["NextTurnMember"] = nextTurnMember
@@ -173,7 +172,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool){
-        if(!selectedMemberTitle.isEmpty){
+        if(!selectedMemberTitle.isEmpty && type(of: TasksTableVC()) == type(of: viewController)){
             (viewController as? TasksTableVC)?.selectedTaskNextUserName = selectedMemberTitle
         }
     }

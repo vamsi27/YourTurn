@@ -76,18 +76,13 @@ class TasksTableVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         // call to super will auto deselect table rows
         super.viewWillAppear(false)
-        
-        if(selectedTaskCellRow >= 0){
-            let cell = self.tableView.cellForRow(at: IndexPath(row: selectedTaskCellRow, section: 0)) as? TasksTableViewCell
-            cell?.taskWhosNextLbl.text  = "Next turn: " + selectedTaskNextUserName
-            self.tableView.reloadData()
-            
-        }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //print(self.tableView.indexPathForSelectedRow ?? 99)
+        if(selectedTaskCellRow >= 0){
+            tasks[selectedTaskCellRow]["NextTurnUserName"] = selectedTaskNextUserName
+            self.tableView.reloadRows(at: [IndexPath(row: selectedTaskCellRow, section: 0)], with: UITableViewRowAnimation.top)
+        }
     }
     
     override func didReceiveMemoryWarning() {
