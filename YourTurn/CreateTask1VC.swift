@@ -18,10 +18,12 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     var groupMembers = [CNContact]()
     var imageSelected:Bool = false
+    var existingTask:PFObject?
     
     @IBOutlet weak var taskImageBtn: UIButton!
     @IBOutlet weak var taskNameTxtField: UITextField!
     @IBOutlet weak var groupMembersTbl: UITableView!
+    @IBOutlet weak var rightBarButtonItem: UIBarButtonItem!
     
     
     override func viewDidLoad() {
@@ -30,13 +32,10 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         groupMembersTbl.delegate = self
         groupMembersTbl.dataSource = self
         
+        setupTaskName()
         setupTaskImageBtn()
-        
-        if groupMembers.count == 0 {
-            let contactData = Utilities.createDummyContact(givenName: "You", phnNum: (PFUser.current()?.username)!)
-            groupMembers.append(contactData)
-            groupMembersTbl.reloadData()
-        }
+        setupGroupMembers()
+        setupRightBarButton()
         
         //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CreateTask1VC.endEditing))
@@ -49,6 +48,22 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         view.endEditing(true)
     }
     
+    func setupTaskName(){
+        if(existingTask != nil){
+            taskNameTxtField.text = existingTask!["Name"] as? String
+        }else{
+            taskNameTxtField.text = ""
+        }
+    }
+    
+    func setupGroupMembers(){
+        if groupMembers.count == 0 && existingTask == nil {
+            let contactData = Utilities.createDummyContact(givenName: "You", phnNum: (PFUser.current()?.username)!)
+            groupMembers.append(contactData)
+            groupMembersTbl.reloadData()
+        }
+    }
+    
     func setupTaskImageBtn(){
         taskImageBtn.clipsToBounds = true
         taskImageBtn.layer.cornerRadius = 45
@@ -57,6 +72,10 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         taskImageBtn.titleLabel!.lineBreakMode = .byWordWrapping
         taskImageBtn.titleLabel!.textAlignment = .center
         taskImageBtn.setTitle("add\nphoto", for: .normal)
+    }
+    
+    func setupRightBarButton(){
+        rightBarButtonItem.title = existingTask != nil ? "Save" : "Create"
     }
     
     @IBAction func cancelBtnAction(_ sender: Any) {
@@ -124,9 +143,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         createTask()
     }
     
+    // TODO: can be modified to be used for update as well
     func createTask(){
-        
-        
         var params:[String : Any] = [:]
         var members:[String] = []
         

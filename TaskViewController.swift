@@ -131,6 +131,8 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         return x
         */
         
+        // TODO: Now that Utilities.getContactNameFromPhnNum has caching, do we still need to load 'titles' array
+        
         if(row >= 0 && row < titles.count){
             return titles[row]
         }
@@ -138,6 +140,10 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
+        
+        
+        // TODO: return if selected the same row
+        
         let nextTurnMember = pickerDataSource[row]
         
         if let task = currentTask{
@@ -171,6 +177,11 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "sbGoToSettingsScreen"){
+            let navController = segue.destination as! UINavigationController
+            let destination = navController.topViewController as! CreateTask1VC
+            destination.existingTask = currentTask
+        }
     }
 
 }

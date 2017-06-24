@@ -16,6 +16,9 @@ class Utilities{
     static var phoneNumberUtil = NBPhoneNumberUtil.sharedInstance()
     static var countryCode = (Locale.current as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
     
+    /*! Key is E164 format phnNum, Value will be Given Name */
+    static var phnNumNameDirectory = [String: String]()
+    
     static func getContactFullName(cnConatct: CNContact?) -> String {
         if let contact = cnConatct{
         return contact.givenName.isEmpty ? contact.familyName : contact.givenName + " " + contact.familyName
@@ -69,12 +72,12 @@ class Utilities{
             do {
                 try CNContactStore().enumerateContacts(with: request) {
                     (contact, stop) in
-                    
                     // Array containing all unified contacts from everywhere
                     if(contact.phoneNumbers.count > 0){
                         contacts.append(contact)
                     }
                 }
+                
                 if self.contacts.count > 0{
                     self.contacts.sort(by: { (cn1, cn2) -> Bool in
                         return (cn1.givenName + cn1.familyName).lowercased() < (cn2.givenName + cn2.familyName).lowercased()
@@ -82,19 +85,40 @@ class Utilities{
                 }
             }
             catch {
-                //print("unable to fetch contacts")
+                print("unable to fetch contacts")
             }
         }
         return contacts
     }
     
     static func getContactNameFromPhnNum(phnNum: String) -> String{
-        let contact = contacts.first { (c) -> Bool in
-            c.phoneNumbers.contains(where: { (p) -> Bool in
-                getContactPlainPhnNum(number: p.value.stringValue) == phnNum
-            })
+        /*
+         // Do I really need locking?
+         return sync(lock: phnNumNameDirectory) {
+         // move below code block here
+         }
+         */
+        
+        if let name = phnNumNameDirectory[phnNum]{
+            return name
+            
+        }else{
+            let contact = contacts.first { (c) -> Bool in
+                c.phoneNumbers.contains(where: { (p) -> Bool in
+                    getContactPlainPhnNum(number: p.value.stringValue) == phnNum
+                })
+            }
+            let name = contact != nil ? getContactGivenName(cnConatct: contact) : phnNum
+            phnNumNameDirectory[phnNum] = name
+            return name
         }
-        return contact != nil ? getContactGivenName(cnConatct: contact) : phnNum
+    }
+    
+    static func sync(lock: [String: String], closure: () -> String) -> String {
+        objc_sync_enter(lock)
+        let x = closure()
+        objc_sync_exit(lock)
+        return x
     }
     
     static func createDummyContact(givenName: String, phnNum: String) -> CNContact{

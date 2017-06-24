@@ -118,10 +118,15 @@ class TasksTableVC: UITableViewController {
         
         let nextTurnUserName = task["NextTurnUserName"] as? String
         
-        let uName = (nextTurnUserName == nil || nextTurnUserName!.isEmpty) ? "" : Utilities.getContactNameFromPhnNum(phnNum: nextTurnUserName!)
+        let backgroundQueue = DispatchQueue(label: "getContactNameFromPhnNum", qos: .background)
+        backgroundQueue.async {
+            let uName = (nextTurnUserName == nil || nextTurnUserName!.isEmpty) ? "" : Utilities.getContactNameFromPhnNum(phnNum: nextTurnUserName!)
+            DispatchQueue.main.async(execute: { () -> Void in
+                cell.taskWhosNextLbl.text = uName.isEmpty ? "Next turn: TBD" : "Next turn: " + uName
+            })
+        }
         
-        cell.taskWhosNextLbl.text = uName.isEmpty ? "Next turn: TBD" : "Next turn: " + uName
-        
+        // TDOD: Cache Image
         if let taskImage = task["DisplayImage"] as? PFFile {
             taskImage.getDataInBackground(block: { (imageData, error) in
                 if (error == nil && imageData != nil) {

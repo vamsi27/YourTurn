@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LUq-oS-tCf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LUq-oS-tCf">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -252,7 +252,7 @@
                     <navigationItem key="navigationItem" title="Your Tasks" id="bhJ-Qq-Iwj">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Hky-id-foO">
                             <connections>
-                                <segue destination="eA4-zt-YtL" kind="presentation" id="Wmf-YC-ep0"/>
+                                <segue destination="eA4-zt-YtL" kind="presentation" identifier="sbCreateNewTask" id="Wmf-YC-ep0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -319,7 +319,7 @@
                     <navigationItem key="navigationItem" id="pLe-wy-2uh">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="5GA-xc-UKm">
                             <connections>
-                                <segue destination="lDa-EO-dRc" kind="show" id="MzM-Ut-218"/>
+                                <segue destination="eA4-zt-YtL" kind="presentation" identifier="sbGoToSettingsScreen" id="36q-Tf-ZHn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -331,37 +331,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WNh-uP-nUk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3045.5999999999999" y="792.95352323838085"/>
-        </scene>
-        <!--Settings-->
-        <scene sceneID="XPl-VW-SLA">
-            <objects>
-                <viewController id="lDa-EO-dRc" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="cKY-jV-tWS"/>
-                        <viewControllerLayoutGuide type="bottom" id="beW-pn-FTr"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="G4c-by-SJG">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Change settings of your task here" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7it-uF-xMb">
-                                <rect key="frame" x="47" y="323" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Settings" id="4nH-IX-Knk">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="t4P-qG-EzW"/>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8yp-4L-jsW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3829.5999999999999" y="792.95352323838085"/>
+            <point key="canvasLocation" x="3162" y="793"/>
         </scene>
         <!--Select Members-->
         <scene sceneID="XVk-4Z-zpD">
@@ -579,6 +549,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="groupMembersTbl" destination="d9u-gL-CFM" id="NXA-PL-qcT"/>
+                        <outlet property="rightBarButtonItem" destination="mJ1-JQ-aBj" id="dgr-O5-cJK"/>
                         <outlet property="taskImageBtn" destination="Um1-cd-CDM" id="bpD-4l-78Q"/>
                         <outlet property="taskNameTxtField" destination="fvI-HH-5vi" id="TxE-MS-Z4M"/>
                         <segue destination="XpF-wq-Dc9" kind="unwind" identifier="unwindToCreateTaskList" unwindAction="unwindToTaskListWithSender:" id="thv-uz-lwl"/>
@@ -666,4 +637,7 @@
             <point key="canvasLocation" x="4224.8000000000002" y="1460.4197901049477"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="36q-Tf-ZHn"/>
+    </inferredMetricsTieBreakers>
 </document>
