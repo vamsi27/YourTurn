@@ -61,6 +61,13 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             let contactData = Utilities.createDummyContact(givenName: "You", phnNum: (PFUser.current()?.username)!)
             groupMembers.append(contactData)
             groupMembersTbl.reloadData()
+        }else if existingTask != nil {
+            let members = existingTask?["Members"] as! [PFUser]
+            members.forEach({ (member) in
+                let c = Utilities.createDummyContact(phnNum: member.username!)
+                groupMembers.append(c)
+            })
+            groupMembersTbl.reloadData()
         }
     }
     
@@ -69,9 +76,23 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         taskImageBtn.layer.cornerRadius = 45
         taskImageBtn.layer.borderWidth = 1
         taskImageBtn.layer.borderColor = UIColor.gray.cgColor
-        taskImageBtn.titleLabel!.lineBreakMode = .byWordWrapping
-        taskImageBtn.titleLabel!.textAlignment = .center
-        taskImageBtn.setTitle("add\nphoto", for: .normal)
+        
+        if existingTask != nil {
+            if let taskImage = existingTask?["DisplayImage"] as? PFFile {
+                taskImage.getDataInBackground(block: { (imageData, error) in
+                    if (error == nil && imageData != nil) {
+                        let image = UIImage(data:imageData!)
+                        
+                        self.taskImageBtn.setBackgroundImage(image, for: UIControlState.normal)
+                    }
+                })
+            }
+            taskImageBtn.setTitle("", for: .normal)
+        }else {
+            taskImageBtn.titleLabel!.lineBreakMode = .byWordWrapping
+            taskImageBtn.titleLabel!.textAlignment = .center
+            taskImageBtn.setTitle("add\nphoto", for: .normal)
+        }
     }
     
     func setupRightBarButton(){
@@ -111,7 +132,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let cellIdentifier = "groupMemberCell"
         
         let contact = groupMembers[indexPath.row]
-        let conactName = Utilities.getContactFullName(cnConatct: contact)
+        let conactName = Utilities.getFullNameFromContact(cnConatct: contact)
         let contactPhnNum = contact.phoneNumbers[0].value.stringValue
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? GroupMemberTableViewCell  else {
@@ -131,7 +152,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         if let sourceViewController = sender.source as? CreateTaskVC, let selectedContact = sourceViewController.selectedContact, let selectedPhnNum = sourceViewController.selectedPhnNum {
             
             // do not add selectedContact directly, or else we wouldn't know which num was selected
-            let contactData = Utilities.createDummyContact(givenName: Utilities.getContactGivenName(cnConatct: selectedContact), phnNum: selectedPhnNum)
+            let contactData = Utilities.createDummyContact(givenName: Utilities.getGivenNameFromContact(cnConatct: selectedContact), phnNum: selectedPhnNum)
             
             groupMembers.append(contactData)
             groupMembersTbl.reloadData()
@@ -143,8 +164,28 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         createTask()
     }
     
+    func validateTask() -> Bool {
+        if(taskNameTxtField.text == nil || taskNameTxtField.text!.isEmpty){
+            let alert = Utilities.createOKAlertMsg(title: "Task Name", message: "Hey, how about a name for your task?")
+            present(alert, animated: true, completion: nil)
+            return false
+        }
+        if(groupMembers.count == 0){
+            let alert = Utilities.createOKAlertMsg(title: "Members?", message: "Come on, add at least one member to your task!")
+            present(alert, animated: true, completion: nil)
+            return false
+        }
+        return true
+    }
+    
     // TODO: can be modified to be used for update as well
     func createTask(){
+        let isValidTask = validateTask()
+        
+        if(!isValidTask){
+            return
+        }
+        
         var params:[String : Any] = [:]
         var members:[String] = []
         
@@ -168,7 +209,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         task["Admin"] = PFUser.current()
         
-        // adding only cuurent user to task's members list
+        // adding only current user to task's members list
         // Cloud code will take care of adding rest of the selected users to the task's members list
         // It will also take care of adding task to the user's tasks list
         task["Members"] = [PFUser.current()]

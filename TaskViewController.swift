@@ -41,7 +41,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         membersPickerView.removeFromSuperview()
         nextTurnTxtField.inputView = membersPickerView
         
-        contacts = Utilities.loadContacts()
+        contacts = Utilities.getContacts()
         
         clearTaskDetails()
         
@@ -72,6 +72,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func loadMembers(){
+        
         let query = PFQuery(className: "Task")
         query.whereKey("objectId", equalTo: currentTask!.objectId!)
         query.includeKey("Members")
@@ -79,6 +80,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         query.getFirstObjectInBackground(block: { (task, error) in
             if(error == nil && task != nil){
+                self.currentTask = task
                 self.pickerDataSource = task?["Members"] as! [PFUser]
                 self.loadTitles()
                 let nextTurnMemberIndex = self.getAndSelectCurrentNextTurnMember()

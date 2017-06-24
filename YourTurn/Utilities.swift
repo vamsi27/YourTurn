@@ -12,23 +12,22 @@ import libPhoneNumber_iOS
 
 class Utilities{
     
-    static var contacts = [CNContact]()
+    private static var contacts = [CNContact]()
     static var phoneNumberUtil = NBPhoneNumberUtil.sharedInstance()
     static var countryCode = (Locale.current as NSLocale).object(forKey: NSLocale.Key.countryCode) as! String
     
     /*! Key is E164 format phnNum, Value will be Given Name */
     static var phnNumNameDirectory = [String: String]()
     
-    static func getContactFullName(cnConatct: CNContact?) -> String {
+    static func getFullNameFromContact(cnConatct: CNContact?) -> String {
         if let contact = cnConatct{
         return contact.givenName.isEmpty ? contact.familyName : contact.givenName + " " + contact.familyName
         }
         return ""
     }
     
-    static func getContactGivenName(cnConatct: CNContact?) -> String {
+    static func getGivenNameFromContact(cnConatct: CNContact?) -> String {
         if let contact = cnConatct{
-            //print(contact.givenName.isEmpty ? contact.familyName : contact.givenName)
             return contact.givenName.isEmpty ? contact.familyName : contact.givenName
         }
         return ""
@@ -64,8 +63,17 @@ class Utilities{
         return phoneCode
     }
     
-    static func loadContacts() -> [CNContact]{
+    static func getContacts() -> [CNContact]{
         if(contacts.count == 0 ){
+            populateContacts()
+        }
+        return contacts
+    }
+    
+    // TO BE USED ONLY FOR APPDELEGATE, SO THAT THE LIST IS POPULATED ON FIRST USE, WE NEED A VOID METHOD, 
+    // AS WE DO NOT WANT TO STORE UNUSED VLAUES IN APP DELEGATE'S SCOPE
+    static func populateContacts(){
+        if(contacts.count == 0){
             let keys = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName),CNContactPhoneNumbersKey] as [Any]
             let request = CNContactFetchRequest(keysToFetch: keys as! [CNKeyDescriptor])
             
@@ -86,9 +94,7 @@ class Utilities{
             }
             catch {
                 print("unable to fetch contacts")
-            }
-        }
-        return contacts
+            }}
     }
     
     static func getContactNameFromPhnNum(phnNum: String) -> String{
@@ -108,7 +114,7 @@ class Utilities{
                     getContactPlainPhnNum(number: p.value.stringValue) == phnNum
                 })
             }
-            let name = contact != nil ? getContactGivenName(cnConatct: contact) : phnNum
+            let name = contact != nil ? getGivenNameFromContact(cnConatct: contact) : phnNum
             phnNumNameDirectory[phnNum] = name
             return name
         }
@@ -130,6 +136,11 @@ class Utilities{
         contactData.givenName = givenName
         contactData.phoneNumbers = [yourPhnNum]
         return contactData
+    }
+    
+    static func createDummyContact(phnNum: String) -> CNContact{
+        let name = getContactNameFromPhnNum(phnNum: phnNum)
+        return createDummyContact(givenName: name, phnNum: phnNum)
     }
     
     static func createOKAlertMsg(title: String, message: String) -> UIAlertController{

@@ -22,7 +22,7 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        contacts = Utilities.loadContacts()
+        contacts = Utilities.getContacts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
