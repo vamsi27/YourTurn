@@ -22,21 +22,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // ****************************************************************************
         
         let configuration = ParseClientConfiguration {
-            
             $0.applicationId = "yourTurn3262017"
-            
             $0.server = "https://your-turn.herokuapp.com/parse"
             
             // Enable storing and querying data from Local Datastore.
             // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
             //$0.isLocalDatastoreEnabled = true
         }
+        
         Parse.initialize(with: configuration)
         
         if(PFUser.current() != nil){
             //PFUser.logOut()
             
-            _ = Utilities.populateContacts()
+            // TODO: test with at least 2K contacts
+            Utilities.populateContacts()
             
             /*
             // TODO: Can it run async on new background thread, rather than main thread?

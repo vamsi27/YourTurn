@@ -19,6 +19,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     var groupMembers = [CNContact]()
     var imageSelected:Bool = false
     var existingTask:PFObject?
+    var initialMembersCountOnSettingsScreen = -1
     
     @IBOutlet weak var taskImageBtn: UIButton!
     @IBOutlet weak var taskNameTxtField: UITextField!
@@ -58,6 +59,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     func setupGroupMembers(){
         if groupMembers.count == 0 && existingTask == nil {
+            initialMembersCountOnSettingsScreen = -1
             let contactData = Utilities.createDummyContact(givenName: "You", phnNum: (PFUser.current()?.username)!)
             groupMembers.append(contactData)
             groupMembersTbl.reloadData()
@@ -67,6 +69,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 let c = Utilities.createDummyContact(phnNum: member.username!)
                 groupMembers.append(c)
             })
+            initialMembersCountOnSettingsScreen = groupMembers.count
             groupMembersTbl.reloadData()
         }
     }
@@ -145,6 +148,27 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return 60
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // a non-admin should be able to remove the member added by him/her on the settings screen
+        return existingTask == nil || isCurrentUserTheAdmin() || indexPath.row >= initialMembersCountOnSettingsScreen
+    }
+    
+    func isCurrentUserTheAdmin() -> Bool {
+        return (existingTask?["Admin"] as! PFUser).username == PFUser.current()?.username
+    }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Remove"
+    }
+    
+    // Override to support editing the table view.
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            groupMembers.remove(at: indexPath.row)
+            groupMembersTbl.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
     // contacts list passes contact only with selected# if contact has multiple, so check only for 0 index
     @IBAction func unwindToCreateTask(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? CreateTaskVC, let selectedContact = sourceViewController.selectedContact, let selectedPhnNum = sourceViewController.selectedPhnNum {
@@ -178,6 +202,12 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     // TODO: can be modified to be used for update as well
     func createTask(){
+        
+        // prevent saving of task from settings screen as it's not ready yet
+        if(existingTask != nil){
+            return
+        }
+        
         let isValidTask = validateTask()
         
         if(!isValidTask){

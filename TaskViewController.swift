@@ -77,6 +77,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         query.whereKey("objectId", equalTo: currentTask!.objectId!)
         query.includeKey("Members")
         query.includeKey("NextTurnMember")
+        query.includeKey("Admin")
         
         query.getFirstObjectInBackground(block: { (task, error) in
             if(error == nil && task != nil){
