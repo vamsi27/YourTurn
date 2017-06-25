@@ -78,7 +78,8 @@ class TasksTableVC: UITableViewController {
             if(selectedTaskCellRow == 0){
                 self.tableView.reloadRows(at: [IndexPath(row: selectedTaskCellRow, section: 0)], with: UITableViewRowAnimation.top)
             }else{
-                // place the updated cell on the top
+                // reload place the updated cell on the top
+                self.tableView.reloadRows(at: [IndexPath(row: selectedTaskCellRow, section: 0)], with: UITableViewRowAnimation.none)
                 self.tableView.moveRow(at: IndexPath(row: selectedTaskCellRow, section: 0), to: IndexPath(row: 0, section: 0))
             }
         }
