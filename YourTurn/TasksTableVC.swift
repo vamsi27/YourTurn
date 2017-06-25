@@ -11,27 +11,14 @@ import ContactsUI
 import Parse
 
 class TasksTableVC: UITableViewController {
-    
-    
     var tasks = [PFObject]()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
-        // ###################### WILL NEED TO INSERT TASKS IN TABLE- After Save btnCick ##########
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = true
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.leftBarButtonItem = editButtonItem
-        
         loadTasksInDetail(refreshCtrl: false)
-        
         setupRefreshControl()
     }
-    
-    
     
     func setupRefreshControl(){
         self.refreshControl?.backgroundColor = UIColor(red: 248/255, green: 248/255, blue: 248/255, alpha: 1)
@@ -39,9 +26,7 @@ class TasksTableVC: UITableViewController {
         self.refreshControl?.addTarget(self, action: #selector(TasksTableVC.refresh), for: UIControlEvents.valueChanged)
     }
     
-    
     func refresh(sender:AnyObject) {
-        
         loadTasksInDetail(refreshCtrl: true)
     }
     
@@ -52,12 +37,10 @@ class TasksTableVC: UITableViewController {
         
         query?.getFirstObjectInBackground(block: { (u, error) in
             if(error == nil && u != nil){
-                
                 self.tasks = u?["Tasks"] as! [PFObject]
-                
                 if self.tasks.count > 0 {
                     self.tasks.sort(by: { (t1, t2) -> Bool in
-                        t1.createdAt! > t2.createdAt!
+                        t1.updatedAt! > t2.updatedAt!
                     })
                 }
                 
@@ -92,7 +75,12 @@ class TasksTableVC: UITableViewController {
                 }
             }
             tasks[selectedTaskCellRow]["NextTurnUserName"] = selectedTaskNextUserName
-            self.tableView.reloadRows(at: [IndexPath(row: selectedTaskCellRow, section: 0)], with: UITableViewRowAnimation.top)
+            if(selectedTaskCellRow == 0){
+                self.tableView.reloadRows(at: [IndexPath(row: selectedTaskCellRow, section: 0)], with: UITableViewRowAnimation.top)
+            }else{
+                // place the updated cell on the top
+                self.tableView.moveRow(at: IndexPath(row: selectedTaskCellRow, section: 0), to: IndexPath(row: 0, section: 0))
+            }
         }
     }
     
@@ -104,8 +92,6 @@ class TasksTableVC: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -169,7 +155,6 @@ class TasksTableVC: UITableViewController {
         }
     }
     
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
@@ -221,12 +206,10 @@ class TasksTableVC: UITableViewController {
     func deleteUserFromTask(params:[String : Any]){
         PFCloud.callFunction(inBackground: "deleteUserFromTask", withParameters: params)
     }
-
-
+    
     @IBAction func unwindToTaskList(sender: UIStoryboardSegue) {
         loadTasksInDetail(refreshCtrl: false)
     }
-    
     
     /*
      // Override to support rearranging the table view.
