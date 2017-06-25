@@ -87,7 +87,7 @@ class TasksTableVC: UITableViewController {
         if(selectedTaskCellRow >= 0 && selectedTaskCellRow < tasks.count){
             // do not animate if the same user is selected
             if let name = tasks[selectedTaskCellRow]["NextTurnUserName"]{
-                if selectedTaskNextUserName == name as! String{
+                if selectedTaskNextUserName == Utilities.getContactNameFromPhnNum(phnNum: name as! String){
                     return
                 }
             }
