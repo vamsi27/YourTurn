@@ -553,6 +553,7 @@
                         <outlet property="taskImageBtn" destination="Um1-cd-CDM" id="bpD-4l-78Q"/>
                         <outlet property="taskNameTxtField" destination="fvI-HH-5vi" id="TxE-MS-Z4M"/>
                         <segue destination="XpF-wq-Dc9" kind="unwind" identifier="unwindToCreateTaskList" unwindAction="unwindToTaskListWithSender:" id="thv-uz-lwl"/>
+                        <segue destination="XpF-wq-Dc9" kind="unwind" identifier="unwindToTaskVCFromSettings" unwindAction="unwindToTaskVCFromSettingsWithSender:" id="mWC-yA-WuX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Of-rt-Y4z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -638,6 +639,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="36q-Tf-ZHn"/>
+        <segue reference="Wmf-YC-ep0"/>
     </inferredMetricsTieBreakers>
 </document>

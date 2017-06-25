@@ -17,6 +17,7 @@ import libPhoneNumber_iOS
 class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSource, RSKImageCropViewControllerDelegate, RSKImageCropViewControllerDataSource {
     
     var groupMembers = [CNContact]()
+    var initialGroupMembersOnSettingsScreen = [CNContact]()
     var imageSelected:Bool = false
     var existingTask:PFObject?
     var initialMembersCountOnSettingsScreen = -1
@@ -60,6 +61,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     func setupGroupMembers(){
         if groupMembers.count == 0 && existingTask == nil {
             initialMembersCountOnSettingsScreen = -1
+            initialGroupMembersOnSettingsScreen.removeAll()
             let contactData = Utilities.createDummyContact(givenName: "You", phnNum: (PFUser.current()?.username)!)
             groupMembers.append(contactData)
             groupMembersTbl.reloadData()
@@ -70,6 +72,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 groupMembers.append(c)
             })
             initialMembersCountOnSettingsScreen = groupMembers.count
+            initialGroupMembersOnSettingsScreen = groupMembers
             groupMembersTbl.reloadData()
         }
     }
@@ -182,8 +185,16 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     @IBAction func createTaskAction(_ sender: Any) {
-        // Create Task here
-        createTask()
+        
+        if(!validateTask()){
+            return
+        }
+        
+        if existingTask == nil{
+            createTask()
+        }else{
+            updateTask()
+        }
     }
     
     func validateTask() -> Bool {
@@ -200,19 +211,65 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return true
     }
     
+    func updateTask(){
+        
+        existingTask?["Name"] = taskNameTxtField.text!
+        
+        if(isCurrentUserTheAdmin()){
+            
+        }else{
+            // non-admin, and only new members can be added
+            // no need to check for removals
+            
+            existingTask?["Name"] = taskNameTxtField.text!
+            let bfTask = existingTask?.saveInBackground()
+            
+            bfTask?.continue({ (antecedent) -> Any? in
+                
+                if let res = antecedent.result?.boolValue {
+                    
+                    if res == false{
+                        return nil
+                    }
+                    
+                    var params:[String : Any] = [:]
+                    params["tskId"] = self.existingTask?.objectId
+                    params["isNewTask"] = 0
+                    
+                    // get task members
+                    var members:[String] = []
+                    
+                    let stRange = self.initialGroupMembersOnSettingsScreen.count
+                    let endRange = self.groupMembers.count - 1
+                    
+                    if(stRange > endRange){
+                        let alert = Utilities.createOKAlertMsg(title: "Error", message: "An unexpected error was encountered. Please try again later.")
+                        self.present(alert, animated: true, completion: nil)
+                        return nil
+                    }
+                    
+                    for i in stRange ... endRange {
+                        let uName = Utilities.getContactPlainPhnNum(number: self.groupMembers[i].phoneNumbers[0].value.stringValue)
+                        members.append(uName)
+                        print(uName)
+                    }
+                    
+                    params["tskMembers"] = members
+                    
+                    self.addMemebersToTheTask(params: params)
+                    self.endEditing()
+                    
+                    // go back to taskviewcontroller, and re-load existing task
+                    // seems like lot of work, better to call tasks table vc
+                    // self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
+                }
+                return nil
+            })
+        }
+    }
+    
     // TODO: can be modified to be used for update as well
     func createTask(){
-        
-        // prevent saving of task from settings screen as it's not ready yet
-        if(existingTask != nil){
-            return
-        }
-        
-        let isValidTask = validateTask()
-        
-        if(!isValidTask){
-            return
-        }
         
         var params:[String : Any] = [:]
         var members:[String] = []
@@ -274,6 +331,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         })
     }
     
+    // params -> "tskId", "Members" (usernames (E164 phnnums))
     func addMemebersToTheTask(params:[String : Any]){
         PFCloud.callFunction(inBackground: "addMembersToTask", withParameters: params){ (response, error) in
             if error == nil {                

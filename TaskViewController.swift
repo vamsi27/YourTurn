@@ -183,5 +183,15 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             destination.existingTask = currentTask
         }
     }
+    
+    @IBAction func unwindToTaskVCFromSettings(sender: UIStoryboardSegue) {
+        
+        if let sourceViewController = sender.source as? CreateTask1VC, let existingTask = sourceViewController.existingTask {
+            
+            currentTask = existingTask
+            viewDidLoad()
+        }
+        
+    }
 
 }
