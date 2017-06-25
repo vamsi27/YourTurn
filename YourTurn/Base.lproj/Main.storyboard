@@ -283,7 +283,7 @@
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9n-5V-bfa">
                                 <rect key="frame" x="0.0" y="380" width="375" height="216"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.90715538259999995" green="0.90715538259999995" blue="0.90715538259999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pickerView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OdS-PQ-eoy">
                                 <rect key="frame" x="84" y="318" width="206" height="45"/>

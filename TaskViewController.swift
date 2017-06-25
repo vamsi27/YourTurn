@@ -142,8 +142,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
-        
-        
         // TODO: return if selected the same row
         
         let nextTurnMember = pickerDataSource[row]

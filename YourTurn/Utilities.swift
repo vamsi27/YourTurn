@@ -105,6 +105,10 @@ class Utilities{
          }
          */
         
+        if phnNum.isEmpty{
+            return ""
+        }
+        
         if let name = phnNumNameDirectory[phnNum]{
             return name
             

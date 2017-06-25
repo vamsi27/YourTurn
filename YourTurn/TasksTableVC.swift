@@ -80,18 +80,24 @@ class TasksTableVC: UITableViewController {
     var selectedTaskNextUserName:String = ""
     
     override func viewDidAppear(_ animated: Bool) {
+        if selectedTaskNextUserName.isEmpty{
+            return
+        }
+        
         if(selectedTaskCellRow >= 0 && selectedTaskCellRow < tasks.count){
-            
             // do not animate if the same user is selected
             if let name = tasks[selectedTaskCellRow]["NextTurnUserName"]{
                 if selectedTaskNextUserName == name as! String{
                     return
                 }
             }
-            
             tasks[selectedTaskCellRow]["NextTurnUserName"] = selectedTaskNextUserName
             self.tableView.reloadRows(at: [IndexPath(row: selectedTaskCellRow, section: 0)], with: UITableViewRowAnimation.top)
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        selectedTaskNextUserName = ""
     }
     
     override func didReceiveMemoryWarning() {
