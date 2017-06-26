@@ -124,6 +124,7 @@ class TasksTableVC: UITableViewController {
         cell.taskNameLbl.text = task["Name"] as? String
         
         let nextTurnUserName = task["NextTurnUserName"] as? String
+        cell.taskWhosNextLbl.text = "Next turn: "
         
         let backgroundQueue = DispatchQueue(label: "getContactNameFromPhnNum", qos: .background)
         backgroundQueue.async {

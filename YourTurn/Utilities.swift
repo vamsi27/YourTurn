@@ -118,6 +118,7 @@ class Utilities{
                     getContactPlainPhnNum(number: p.value.stringValue) == phnNum
                 })
             }
+            // if no contact found, then name will be phnnum
             let name = contact != nil ? getGivenNameFromContact(cnConatct: contact) : phnNum
             phnNumNameDirectory[phnNum] = name
             return name
