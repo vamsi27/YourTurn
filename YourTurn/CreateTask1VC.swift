@@ -243,8 +243,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                     let endRange = self.groupMembers.count - 1
                     
                     if(stRange > endRange){
-                        let alert = Utilities.createOKAlertMsg(title: "Error", message: "An unexpected error was encountered. Please try again later.")
-                        self.present(alert, animated: true, completion: nil)
+                        self.endEditing()
+                        self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
                         return nil
                     }
                     
@@ -256,12 +256,14 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                     
                     params["tskMembers"] = members
                     
-                    self.addMemebersToTheTask(params: params)
-                    self.endEditing()
-                    
-                    // go back to taskviewcontroller, and re-load existing task
-                    // seems like lot of work, better to call tasks table vc
-                    // self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
+                    PFCloud.callFunction(inBackground: "addMembersToTask", withParameters: params){ (response, error) in
+                        if error == nil {
+                            self.endEditing()
+                            self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
+                        } else {
+                            // Couldn't add members to task
+                        }
+                    }
                 }
                 return nil
             })
@@ -322,7 +324,6 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                         print(task.objectId!)
                         params["tskId"] = task.objectId
                         self.addMemebersToTheTask(params: params)
-
                         self.endEditing()
                         self.performSegue(withIdentifier: "unwindToCreateTaskList", sender: self)
                     }

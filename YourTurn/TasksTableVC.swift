@@ -12,6 +12,7 @@ import Parse
 
 class TasksTableVC: UITableViewController {
     var tasks = [PFObject]()
+    var isReloadRequired = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +64,12 @@ class TasksTableVC: UITableViewController {
     var selectedTaskNextUserName:String = ""
     
     override func viewDidAppear(_ animated: Bool) {
+        if isReloadRequired{
+            isReloadRequired = false
+            selectedTaskNextUserName = ""
+            loadTasksInDetail(refreshCtrl: false)
+            return
+        }
         if selectedTaskNextUserName.isEmpty{
             return
         }
@@ -81,6 +88,9 @@ class TasksTableVC: UITableViewController {
                 // reload place the updated cell on the top
                 self.tableView.reloadRows(at: [IndexPath(row: selectedTaskCellRow, section: 0)], with: UITableViewRowAnimation.none)
                 self.tableView.moveRow(at: IndexPath(row: selectedTaskCellRow, section: 0), to: IndexPath(row: 0, section: 0))
+                // move in tasks collection too
+                let element = tasks.remove(at: selectedTaskCellRow)
+                tasks.insert(element, at: 0)
             }
         }
     }
@@ -151,6 +161,8 @@ class TasksTableVC: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "taskTableCellToDetails" && selectedTaskCellRow >= 0 && selectedTaskCellRow < tasks.count){
+            selectedTaskNextUserName = ""
+            isReloadRequired = false
             let taskVC = segue.destination as! TaskViewController
             taskVC.currentTask = tasks[selectedTaskCellRow]
         }

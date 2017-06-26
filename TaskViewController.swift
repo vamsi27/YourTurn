@@ -17,6 +17,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var titles = [String]()
     var contacts = [CNContact]()
     var selectedMemberTitle:String = ""
+    var isTasksTableReloadRequired = false
 
     @IBOutlet weak var nextTurnTxtField: UITextField!
     @IBOutlet weak var txtTaskName: UILabel!
@@ -47,7 +48,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         
         if(currentTask != nil && !(currentTask?.objectId?.isEmpty)!){
             title = currentTask?["Name"]! as? String
-            
+            print(title ?? "ezy")
             if let nextTurnPhnNum = currentTask?["NextTurnUserName"] as? String {
                 selectedMemberTitle = Utilities.getContactNameFromPhnNum(phnNum: nextTurnPhnNum)
                 nextTurnTxtField.text = selectedMemberTitle != "" ? selectedMemberTitle : ""
@@ -173,6 +174,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool){
         if(!selectedMemberTitle.isEmpty && type(of: TasksTableVC()) == type(of: viewController)){
             (viewController as? TasksTableVC)?.selectedTaskNextUserName = selectedMemberTitle
+            (viewController as? TasksTableVC)?.isReloadRequired = isTasksTableReloadRequired
         }
     }
 
@@ -187,7 +189,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     @IBAction func unwindToTaskVCFromSettings(sender: UIStoryboardSegue) {
         
         if let sourceViewController = sender.source as? CreateTask1VC, let existingTask = sourceViewController.existingTask {
-            
+            isTasksTableReloadRequired = true
             currentTask = existingTask
             viewDidLoad()
         }
