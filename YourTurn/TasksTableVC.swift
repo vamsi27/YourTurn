@@ -47,6 +47,7 @@ class TasksTableVC: UITableViewController {
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+                    self.tableView.scrollToRow(at: NSIndexPath.init(row: 0, section: 0) as IndexPath, at: .top, animated: false)
                     if(refreshCtrl){
                         self.refreshControl?.endRefreshing()
                     }

@@ -26,6 +26,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     @IBOutlet weak var taskNameTxtField: UITextField!
     @IBOutlet weak var groupMembersTbl: UITableView!
     @IBOutlet weak var rightBarButtonItem: UIBarButtonItem!
+    var isCurrentUserAdmin = true
     
     
     override func viewDidLoad() {
@@ -34,6 +35,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         groupMembersTbl.delegate = self
         groupMembersTbl.dataSource = self
         
+        isCurrentUserAdmin = isCurrentUserTheAdmin()
         setupTaskName()
         setupTaskImageBtn()
         setupGroupMembers()
@@ -48,6 +50,13 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     func endEditing(){
         view.endEditing(true)
+    }
+    
+    func isCurrentUserTheAdmin() -> Bool {
+        if(existingTask == nil){
+            return true
+        }
+        return (existingTask?["Admin"] as! PFUser).username == PFUser.current()?.username
     }
     
     func setupTaskName(){
@@ -144,7 +153,21 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         cell.conatctNameLbl.text = conactName
         cell.contactPhnNumLbl.text = contactPhnNum
+        cell.btnRemoveMember.isHidden = !isCurrentUserAdmin
+        cell.btnRemoveMember.tag = indexPath.row
+        cell.btnRemoveMember.addTarget(self, action: #selector(deleteGroupMember), for: .touchDown)
+        
         return cell
+    }
+    
+    func deleteGroupMember(_ sender: Any){
+        let btn = sender as! UIButton
+        let indexPath = IndexPath(row: btn.tag, section: 0)
+        
+        groupMembers.remove(at: indexPath.row)
+        groupMembersTbl.reloadData()
+        // below line was causing entire table to flash
+        //groupMembersTbl.deleteRows(at: [indexPath], with: .none)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -153,11 +176,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // a non-admin should be able to remove the member added by him/her on the settings screen
-        return existingTask == nil || isCurrentUserTheAdmin() || indexPath.row >= initialMembersCountOnSettingsScreen
-    }
-    
-    func isCurrentUserTheAdmin() -> Bool {
-        return (existingTask?["Admin"] as! PFUser).username == PFUser.current()?.username
+        return existingTask == nil || isCurrentUserAdmin || indexPath.row >= initialMembersCountOnSettingsScreen
     }
     
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
@@ -213,61 +232,67 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     func updateTask(){
         
+        self.endEditing()
         existingTask?["Name"] = taskNameTxtField.text!
+        let bfTask = existingTask?.saveInBackground()
         
-        if(isCurrentUserTheAdmin()){
+        bfTask?.continue({ (antecedent) -> Any? in
             
-        }else{
-            // non-admin, and only new members can be added
-            // no need to check for removals
-            
-            existingTask?["Name"] = taskNameTxtField.text!
-            let bfTask = existingTask?.saveInBackground()
-            
-            bfTask?.continue({ (antecedent) -> Any? in
+            if let res = antecedent.result?.boolValue {
                 
-                if let res = antecedent.result?.boolValue {
+                if res == false{
+                    return nil
+                }
+                
+                var params:[String : Any] = [:]
+                params["tskId"] = self.existingTask?.objectId
+                params["isNewTask"] = 0
+                
+                // get task members
+                var addedMembers:[String] = []
+                var removedMembers:[String] = []
+                
+                let addedContacts = self.groupMembers.filter({ (c) -> Bool in
+                    !self.initialGroupMembersOnSettingsScreen.contains(c)
+                })
+                
+                addedContacts.forEach({ (c) in
+                    let uName = Utilities.getContactPlainPhnNum(number: c.phoneNumbers[0].value.stringValue)
+                    addedMembers.append(uName)
+                    print(uName)
+                })
+                
+                // as only admin can delete members
+                if self.isCurrentUserAdmin {
+                    let removedContacts = self.initialGroupMembersOnSettingsScreen.filter({ (c) -> Bool in
+                        !self.groupMembers.contains(c)
+                    })
                     
-                    if res == false{
-                        return nil
-                    }
-                    
-                    var params:[String : Any] = [:]
-                    params["tskId"] = self.existingTask?.objectId
-                    params["isNewTask"] = 0
-                    
-                    // get task members
-                    var members:[String] = []
-                    
-                    let stRange = self.initialGroupMembersOnSettingsScreen.count
-                    let endRange = self.groupMembers.count - 1
-                    
-                    if(stRange > endRange){
-                        self.endEditing()
-                        self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
-                        return nil
-                    }
-                    
-                    for i in stRange ... endRange {
-                        let uName = Utilities.getContactPlainPhnNum(number: self.groupMembers[i].phoneNumbers[0].value.stringValue)
-                        members.append(uName)
+                    removedContacts.forEach({ (c) in
+                        let uName = Utilities.getContactPlainPhnNum(number: c.phoneNumbers[0].value.stringValue)
+                        removedMembers.append(uName)
                         print(uName)
-                    }
-                    
-                    params["tskMembers"] = members
+                    })
+                }
+                
+                if(addedMembers.count > 0 || removedMembers.count > 0){
+                    params["tskMembers"] = addedMembers
+                    params["tskMembersRemoved"] = removedMembers
                     
                     PFCloud.callFunction(inBackground: "addMembersToTask", withParameters: params){ (response, error) in
                         if error == nil {
-                            self.endEditing()
                             self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
                         } else {
                             // Couldn't add members to task
                         }
                     }
+                }else{
+                    // Only a name/pic change
+                    self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
                 }
-                return nil
-            })
-        }
+            }
+            return nil
+        })
     }
     
     // TODO: can be modified to be used for update as well
@@ -282,6 +307,8 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
         
         params["tskMembers"] = members
+        params["isNewTask"] = 1
+
         
         let task = PFObject(className:"Task")
         task["Name"] = taskNameTxtField.text!

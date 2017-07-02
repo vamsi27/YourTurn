@@ -13,6 +13,7 @@ class GroupMemberTableViewCell: UITableViewCell {
     @IBOutlet weak var contactPhnNumLbl: UILabel!
     @IBOutlet weak var conatctNameLbl: UILabel!
     
+    @IBOutlet weak var btnRemoveMember: UIButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -23,8 +24,4 @@ class GroupMemberTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
-    @IBAction func deleteGroupMember(_ sender: Any) {
-    }
-
 }
