@@ -208,17 +208,11 @@ class TasksTableVC: UITableViewController {
     }
     
     func disassociateTaskFromUser(task:PFObject){
-        let currentUser = PFUser.current()
-        currentUser?.remove(task, forKey: "Tasks")
-        currentUser?.saveEventually()
-        
         var params:[String : Any] = [:]
         params["taskId"] = task.objectId
-        params["userId"] = currentUser?.objectId
-        deleteUserFromTask(params: params)
-    }
-    
-    func deleteUserFromTask(params:[String : Any]){
+        var userNames:[String] = []
+        userNames.append(PFUser.current()!.username!)
+        params["tskMembersRemoved"] = userNames
         PFCloud.callFunction(inBackground: "deleteUserFromTask", withParameters: params)
     }
     

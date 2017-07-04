@@ -245,7 +245,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 }
                 
                 var params:[String : Any] = [:]
-                params["tskId"] = self.existingTask?.objectId
+                params["taskId"] = self.existingTask?.objectId
                 params["isNewTask"] = 0
                 
                 // get task members
@@ -258,6 +258,13 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                 
                 addedContacts.forEach({ (c) in
                     let uName = Utilities.getContactPlainPhnNum(number: c.phoneNumbers[0].value.stringValue)
+                    
+                    if(uName == PFUser.current()?.username){
+                        // existingTask cannot be null at this point
+                        PFUser.current()?.remove(self.existingTask!, forKey: "Tasks")
+                        PFUser.current()?.saveEventually()
+                    }
+                    
                     addedMembers.append(uName)
                     print(uName)
                 })
@@ -281,9 +288,19 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                     
                     PFCloud.callFunction(inBackground: "addMembersToTask", withParameters: params){ (response, error) in
                         if error == nil {
-                            self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
+                            PFCloud.callFunction(inBackground: "deleteUserFromTask", withParameters: params){ (response, error) in
+                                if error == nil {
+                                    if (!removedMembers.contains(PFUser.current()!.username!)){
+                                        self.performSegue(withIdentifier: "unwindToTaskVCFromSettings", sender: self)
+                                    }else{
+                                        self.performSegue(withIdentifier: "unwindToCreateTaskList", sender: self)
+                                    }
+                                } else {
+                                    print("Error 2")
+                                }
+                            }
                         } else {
-                            // Couldn't add members to task
+                            print("Error 1")
                         }
                     }
                 }else{
@@ -349,7 +366,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                     } else {
                         // Cloud code to fetch other users (create accounts if required) and add to task
                         print(task.objectId!)
-                        params["tskId"] = task.objectId
+                        params["taskId"] = task.objectId
                         self.addMemebersToTheTask(params: params)
                         self.endEditing()
                         self.performSegue(withIdentifier: "unwindToCreateTaskList", sender: self)
@@ -359,7 +376,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         })
     }
     
-    // params -> "tskId", "Members" (usernames (E164 phnnums))
+    // params -> "taskId", "Members" (usernames (E164 phnnums))
     func addMemebersToTheTask(params:[String : Any]){
         PFCloud.callFunction(inBackground: "addMembersToTask", withParameters: params){ (response, error) in
             if error == nil {                
