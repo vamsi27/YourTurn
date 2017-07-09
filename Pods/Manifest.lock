@@ -1,14 +1,14 @@
 PODS:
   - Bolts/Tasks (1.8.4)
-  - DKImagePickerController (3.5.5):
-    - DKImagePickerController/Camera (= 3.5.5)
-    - DKImagePickerController/ImageManager (= 3.5.5)
-  - DKImagePickerController/Camera (3.5.5)
-  - DKImagePickerController/ImageManager (3.5.5)
+  - DKImagePickerController (3.5.7):
+    - DKImagePickerController/Camera (= 3.5.7)
+    - DKImagePickerController/ImageManager (= 3.5.7)
+  - DKImagePickerController/Camera (3.5.7)
+  - DKImagePickerController/ImageManager (3.5.7)
   - libPhoneNumber-iOS (0.9.10)
-  - Parse (1.14.4):
+  - Parse (1.15.0):
     - Bolts/Tasks (~> 1.8)
-  - RSKImageCropper (1.6.2)
+  - RSKImageCropper (1.6.3)
 
 DEPENDENCIES:
   - DKImagePickerController
@@ -18,10 +18,10 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  DKImagePickerController: 16f28d10f4384d8c582aa05baab26fc75432a41d
+  DKImagePickerController: da5111f475c2fda9f932bab55519a43275bd4cf0
   libPhoneNumber-iOS: f721ae4d5854bce60934f9fb9b0b28e8e68913cb
-  Parse: b0aa91d2c435e53d4a9af26e741e014c9b35c42e
-  RSKImageCropper: 3e579d0000945a8be1c0efdad728fd9e25c2fd79
+  Parse: c0519f8fbf57bd0334f75cd22ac032d86ee55464
+  RSKImageCropper: 356e36fc58c57c371b5d8b23d603936d6a73df6c
 
 PODFILE CHECKSUM: 63025d272aa9b52ee7c102b5da6ff15e6eda1dd1
 

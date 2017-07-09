@@ -130,7 +130,7 @@ class TasksTableVC: UITableViewController {
         /*
          
         // commenting out background loading of cell.taskWhosNextLbl.text as it wasn't a pleasant sight to have label popping in random at different times.
-        // Commenting it shows that there's no loag anymore (surprising!!!)
+        // Commenting it shows that there's no lag anymore (surprising!!!)
          
         let backgroundQueue = DispatchQueue(label: "getContactNameFromPhnNum", qos: .background)
         backgroundQueue.async {
