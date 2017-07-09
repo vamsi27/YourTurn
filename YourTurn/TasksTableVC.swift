@@ -127,13 +127,21 @@ class TasksTableVC: UITableViewController {
         let nextTurnUserName = task["NextTurnUserName"] as? String
         cell.taskWhosNextLbl.text = "Next turn: "
         
+        /*
+         
+        // commenting out background loading of cell.taskWhosNextLbl.text as it wasn't a pleasant sight to have label popping in random at different times.
+        // Commenting it shows that there's no loag anymore (surprising!!!)
+         
         let backgroundQueue = DispatchQueue(label: "getContactNameFromPhnNum", qos: .background)
         backgroundQueue.async {
             let uName = (nextTurnUserName == nil || nextTurnUserName!.isEmpty) ? "" : Utilities.getContactNameFromPhnNum(phnNum: nextTurnUserName!)
             DispatchQueue.main.async(execute: { () -> Void in
                 cell.taskWhosNextLbl.text = uName.isEmpty ? "Next turn: TBD" : "Next turn: " + uName
             })
-        }
+        }*/
+        
+        let uName = (nextTurnUserName == nil || nextTurnUserName!.isEmpty) ? "" : Utilities.getContactNameFromPhnNum(phnNum: nextTurnUserName!)
+        cell.taskWhosNextLbl.text = uName.isEmpty ? "Next turn: TBD" : "Next turn: " + uName
         
         // TDOD: Cache Image
         if let taskImage = task["DisplayImage"] as? PFFile {
