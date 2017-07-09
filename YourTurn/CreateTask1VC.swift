@@ -102,6 +102,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                         let image = UIImage(data:imageData!)
                         self.taskImageBtn.setBackgroundImage(image, for: UIControlState.normal)
                         self.taskImageBtn.setTitle("", for: .normal)
+                        self.imageSelected = true
                     }
                 })
             }
@@ -234,6 +235,16 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         self.endEditing()
         existingTask?["Name"] = taskNameTxtField.text!
+        
+        if(self.taskImageBtn.backgroundImage(for: UIControlState.normal) != nil && imageSelected){
+            let imageData = UIImagePNGRepresentation(self.taskImageBtn.backgroundImage(for: UIControlState.normal)!)
+            let imageFile = PFFile(name:"taskImage.png", data:imageData!)
+            
+            
+            // TODO: Compress image to a reasonable size
+            existingTask?["DisplayImage"] = imageFile
+        }
+        
         let bfTask = existingTask?.saveInBackground()
         
         bfTask?.continue({ (antecedent) -> Any? in
@@ -296,11 +307,12 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                                         self.performSegue(withIdentifier: "unwindToCreateTaskList", sender: self)
                                     }
                                 } else {
-                                    print("Error 2")
+                                    print("Error - couldn't remove members from the task")
                                 }
                             }
                         } else {
-                            print("Error 1")
+                            // TODO: show alert
+                            print("Error - couldn't add members to the task")
                         }
                     }
                 }else{

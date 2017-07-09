@@ -172,7 +172,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool){
-        if(!selectedMemberTitle.isEmpty && type(of: TasksTableVC()) == type(of: viewController)){
+        if(type(of: TasksTableVC()) == type(of: viewController) && (!selectedMemberTitle.isEmpty || isTasksTableReloadRequired)){
             (viewController as? TasksTableVC)?.selectedTaskNextUserName = selectedMemberTitle
             (viewController as? TasksTableVC)?.isReloadRequired = isTasksTableReloadRequired
         }
