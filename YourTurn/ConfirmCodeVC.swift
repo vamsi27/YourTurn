@@ -116,13 +116,22 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         }
     }
     
+    func setupUsersDeviceForNotifications(){
+        let installation = PFInstallation.current()
+        installation?["user"] = PFUser.current()
+        installation?["username"] = PFUser.current()?.username
+        installation?.saveInBackground(block: { (result, error) in
+            print(error ?? "No error")
+            print(result)
+        })
+    }
+    
     func proceedToMyTasks(){
-        
+        self.setupUsersDeviceForNotifications()
         let controllerId = "sbLoggedInNavCtrler";
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let initViewController: UIViewController = storyboard.instantiateViewController(withIdentifier: controllerId) as UIViewController
         self.present(initViewController, animated: true, completion: nil)
-        
     }
     
     func showOKAlertMsg(title: String, message: String){
@@ -130,8 +139,6 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-    
-    
 
     /*
     // MARK: - Navigation

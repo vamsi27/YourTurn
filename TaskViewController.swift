@@ -152,6 +152,28 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             task["NextTurnMember"] = nextTurnMember
             task["NextTurnUserName"] = nextTurnMember.username
             task.saveEventually()
+            notifyUser(userName: nextTurnMember.username!)
+        }
+    }
+    
+    func notifyUser(userName: String){
+        
+        // Do not notify the same user
+        if(PFUser.current()?.username == userName){
+            return
+        }
+        
+        var params:[String : Any] = [:]
+        params["username"] = userName
+        params["taskName"] = currentTask?["Name"]
+        
+        PFCloud.callFunction(inBackground: "sendNotification", withParameters: params){ (response, error) in
+            if error == nil {
+                print("Sent notification")
+            } else {
+                // TODO: show alert
+                print("Error - couldn't send notification")
+            }
         }
     }
     

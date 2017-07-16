@@ -8,6 +8,7 @@
 
 import UIKit
 import Parse
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,6 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         Parse.initialize(with: configuration)
+        
+        UNUserNotificationCenter.current().requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
+            if granted {
+                UIApplication.shared.registerForRemoteNotifications()
+            }
+        }
         
         if(PFUser.current() != nil){
             //PFUser.logOut()
@@ -74,6 +81,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let initialViewController = storyboard.instantiateViewController(withIdentifier: viewIdentifier)
         self.window?.rootViewController = initialViewController
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let installation = PFInstallation.current()
+        installation?.setDeviceTokenFrom(deviceToken as Data)
+        installation?.saveInBackground()
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        if (error as NSError).code == 3010 {
+            print("Push notifications are not supported in the iOS Simulator.")
+        } else {
+            print("application:didFailToRegisterForRemoteNotificationsWithError: %@", error)
+        }
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
+        PFPush.handle(userInfo)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
