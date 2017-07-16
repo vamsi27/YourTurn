@@ -10,7 +10,7 @@ import UIKit
 import Parse
 import ContactsUI
 
-class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate {
+class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     var currentTask:PFObject?
     var pickerDataSource = [PFUser]()
@@ -18,7 +18,9 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     var contacts = [CNContact]()
     var selectedMemberTitle:String = ""
     var isTasksTableReloadRequired = false
+    var currentSelectedRow = -1
 
+    @IBOutlet weak var btnSendReminder: UIButton!
     @IBOutlet weak var nextTurnTxtField: UITextField!
     @IBOutlet weak var txtTaskName: UILabel!
     @IBOutlet weak var lblNextTurn: UILabel!
@@ -27,17 +29,18 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        nextTurnTxtField.delegate = self
+        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskViewController.dismissPickerAndKb))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
+        
+        btnSendReminder.isEnabled = false
         
         self.membersPickerView.dataSource = self;
         self.membersPickerView.delegate = self;
         self.membersPickerView.showsSelectionIndicator = true
         navigationController?.delegate = self
-        
-        //nextTurnTxtField.rightView = UIImageView(image: UIImage(named:"dda.png"))
-        //nextTurnTxtField.rightViewMode = UITextFieldViewMode.always
         
         membersPickerView.removeFromSuperview()
         nextTurnTxtField.inputView = membersPickerView
@@ -51,7 +54,8 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             print(title ?? "ezy")
             if let nextTurnPhnNum = currentTask?["NextTurnUserName"] as? String {
                 selectedMemberTitle = Utilities.getContactNameFromPhnNum(phnNum: nextTurnPhnNum)
-                nextTurnTxtField.text = selectedMemberTitle != "" ? selectedMemberTitle : ""
+                nextTurnTxtField.text = selectedMemberTitle != "" ? selectedMemberTitle.uppercased() : ""
+                updateSendReminderBtnState(phnNum: nextTurnPhnNum)
             }
             loadMembers()
         }
@@ -70,6 +74,16 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
             return memberIndex
         }
         return nil
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if(textField == nextTurnTxtField){
+            currentSelectedRow = membersPickerView.selectedRow(inComponent: 0)
+        }
+    }
+    
+    func updateSendReminderBtnState(phnNum: String){
+        btnSendReminder.isEnabled = phnNum != PFUser.current()?.username
     }
     
     func loadMembers(){
@@ -126,17 +140,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        /*
-        //This was very slow, hence moved to using titles array - which saves titles in background
-         
-        let phnNum = (pickerDataSource[row] as PFUser).username
-        let x = Utilities.getContactNameFromPhnNum(phnNum: phnNum!)
-        return x
-        */
-        
         // TODO: Now that Utilities.getContactNameFromPhnNum has caching, do we still need to load 'titles' array
-        
         if(row >= 0 && row < titles.count){
             return titles[row]
         }
@@ -144,19 +148,29 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
-        // TODO: return if selected the same row
-        
+        if(currentSelectedRow == row && nextTurnTxtField.text != ""){
+            return
+        }
         let nextTurnMember = pickerDataSource[row]
         if let task = currentTask{
             setSelectedRowTitle()
             task["NextTurnMember"] = nextTurnMember
             task["NextTurnUserName"] = nextTurnMember.username
             task.saveEventually()
-            notifyUser(userName: nextTurnMember.username!)
+            updateSendReminderBtnState(phnNum: nextTurnMember.username!)
+            notifyUser(userName: nextTurnMember.username!, isReminder: false)
         }
     }
     
-    func notifyUser(userName: String){
+    @IBAction func btnSendReminderAction(_ sender: UIButton) {
+        currentSelectedRow = membersPickerView.selectedRow(inComponent: 0)
+        if(currentSelectedRow > -1){
+            let nextTurnMember = pickerDataSource[currentSelectedRow]
+            notifyUser(userName: nextTurnMember.username!, isReminder: true)
+        }
+    }
+    
+    func notifyUser(userName: String, isReminder: Bool){
         
         // Do not notify the same user
         if(PFUser.current()?.username == userName){
@@ -166,6 +180,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         var params:[String : Any] = [:]
         params["username"] = userName
         params["taskName"] = currentTask?["Name"]
+        params["isReminder"] = isReminder ? 1 : 0
         
         PFCloud.callFunction(inBackground: "sendNotification", withParameters: params){ (response, error) in
             if error == nil {
@@ -189,8 +204,10 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     
     func setSelectedRowTitle(){
         let selectedRow = membersPickerView.selectedRow(inComponent: 0)
+        currentSelectedRow = selectedRow
         selectedMemberTitle = pickerView(membersPickerView, titleForRow: selectedRow, forComponent: 0)!
-        nextTurnTxtField.text = selectedMemberTitle
+        print(selectedMemberTitle.capitalized)
+        nextTurnTxtField.text = selectedMemberTitle.uppercased()
     }
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool){

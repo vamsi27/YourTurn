@@ -280,40 +280,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9n-5V-bfa">
-                                <rect key="frame" x="0.0" y="380" width="375" height="216"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F9n-5V-bfa">
+                                <rect key="frame" x="0.0" y="451" width="375" height="216"/>
                                 <color key="backgroundColor" red="0.90715538259999995" green="0.90715538259999995" blue="0.90715538259999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pickerView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OdS-PQ-eoy">
-                                <rect key="frame" x="84" y="318" width="206" height="45"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="OdS-PQ-eoy">
+                                <rect key="frame" x="16" y="188" width="343" height="45"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="HWs-jp-4Zt"/>
-                                    <constraint firstAttribute="width" constant="206" id="o2Z-8T-W48"/>
+                                    <constraint firstAttribute="height" constant="45" id="Ecf-sN-IPS"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Turn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVD-hw-3Nh">
-                                <rect key="frame" x="16" y="243" width="343" height="42"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVb-yo-gxN">
+                                <rect key="frame" x="16" y="241" width="343" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="7UX-cT-SZb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <state key="normal" title="SEND REMINDER">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="disabled">
+                                    <color key="titleColor" red="0.90715538259999995" green="0.90715538259999995" blue="0.90715538259999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnSendReminderAction:" destination="tAd-Vd-WbK" eventType="touchUpInside" id="U7z-g6-If8"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEXT TURN: " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVD-hw-3Nh">
+                                <rect key="frame" x="124" y="138" width="127" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="VZ6-5i-ScQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="sVD-hw-3Nh" firstAttribute="leading" secondItem="9fY-gq-YCh" secondAttribute="leadingMargin" id="0vv-51-RAk"/>
-                            <constraint firstItem="sVD-hw-3Nh" firstAttribute="trailing" secondItem="9fY-gq-YCh" secondAttribute="trailingMargin" id="3PG-wh-fhn"/>
+                            <constraint firstItem="sVD-hw-3Nh" firstAttribute="leading" secondItem="9fY-gq-YCh" secondAttribute="leadingMargin" constant="108" id="0vv-51-RAk"/>
+                            <constraint firstItem="sVb-yo-gxN" firstAttribute="top" secondItem="OdS-PQ-eoy" secondAttribute="bottom" constant="8" symbolic="YES" id="13g-fb-eK6"/>
+                            <constraint firstItem="OdS-PQ-eoy" firstAttribute="top" secondItem="sVD-hw-3Nh" secondAttribute="bottom" constant="8" symbolic="YES" id="2Vf-As-Ur4"/>
+                            <constraint firstItem="sVD-hw-3Nh" firstAttribute="trailing" secondItem="9fY-gq-YCh" secondAttribute="trailingMargin" constant="-108" id="3PG-wh-fhn"/>
                             <constraint firstItem="sVD-hw-3Nh" firstAttribute="centerX" secondItem="9fY-gq-YCh" secondAttribute="centerX" id="90L-xb-zkr"/>
-                            <constraint firstItem="sVD-hw-3Nh" firstAttribute="top" secondItem="umr-4k-TbI" secondAttribute="bottom" constant="179" id="PHU-6G-j00"/>
-                            <constraint firstItem="OdS-PQ-eoy" firstAttribute="centerX" secondItem="9fY-gq-YCh" secondAttribute="centerX" id="h00-H1-b5A"/>
-                            <constraint firstItem="OdS-PQ-eoy" firstAttribute="top" secondItem="sVD-hw-3Nh" secondAttribute="bottom" constant="33" id="kgs-j1-ylb"/>
+                            <constraint firstItem="F9n-5V-bfa" firstAttribute="centerX" secondItem="OdS-PQ-eoy" secondAttribute="centerX" id="Huh-hW-eO9"/>
+                            <constraint firstItem="F9n-5V-bfa" firstAttribute="leading" secondItem="9fY-gq-YCh" secondAttribute="leading" id="Mg7-wD-vqp"/>
+                            <constraint firstItem="sVD-hw-3Nh" firstAttribute="top" secondItem="umr-4k-TbI" secondAttribute="bottom" constant="74" id="PHU-6G-j00"/>
+                            <constraint firstItem="sVb-yo-gxN" firstAttribute="trailing" secondItem="OdS-PQ-eoy" secondAttribute="trailing" id="SgZ-OW-Nct"/>
+                            <constraint firstItem="OdS-PQ-eoy" firstAttribute="leading" secondItem="9fY-gq-YCh" secondAttribute="leadingMargin" id="UAs-8I-lmw"/>
+                            <constraint firstItem="OdS-PQ-eoy" firstAttribute="centerX" secondItem="sVD-hw-3Nh" secondAttribute="centerX" id="gIF-6h-zvp"/>
+                            <constraint firstItem="F9n-5V-bfa" firstAttribute="bottom" secondItem="KYd-U7-qSY" secondAttribute="top" id="rhi-Wa-N7z"/>
+                            <constraint firstItem="sVb-yo-gxN" firstAttribute="leading" secondItem="OdS-PQ-eoy" secondAttribute="leading" id="swF-vm-L6F"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pLe-wy-2uh">
@@ -324,6 +346,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnSendReminder" destination="sVb-yo-gxN" id="aH3-aD-35K"/>
                         <outlet property="lblNextTurn" destination="sVD-hw-3Nh" id="Kjq-ol-rSE"/>
                         <outlet property="membersPickerView" destination="F9n-5V-bfa" id="d8e-l9-AHX"/>
                         <outlet property="nextTurnTxtField" destination="OdS-PQ-eoy" id="nQC-Yt-D6a"/>
@@ -331,7 +354,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WNh-uP-nUk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3162" y="793"/>
+            <point key="canvasLocation" x="3160.8000000000002" y="792.95352323838085"/>
         </scene>
         <!--Select Members-->
         <scene sceneID="XVk-4Z-zpD">
@@ -644,6 +667,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Wmf-YC-ep0"/>
+        <segue reference="36q-Tf-ZHn"/>
     </inferredMetricsTieBreakers>
 </document>
