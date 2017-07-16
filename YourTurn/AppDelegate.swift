@@ -41,23 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if(PFUser.current() != nil){
             //PFUser.logOut()
-            
-            // TODO: test with at least 2K contacts
-            // Utilities.populateContacts()
-            
-            /*
-            // TODO: Can it run async on new background thread, rather than main thread?
-            DispatchQueue.main.async() {
-                _ = Utilities.populateContacts()
-            }*/
-            
-            /*
-            // using non main background thread
-            // TODO: study more about these threads
-            let backgroundQueue = DispatchQueue(label: "loadContacts", qos: .background)
-            backgroundQueue.async {
-                _ = Utilities.populateContacts()
-            }*/
         }
         
         if(PFUser.current() == nil){
@@ -110,6 +93,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        resetBadgeCountOnCloud()
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -119,13 +104,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         
+        resetBadgeCountOnCloud()
+        application.applicationIconBadgeNumber = 0;
+    }
+    
+    func resetBadgeCountOnCloud(){
         let installation = PFInstallation.current()
         if((installation?.badge)! > 0){
             installation?.badge = 0
             installation?.saveEventually()
         }
-        
-        application.applicationIconBadgeNumber = 0;
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
