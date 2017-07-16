@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //PFUser.logOut()
             
             // TODO: test with at least 2K contacts
-            Utilities.populateContacts()
+            // Utilities.populateContacts()
             
             /*
             // TODO: Can it run async on new background thread, rather than main thread?
@@ -85,8 +85,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let installation = PFInstallation.current()
+        print(deviceToken.map { String(format: "%02.2hhx", $0) }.joined())
         installation?.setDeviceTokenFrom(deviceToken as Data)
-        installation?.saveInBackground()
+        installation?.saveEventually()
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -117,6 +118,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+        let installation = PFInstallation.current()
+        if((installation?.badge)! > 0){
+            installation?.badge = 0
+            installation?.saveEventually()
+        }
+        
+        application.applicationIconBadgeNumber = 0;
     }
     
     func applicationWillTerminate(_ application: UIApplication) {

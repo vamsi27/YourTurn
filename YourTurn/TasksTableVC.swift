@@ -17,6 +17,10 @@ class TasksTableVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.leftBarButtonItem = editButtonItem
+        
+        // not populating contacts in app delegate as access contacts permission was not being asked properly and contact names weren't showing up.
+        // TODO: test with at least 2K contacts
+        Utilities.populateContacts()
         loadTasksInDetail(refreshCtrl: false)
         setupRefreshControl()
     }
