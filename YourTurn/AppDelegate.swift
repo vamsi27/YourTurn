@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if(PFUser.current() != nil){
-            //PFUser.logOut()
+            PFUser.logOut()
         }
         
         if(PFUser.current() == nil){

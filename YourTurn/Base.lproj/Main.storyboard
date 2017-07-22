@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LUq-oS-tCf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LUq-oS-tCf">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -56,9 +56,9 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1pc-6q-9zY">
-                                <rect key="frame" x="123" y="332" width="181" height="32"/>
+                                <rect key="frame" x="172" y="332" width="149" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="181" id="TMl-ft-JT4"/>
+                                    <constraint firstAttribute="width" constant="149" id="TMl-ft-JT4"/>
                                     <constraint firstAttribute="height" constant="32" id="vFU-0E-wO4"/>
                                 </constraints>
                                 <nil key="textColor"/>
@@ -66,7 +66,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R34-Ho-67z">
-                                <rect key="frame" x="65" y="332" width="50" height="32"/>
+                                <rect key="frame" x="54" y="332" width="50" height="32"/>
                                 <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -76,25 +76,37 @@
                                 <rect key="frame" x="0.0" y="451" width="375" height="216"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </pickerView>
+                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nwS-3j-G5r">
+                                <rect key="frame" x="114" y="332" width="50" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="meo-K2-9f0"/>
+                                    <constraint firstAttribute="height" constant="32" id="sFp-m7-7yt"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="glz-sW-a75" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="96" id="7iR-eN-8mE"/>
-                            <constraint firstItem="1pc-6q-9zY" firstAttribute="leading" secondItem="R34-Ho-67z" secondAttribute="trailing" constant="8" symbolic="YES" id="Ci3-tT-MMe"/>
+                            <constraint firstItem="1pc-6q-9zY" firstAttribute="leading" secondItem="R34-Ho-67z" secondAttribute="trailing" constant="68" id="Ci3-tT-MMe"/>
                             <constraint firstItem="2cd-RT-KJ3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Q1E-be-SHN"/>
                             <constraint firstAttribute="trailing" secondItem="naR-fk-NnH" secondAttribute="trailing" id="Rs9-UB-7rj"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="naR-fk-NnH" secondAttribute="bottom" id="SHu-GH-lPi"/>
                             <constraint firstItem="naR-fk-NnH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Tdu-7S-J9V"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1pc-6q-9zY" secondAttribute="trailing" constant="55" id="Xv7-oU-nxM"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1pc-6q-9zY" secondAttribute="trailing" constant="38" id="Xv7-oU-nxM"/>
                             <constraint firstItem="2cd-RT-KJ3" firstAttribute="top" secondItem="3F0-c9-EuD" secondAttribute="bottom" constant="57" id="ZCM-um-5ue"/>
                             <constraint firstItem="R34-Ho-67z" firstAttribute="top" secondItem="2cd-RT-KJ3" secondAttribute="bottom" constant="60" id="e7b-JR-aWH"/>
                             <constraint firstItem="2cd-RT-KJ3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="38" id="fL8-lN-Wdp"/>
                             <constraint firstItem="glz-sW-a75" firstAttribute="top" secondItem="1pc-6q-9zY" secondAttribute="bottom" constant="23" id="gcL-VZ-Gzp"/>
                             <constraint firstItem="R34-Ho-67z" firstAttribute="bottom" secondItem="1pc-6q-9zY" secondAttribute="bottom" id="hr3-md-PZ6"/>
+                            <constraint firstItem="nwS-3j-G5r" firstAttribute="leading" secondItem="R34-Ho-67z" secondAttribute="trailing" constant="10" id="lS7-UH-9M3"/>
                             <constraint firstItem="glz-sW-a75" firstAttribute="centerX" secondItem="2cd-RT-KJ3" secondAttribute="centerX" id="mtL-Yn-MPz"/>
                             <constraint firstItem="R34-Ho-67z" firstAttribute="top" secondItem="1pc-6q-9zY" secondAttribute="top" id="pwz-Sr-K3N"/>
-                            <constraint firstItem="R34-Ho-67z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="49" id="uCU-ri-Q0o"/>
+                            <constraint firstItem="R34-Ho-67z" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="38" id="uCU-ri-Q0o"/>
                             <constraint firstItem="2cd-RT-KJ3" firstAttribute="centerX" secondItem="3F0-c9-EuD" secondAttribute="centerX" id="vJJ-IZ-jtr"/>
+                            <constraint firstItem="nwS-3j-G5r" firstAttribute="top" secondItem="2cd-RT-KJ3" secondAttribute="bottom" constant="60" id="xOS-Uv-SHr"/>
                             <constraint firstItem="3F0-c9-EuD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="38" id="xqR-Lg-pGH"/>
                         </constraints>
                     </view>
@@ -102,6 +114,7 @@
                     <connections>
                         <outlet property="btnContinue" destination="glz-sW-a75" id="jjo-dE-Chk"/>
                         <outlet property="pickerViewCountry" destination="naR-fk-NnH" id="ipe-nB-D0n"/>
+                        <outlet property="txtFieldCode" destination="nwS-3j-G5r" id="zfF-AQ-nai"/>
                         <outlet property="txtFlagImage" destination="R34-Ho-67z" id="fsz-Op-KuP"/>
                         <outlet property="txtPhnNum" destination="1pc-6q-9zY" id="KPn-4T-Dad"/>
                     </connections>

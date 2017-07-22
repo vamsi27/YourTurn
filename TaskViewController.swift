@@ -87,7 +87,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func loadMembers(){
-        
         let query = PFQuery(className: "Task")
         query.whereKey("objectId", equalTo: currentTask!.objectId!)
         query.includeKey("Members")
@@ -140,7 +139,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        // TODO: Now that Utilities.getContactNameFromPhnNum has caching, do we still need to load 'titles' array
         if(row >= 0 && row < titles.count){
             return titles[row]
         }
@@ -171,7 +169,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     func notifyUser(userName: String, isReminder: Bool){
-        
         // Do not notify the same user
         if(PFUser.current()?.username == userName){
             return
@@ -226,7 +223,6 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
     }
     
     @IBAction func unwindToTaskVCFromSettings(sender: UIStoryboardSegue) {
-        
         if let sourceViewController = sender.source as? CreateTask1VC, let existingTask = sourceViewController.existingTask {
             isTasksTableReloadRequired = true
             currentTask = existingTask

@@ -10,8 +10,23 @@ import UIKit
 import Parse
 import libPhoneNumber_iOS
 
+extension UITextField {
+    func setBottomBorder() {
+        self.borderStyle = .none
+        self.layer.backgroundColor = UIColor.white.cgColor
+        
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
+        self.layer.shadowOpacity = 1.0
+        self.layer.shadowRadius = 0.0
+    }
+}
+
+
 class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCodePickerDelegate {
     
+    @IBOutlet weak var txtFieldCode: UITextField!
     @IBOutlet weak var txtFlagImage: UITextField!
     @IBOutlet weak var txtPhnNum: UITextField!
     @IBOutlet weak var pickerViewCountry: CountryPicker!
@@ -48,6 +63,10 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         
         setCountryFlagToButton(code: code)
         txtCountryCode = (defaultCountry?.phoneCode)!
+        txtFieldCode.text = txtCountryCode
+        
+        txtFieldCode.setBottomBorder()
+        txtPhnNum.setBottomBorder()
     }
     
     func dismissPickerAndKb() {
@@ -87,6 +106,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     func countryPhoneCodePicker(_ picker: CountryPicker, didSelectCountryCountryWithName name: String, countryCode: String, phoneCode: String) {
         setCountryFlagToButton(code: countryCode)
         txtCountryCode = phoneCode
+        txtFieldCode.text = txtCountryCode
     }
     
     override func didReceiveMemoryWarning() {
@@ -122,5 +142,6 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
             navigationItem.backBarButtonItem = backItem
         }
     }
+    
 }
 
