@@ -88,9 +88,9 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         if(textField == txtPhnNum){
             guard let text = textField.text else { return true }
             let newLength = text.characters.count + string.characters.count - range.length
-            btnContinue.isEnabled = newLength >= 10
+            btnContinue.isEnabled = newLength >= 8
             
-            return newLength <= 10 && !txtCountryCode.isEmpty
+            return newLength <= 12 && !txtCountryCode.isEmpty
         }
         return true
     }
@@ -119,6 +119,13 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
     @IBAction func continueToConfirmCodeAction(_ sender: Any) {
         
         let fullPhnNum = txtCountryCode + txtPhnNum.text!
+        
+        if(!Utilities.isPhnNumValid(number: fullPhnNum)){
+            let alert = Utilities.createOKAlertMsg(title: "Nice try!", message: "Invalid phone number entered.")
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
         let params = ["phoneNumber":fullPhnNum] as [String : Any]
         
         PFCloud.callFunction(inBackground: "sendVerificationCode", withParameters: params){ (response, error) in

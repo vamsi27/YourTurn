@@ -30,6 +30,7 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         super.viewDidLoad()
         
         nextTurnTxtField.delegate = self
+        nextTurnTxtField.setBottomBorder()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(TaskViewController.dismissPickerAndKb))
         tap.cancelsTouchesInView = false
