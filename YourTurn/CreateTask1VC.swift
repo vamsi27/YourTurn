@@ -235,14 +235,14 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         self.endEditing()
         existingTask?["Name"] = taskNameTxtField.text!
+        let displayImage = self.taskImageBtn.backgroundImage(for: UIControlState.normal)
         
-        if(self.taskImageBtn.backgroundImage(for: UIControlState.normal) != nil && imageSelected){
-            let imageData = UIImagePNGRepresentation(self.taskImageBtn.backgroundImage(for: UIControlState.normal)!)
-            let imageFile = PFFile(name:"taskImage.png", data:imageData!)
-            
-            
-            // TODO: Compress image to a reasonable size
-            existingTask?["DisplayImage"] = imageFile
+        if(displayImage != nil && imageSelected){
+            if let imageData = displayImage!.jpeg(.low) {
+                print("size of image in KB: %f ", Double(NSData(data: imageData).length) / 1024.0)
+                let imageFile = PFFile(name:"taskImage.jpg", data:imageData)
+                existingTask?["DisplayImage"] = imageFile
+            }
         }
         
         let bfTask = existingTask?.saveInBackground()
@@ -342,12 +342,14 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let task = PFObject(className:"Task")
         task["Name"] = taskNameTxtField.text!
         
-        if(self.taskImageBtn.backgroundImage(for: UIControlState.normal) != nil && imageSelected){
-            let imageData = UIImagePNGRepresentation(self.taskImageBtn.backgroundImage(for: UIControlState.normal)!)
-            let imageFile = PFFile(name:"taskImage.png", data:imageData!)
-            
-            // TODO: Compress image to a reasonable size
-            task["DisplayImage"] = imageFile
+        let displayImage = self.taskImageBtn.backgroundImage(for: UIControlState.normal)
+        
+        if(displayImage != nil && imageSelected){
+            if let imageData = displayImage!.jpeg(.low) {
+                print("size of image in KB: %f ", Double(NSData(data: imageData).length) / 1024.0)
+                let imageFile = PFFile(name:"taskImage.jpg", data:imageData)
+                task["DisplayImage"] = imageFile
+            }
         }
         
         task["Admin"] = PFUser.current()

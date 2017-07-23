@@ -19,6 +19,7 @@
 		F42635681EB996D6004E079C /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F42635671EB996D6004E079C /* 1.jpg */; };
 		F426356A1EB99883004E079C /* TasksTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42635691EB99883004E079C /* TasksTableVC.swift */; };
 		F426356C1EB99933004E079C /* TasksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F426356B1EB99933004E079C /* TasksTableViewCell.swift */; };
+		F42E5EE11F25058100D866B3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E5EE01F25058100D866B3 /* Extensions.swift */; };
 		F440125C1EE34DDE00254421 /* __def_ctask_uturn.png in Resources */ = {isa = PBXBuildFile; fileRef = F440125B1EE34DDE00254421 /* __def_ctask_uturn.png */; };
 		F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8DF1E887E05001EECAB /* AppDelegate.swift */; };
 		F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F448D8E11E887E05001EECAB /* PhoneNumberSetupVC.swift */; };
@@ -66,6 +67,7 @@
 		F42635671EB996D6004E079C /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		F42635691EB99883004E079C /* TasksTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableVC.swift; sourceTree = "<group>"; };
 		F426356B1EB99933004E079C /* TasksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TasksTableViewCell.swift; sourceTree = "<group>"; };
+		F42E5EE01F25058100D866B3 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F440125B1EE34DDE00254421 /* __def_ctask_uturn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = __def_ctask_uturn.png; sourceTree = "<group>"; };
 		F448D8DC1E887E05001EECAB /* YourTurn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YourTurn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F448D8DF1E887E05001EECAB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				F41391B31EBED0B500E8568F /* ContactsTableViewCell.swift */,
 				F41391BB1EC01E1800E8568F /* CreateTask1VC.swift */,
 				F41391BD1EC177C000E8568F /* GroupMemberTableViewCell.swift */,
+				F42E5EE01F25058100D866B3 /* Extensions.swift */,
 			);
 			path = YourTurn;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				F426356A1EB99883004E079C /* TasksTableVC.swift in Sources */,
 				F425DADD1EA5C238007BE333 /* ConfirmCodeVC.swift in Sources */,
 				F448D8E21E887E05001EECAB /* PhoneNumberSetupVC.swift in Sources */,
+				F42E5EE11F25058100D866B3 /* Extensions.swift in Sources */,
 				F40F510F1EBAE833007A6B55 /* CreateTaskVC.swift in Sources */,
 				F448D8E01E887E05001EECAB /* AppDelegate.swift in Sources */,
 				F41391B21EBE7ADA00E8568F /* Task.swift in Sources */,

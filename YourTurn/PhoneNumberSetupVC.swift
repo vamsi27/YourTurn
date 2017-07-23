@@ -10,20 +10,6 @@ import UIKit
 import Parse
 import libPhoneNumber_iOS
 
-extension UITextField {
-    func setBottomBorder() {
-        self.borderStyle = .none
-        self.layer.backgroundColor = UIColor.white.cgColor
-        
-        self.layer.masksToBounds = false
-        self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowRadius = 0.0
-    }
-}
-
-
 class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCodePickerDelegate {
     
     @IBOutlet weak var txtFieldCode: UITextField!
@@ -128,6 +114,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
         
         let params = ["phoneNumber":fullPhnNum] as [String : Any]
         
+        
         PFCloud.callFunction(inBackground: "sendVerificationCode", withParameters: params){ (response, error) in
             if error == nil {
                 print("###############\(response as! Int)##################")
@@ -138,6 +125,7 @@ class PhoneNumberSetupVC: UIViewController, UITextFieldDelegate, CountryPhoneCod
                 print("Send code failed")
             }
         }
+ 
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
