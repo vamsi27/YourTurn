@@ -179,7 +179,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         cell.conatctNameLbl.text = conactName
         
-        if(conactName != contactPhnNum){
+        if(conactName.trimmingCharacters(in: .whitespacesAndNewlines) != contactPhnNum){
             cell.contactPhnNumLbl.text = contactPhnNum
         }
         cell.btnRemoveMember.isHidden = !isCurrentUserAdmin
