@@ -35,6 +35,9 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         groupMembersTbl.delegate = self
         groupMembersTbl.dataSource = self
         
+        // precautionary check so that if settings screen is opened even before the task is fully loaded in the background in the previous view
+        fetchIfNeededForExistingTask()
+        
         isCurrentUserAdmin = isCurrentUserTheAdmin()
         setupTaskName()
         setupTaskImageBtn()
@@ -48,6 +51,25 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.view.addGestureRecognizer(tap)
     }
     
+    func fetchIfNeededForExistingTask(){
+        if(existingTask == nil){
+            return
+        }
+        
+        let admin = existingTask?["Admin"] as! PFObject
+        do{
+            try admin.fetchIfNeeded()
+        }catch{
+        }
+        let members = existingTask?["Members"] as! [PFUser]
+        members.forEach { (member) in
+            do{
+                try member.fetchIfNeeded()
+            }catch{
+            }
+        }
+    }
+    
     func endEditing(){
         view.endEditing(true)
     }
@@ -56,10 +78,12 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         if(existingTask == nil){
             return true
         }
-        return (existingTask?["Admin"] as! PFUser).username == PFUser.current()?.username
+        return (existingTask?["Admin"] as! PFUser).objectId == PFUser.current()?.objectId
     }
     
     func setupTaskName(){
+        taskNameTxtField.setBottomBorder()
+        
         if(existingTask != nil){
             taskNameTxtField.text = existingTask!["Name"] as? String
         }else{
@@ -88,9 +112,9 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     func setupTaskImageBtn(){
         taskImageBtn.clipsToBounds = true
-        taskImageBtn.layer.cornerRadius = 45
+        taskImageBtn.layer.cornerRadius = taskImageBtn.layer.frame.width/2
         taskImageBtn.layer.borderWidth = 1
-        taskImageBtn.layer.borderColor = UIColor.gray.cgColor
+        taskImageBtn.layer.borderColor = UIColor.lightGray.cgColor
         taskImageBtn.titleLabel!.lineBreakMode = .byWordWrapping
         taskImageBtn.titleLabel!.textAlignment = .center
         taskImageBtn.setTitle("add\nphoto", for: .normal)
@@ -152,8 +176,12 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? GroupMemberTableViewCell  else {
             fatalError("The dequeued cell is not an instance of TasksTableViewCell.")
         }
+        
         cell.conatctNameLbl.text = conactName
-        cell.contactPhnNumLbl.text = contactPhnNum
+        
+        if(conactName != contactPhnNum){
+            cell.contactPhnNumLbl.text = contactPhnNum
+        }
         cell.btnRemoveMember.isHidden = !isCurrentUserAdmin
         cell.btnRemoveMember.tag = indexPath.row
         cell.btnRemoveMember.addTarget(self, action: #selector(deleteGroupMember), for: .touchDown)

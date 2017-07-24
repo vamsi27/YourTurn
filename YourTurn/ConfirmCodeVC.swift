@@ -22,6 +22,7 @@ class ConfirmCodeVC: UIViewController, UITextFieldDelegate {
 
         btnConfirmCode.isEnabled = false
         txtFieldConfCode.delegate = self
+        txtFieldConfCode.setBottomBorder()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ConfirmCodeVC.dismissKb))
         
