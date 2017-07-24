@@ -97,7 +97,18 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         query.getFirstObjectInBackground(block: { (task, error) in
             if(error == nil && task != nil){
                 self.currentTask = task
-                self.pickerDataSource = task?["Members"] as! [PFUser]
+                
+                // sort as per the names in the client's contacts book
+                // it's not necessary that the other users will have the same order as they can save the names differently
+                var unsortedContacts = task?["Members"] as! [PFUser]
+                unsortedContacts.sort(by: { (user1, user2) -> Bool in
+                    let u1Name = Utilities.getContactNameFromPhnNum(phnNum: user1.username!)
+                    let u2Name = Utilities.getContactNameFromPhnNum(phnNum: user2.username!)
+                    
+                    return u1Name <= u2Name
+                })
+                self.pickerDataSource = unsortedContacts
+                
                 self.loadTitles()
                 let nextTurnMemberIndex = self.getAndSelectCurrentNextTurnMember()
                 DispatchQueue.main.async {
