@@ -2050,7 +2050,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TaskViewController.swift"
@@ -2066,7 +2066,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "YourTurn/CreateTask1VC.swift"
@@ -2079,34 +2079,34 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "YourTurn.CreateTask1VC.fetchIfNeededForExistingTask () -&gt; ()"
                   moduleName = "YourTurn"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vmzi/Documents/iOS%20Apps/YourTurn/YourTurn/CreateTask1VC.swift"
-                  timestampString = "522564927.085134"
+                  timestampString = "522565378.69428"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "59"
                   endingLineNumber = "59"
-                  offsetFromSymbolStart = "144">
+                  offsetFromSymbolStart = "153">
                </Location>
                <Location
-                  shouldBeEnabled = "Yes"
+                  shouldBeEnabled = "No"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
                   symbolName = "YourTurn.CreateTask1VC.fetchIfNeededForExistingTask () -&gt; ()"
                   moduleName = "YourTurn"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/vmzi/Documents/iOS%20Apps/YourTurn/YourTurn/CreateTask1VC.swift"
-                  timestampString = "522564927.087238"
+                  timestampString = "522565378.696186"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "59"
                   endingLineNumber = "59"
-                  offsetFromSymbolStart = "1448">
+                  offsetFromSymbolStart = "1795">
                </Location>
             </Locations>
          </BreakpointContent>

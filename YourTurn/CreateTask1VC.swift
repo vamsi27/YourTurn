@@ -266,7 +266,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let displayImage = self.taskImageBtn.backgroundImage(for: UIControlState.normal)
         
         if(displayImage != nil && imageSelected){
-            if let imageData = displayImage!.jpeg(.low) {
+            if let imageData = displayImage!.jpeg(.lowest) {
                 print("size of image in KB: %f ", Double(NSData(data: imageData).length) / 1024.0)
                 let imageFile = PFFile(name:"taskImage.jpg", data:imageData)
                 existingTask?["DisplayImage"] = imageFile
@@ -373,7 +373,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let displayImage = self.taskImageBtn.backgroundImage(for: UIControlState.normal)
         
         if(displayImage != nil && imageSelected){
-            if let imageData = displayImage!.jpeg(.low) {
+            if let imageData = displayImage!.jpeg(.lowest) {
                 print("size of image in KB: %f ", Double(NSData(data: imageData).length) / 1024.0)
                 let imageFile = PFFile(name:"taskImage.jpg", data:imageData)
                 task["DisplayImage"] = imageFile
