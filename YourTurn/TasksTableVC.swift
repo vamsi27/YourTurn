@@ -40,16 +40,15 @@ class TasksTableVC: UITableViewController {
         query?.whereKey("objectId", equalTo: (PFUser.current()?.objectId)!)
         query?.includeKey("Tasks")
         
-        query?.getFirstObjectInBackground(block: { (u, error) in
-            if(error == nil && u != nil){
+        do{
+            let u = try query?.getFirstObject()
+            if(u != nil){
                 self.tasks = u?["Tasks"] as! [PFObject]
                 if self.tasks.count > 0 {
                     self.tasks.sort(by: { (t1, t2) -> Bool in
                         t1.updatedAt! > t2.updatedAt!
                     })
-                }
-                
-                DispatchQueue.main.async {
+                    
                     self.tableView.reloadData()
                     self.tableView.scrollToRow(at: NSIndexPath.init(row: 0, section: 0) as IndexPath, at: .top, animated: false)
                     if(refreshCtrl){
@@ -57,7 +56,7 @@ class TasksTableVC: UITableViewController {
                     }
                 }
             }
-        })
+        }catch{}
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -110,7 +109,17 @@ class TasksTableVC: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        
+        if (self.tasks.count == 0){
+            let noDataLabel: UILabel     = UILabel(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: self.tableView.bounds.size.height))
+            noDataLabel.text          = "Tap on + at the top to create a new task."
+            noDataLabel.textColor     = UIColor.black
+            noDataLabel.textAlignment = .center
+            self.tableView.backgroundView  = noDataLabel
+            self.tableView.separatorStyle  = .none
+        }
+        
+        return tasks.count > 0 ? 1 : 0
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
