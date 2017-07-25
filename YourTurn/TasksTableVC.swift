@@ -43,7 +43,11 @@ class TasksTableVC: UITableViewController {
         do{
             let u = try query?.getFirstObject()
             if(u != nil){
-                self.tasks = u?["Tasks"] as! [PFObject]
+                let rawTasks = u?["Tasks"]
+                if rawTasks == nil{
+                    return
+                }
+                self.tasks = rawTasks as! [PFObject]
                 if self.tasks.count > 0 {
                     self.tasks.sort(by: { (t1, t2) -> Bool in
                         t1.updatedAt! > t2.updatedAt!
@@ -117,6 +121,9 @@ class TasksTableVC: UITableViewController {
             noDataLabel.textAlignment = .center
             self.tableView.backgroundView  = noDataLabel
             self.tableView.separatorStyle  = .none
+        }else{
+            self.tableView.backgroundView  = nil
+            self.tableView.separatorStyle  = .singleLine
         }
         
         return tasks.count > 0 ? 1 : 0
