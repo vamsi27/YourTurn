@@ -10,10 +10,10 @@ import UIKit
 
 class GroupMemberTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var contactPhnNumLbl: UILabel!
     @IBOutlet weak var conatctNameLbl: UILabel!
-    
+    @IBOutlet weak var lblAdmin: UILabel!
     @IBOutlet weak var btnRemoveMember: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

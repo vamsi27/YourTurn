@@ -179,9 +179,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         cell.conatctNameLbl.text = conactName
         
-        if(conactName.trimmingCharacters(in: .whitespacesAndNewlines) != contactPhnNum){
-            cell.contactPhnNumLbl.text = contactPhnNum
-        }
+        cell.lblAdmin.isHidden = contactPhnNum != PFUser.current()?.username
         cell.btnRemoveMember.isHidden = !isCurrentUserAdmin
         cell.btnRemoveMember.tag = indexPath.row
         cell.btnRemoveMember.addTarget(self, action: #selector(deleteGroupMember), for: .touchDown)
