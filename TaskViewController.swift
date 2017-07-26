@@ -100,14 +100,14 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
                 
                 // sort as per the names in the client's contacts book
                 // it's not necessary that the other users will have the same order as they can save the names differently
-                var unsortedContacts = task?["Members"] as! [PFUser]
-                unsortedContacts.sort(by: { (user1, user2) -> Bool in
+                var sortedContacts = task?["Members"] as! [PFUser]
+                sortedContacts.sort(by: { (user1, user2) -> Bool in
                     let u1Name = Utilities.getContactNameFromPhnNum(phnNum: user1.username!)
                     let u2Name = Utilities.getContactNameFromPhnNum(phnNum: user2.username!)
                     
                     return u1Name <= u2Name
                 })
-                self.pickerDataSource = unsortedContacts
+                self.pickerDataSource = sortedContacts
                 
                 self.loadTitles()
                 let nextTurnMemberIndex = self.getAndSelectCurrentNextTurnMember()
@@ -177,6 +177,8 @@ class TaskViewController: UIViewController, UIPickerViewDataSource, UIPickerView
         if(currentSelectedRow > -1){
             let nextTurnMember = pickerDataSource[currentSelectedRow]
             notifyUser(userName: nextTurnMember.username!, isReminder: true)
+            let alert = Utilities.createOKAlertMsg(title: "", message: (nextTurnTxtField.text ?? "Member") + " has been reminded!")
+            present(alert, animated: true, completion: nil)
         }
     }
     
