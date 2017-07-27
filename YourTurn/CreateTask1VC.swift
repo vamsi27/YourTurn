@@ -32,6 +32,7 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = existingTask == nil ? "New Task" : "Settings"
         groupMembersTbl.delegate = self
         groupMembersTbl.dataSource = self
         
