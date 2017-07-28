@@ -185,6 +185,13 @@ class CreateTaskVC: UITableViewController, UISearchBarDelegate {
             optionMenu.addAction(numAction)
         }
         optionMenu.addAction(cancelAction)
+        
+        // below 2 statements are need for ipad
+        // unlike iphone, ipad doesn't show a cancel btn. It's just a popover and needs a UI to hook onto
+        // that's the reason we hook on to self.view
+        optionMenu.popoverPresentationController?.sourceView = self.view;
+        optionMenu.popoverPresentationController?.sourceRect = CGRect(x: self.view.frame.midX, y: self.view.frame.midY, width: 1, height: 1);
+        
         self.present(optionMenu, animated: true, completion: nil)
     }
     
