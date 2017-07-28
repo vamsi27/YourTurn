@@ -31,6 +31,7 @@
 		F47911781EB6A48F0014C7D5 /* Flags.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F47911771EB6A48F0014C7D5 /* Flags.xcassets */; };
 		F49E89C11ED13CDB00D76FDA /* EmptyTask.png in Resources */ = {isa = PBXBuildFile; fileRef = F49E89C01ED13CDB00D76FDA /* EmptyTask.png */; };
 		F49E89C31ED27F3600D76FDA /* TaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49E89C21ED27F3600D76FDA /* TaskViewController.swift */; };
+		F4E1D8F01F2ACD5400C1F193 /* YTN.png in Resources */ = {isa = PBXBuildFile; fileRef = F4E1D8EF1F2ACD5400C1F193 /* YTN.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		F49DEFD21F0DDB97005EBFD5 /* YourTurn.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YourTurn.entitlements; sourceTree = "<group>"; };
 		F49E89C01ED13CDB00D76FDA /* EmptyTask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EmptyTask.png; sourceTree = "<group>"; };
 		F49E89C21ED27F3600D76FDA /* TaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TaskViewController.swift; path = ../TaskViewController.swift; sourceTree = "<group>"; };
+		F4E1D8EF1F2ACD5400C1F193 /* YTN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YTN.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 		F47911791EB6F18F0014C7D5 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F4E1D8EF1F2ACD5400C1F193 /* YTN.png */,
 				F49E89C01ED13CDB00D76FDA /* EmptyTask.png */,
 			);
 			name = Images;
@@ -301,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F47911781EB6A48F0014C7D5 /* Flags.xcassets in Resources */,
+				F4E1D8F01F2ACD5400C1F193 /* YTN.png in Resources */,
 				F448D8EA1E887E05001EECAB /* LaunchScreen.storyboard in Resources */,
 				F448D8E71E887E05001EECAB /* Assets.xcassets in Resources */,
 				F49E89C11ED13CDB00D76FDA /* EmptyTask.png in Resources */,
