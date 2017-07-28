@@ -568,7 +568,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Um1-cd-CDM" firstAttribute="centerX" secondItem="fvI-HH-5vi" secondAttribute="centerX" constant="-176" id="9rX-fu-UAS"/>
                             <constraint firstItem="d9u-gL-CFM" firstAttribute="centerX" secondItem="2b0-ed-eE5" secondAttribute="centerX" id="AP6-Ke-BUQ"/>
                             <constraint firstAttribute="trailing" secondItem="d9u-gL-CFM" secondAttribute="trailing" id="D2D-pV-JTY"/>
                             <constraint firstItem="JgF-L3-ddC" firstAttribute="top" secondItem="2b0-ed-eE5" secondAttribute="bottom" constant="72" id="Fd6-4H-DaV"/>
@@ -578,6 +577,7 @@
                             <constraint firstItem="fvI-HH-5vi" firstAttribute="top" secondItem="Um1-cd-CDM" secondAttribute="bottom" constant="-35" id="Tbn-Cp-iXy"/>
                             <constraint firstItem="d9u-gL-CFM" firstAttribute="top" secondItem="DSe-dD-nvg" secondAttribute="bottom" constant="18" id="f5Y-H0-5zp"/>
                             <constraint firstItem="Um1-cd-CDM" firstAttribute="top" secondItem="V86-SC-UpF" secondAttribute="bottom" constant="23" id="isY-gs-joJ"/>
+                            <constraint firstItem="fvI-HH-5vi" firstAttribute="leading" secondItem="Um1-cd-CDM" secondAttribute="trailing" constant="8.5" id="jry-VY-3bo"/>
                             <constraint firstItem="d9u-gL-CFM" firstAttribute="leading" secondItem="nGt-sd-THI" secondAttribute="leading" id="jvc-gM-9Ni"/>
                             <constraint firstItem="fvI-HH-5vi" firstAttribute="leading" secondItem="nGt-sd-THI" secondAttribute="leadingMargin" constant="83" id="lU7-4c-X2x"/>
                             <constraint firstItem="DSe-dD-nvg" firstAttribute="centerX" secondItem="d9u-gL-CFM" secondAttribute="centerX" id="zjp-q3-Xz7"/>
