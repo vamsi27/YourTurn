@@ -82,6 +82,13 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return (existingTask?["Admin"] as! PFUser).objectId == PFUser.current()?.objectId
     }
     
+    func getAdminUserName() -> String {
+        if(existingTask == nil){
+            return (PFUser.current()?.username)!
+        }
+        return (existingTask?["Admin"] as! PFUser).username!
+    }
+    
     func setupTaskName(){
         taskNameTxtField.setBottomBorder()
         
@@ -180,7 +187,9 @@ class CreateTask1VC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         cell.conatctNameLbl.text = conactName
         
-        cell.lblAdmin.isHidden = contactPhnNum != PFUser.current()?.username
+        let showAdminLbl = contactPhnNum == getAdminUserName()
+        
+        cell.lblAdmin.isHidden = !showAdminLbl
         cell.btnRemoveMember.isHidden = !isCurrentUserAdmin
         cell.btnRemoveMember.tag = indexPath.row
         cell.btnRemoveMember.addTarget(self, action: #selector(deleteGroupMember), for: .touchDown)
